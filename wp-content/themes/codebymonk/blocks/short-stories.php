@@ -22,7 +22,8 @@ if ($showHeader === null || $showHeader === '') {
     $showHeader = ($layout === 'simple');
 }
 
-$title = get_field('title') ?: __('People who changed Zone', 'codebymonk');
+$kicker = get_field('kicker') ?: '';
+$title = get_field('title') ?: __('REAL PEOPLE. REAL BREAKTHROUGHS', 'codebymonk');
 $buttonText = get_field('button_text') ?: __('All stories', 'codebymonk');
 $buttonLink = get_field('button_link') ?: '/stories/';
 $source = get_field('stories_source') ?: 'latest';
@@ -139,8 +140,13 @@ if (empty($storiesList)) {
 <section id="<?= esc_attr($blockID); ?>" data-block="short-stories" class="<?= esc_attr(implode(' ', $blockClasses)); ?>">
   <div class="wrap">
     <?php if ($showHeader): ?>
-      <div class="hgroup mb24" style="justify-content:space-between">
-        <h2><?= esc_html($title); ?></h2>
+      <div class="hgroup mb24" style="justify-content:space-between;align-items:flex-end">
+        <div>
+          <?php if (!empty($kicker)): ?>
+            <div class="tiny kicker-mono mb8" style="color:var(--brand);font-weight:700;letter-spacing:0.08em;text-transform:uppercase;"><?= esc_html($kicker); ?></div>
+          <?php endif; ?>
+          <h2><?= esc_html($title); ?></h2>
+        </div>
         <?php if (!empty($buttonText)): ?>
           <a class="btn btn-ghost btn-sm" href="<?= esc_url($buttonLink); ?>"><?= esc_html($buttonText); ?></a>
         <?php endif; ?>

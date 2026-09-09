@@ -18,7 +18,7 @@ if (!empty($block['className'])) {
 // Card 1
 $c1Badge = get_field('card_1_badge') ?: __('Step 1 · free', 'codebymonk');
 $c1Title = get_field('card_1_title') ?: __('Short profile', 'codebymonk');
-$c1Desc  = get_field('card_1_desc') ?: __('Fourteen questions, two minutes. You get your Zone, why you are in it, and which of the three areas is holding you back.', 'codebymonk');
+$c1Desc  = get_field('card_1_desc') ?: __('Twenty questions, two minutes. You get your Zone, why you are in it, and which of the three areas is holding you back.', 'codebymonk');
 $c1BtnText = get_field('card_1_btn_text') ?: __('Start', 'codebymonk');
 $c1BtnLink = get_field('card_1_btn_link');
 if (empty($c1BtnLink) || $c1BtnLink === '#quiz') {
@@ -27,13 +27,13 @@ if (empty($c1BtnLink) || $c1BtnLink === '#quiz') {
 
 // Card 2
 $c2Badge = get_field('card_2_badge') ?: __('Step 2 · paid', 'codebymonk');
-$c2Title = get_field('card_2_title') ?: __('Full report', 'codebymonk');
+$c2Title = get_field('card_2_title') ?: __('Full Report Automated', 'codebymonk');
 $c2Desc  = get_field('card_2_desc') ?: __('Question-by-question breakdown of all three areas, what to move first and in what order, and what the Green Zone looks like in your specific case.', 'codebymonk');
 $c2Price = get_field('card_2_price') ?: 'price TBD';
 
 // Card 3
-$c3Badge = get_field('card_3_badge') ?: __('Step 3 · with support', 'codebymonk');
-$c3Title = get_field('card_3_title') ?: __('Cohort or coaching', 'codebymonk');
+$c3Badge = get_field('card_3_badge') ?: __('60 minutes of Personalized Coaching', 'codebymonk');
+$c3Title = get_field('card_3_title') ?: __('Full Report One on One', 'codebymonk');
 $c3Desc  = get_field('card_3_desc') ?: __('A cohort with a start date and a group here, or continuous one-to-one coaching with an assigned coach at ACLC.', 'codebymonk');
 $c3BtnText = get_field('card_3_btn_text') ?: __('See options', 'codebymonk');
 $c3BtnLink = get_field('card_3_btn_link') ?: '/cohorts/';

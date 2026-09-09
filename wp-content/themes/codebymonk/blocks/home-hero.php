@@ -18,7 +18,7 @@ if (!empty($block['className'])) {
 // Fields
 $kicker = get_field('kicker') ?: __('The assessment', 'codebymonk');
 $title = get_field('title') ?: __('Which Zone are you in today?', 'codebymonk');
-$description = get_field('description') ?: __('Your level of success, prosperity, happiness and the quality of your relationships depend on the Zone you are operating from. Fourteen questions to find out which one.', 'codebymonk');
+$description = get_field('description') ?: __('Your level of success, prosperity, happiness and the quality of your relationships depend on the Zone you are operating from. Twenty questions to find out which one.', 'codebymonk');
 $primaryBtnText = get_field('button_primary_text') ?: __('Find your Zone — free', 'codebymonk');
 $primaryBtnLink = get_field('button_primary_link');
 if (empty($primaryBtnLink) || $primaryBtnLink === '#quiz') {
@@ -37,15 +37,15 @@ if (empty($areas)) {
     $areas = [
         [
             'title'    => __('Financial Profile', 'codebymonk'),
-            'subtitle' => __('Money and prosperity', 'codebymonk'),
+            'subtitle' => __('MEASURE YOUR ABILITY TO CREATE WEALTH', 'codebymonk'),
         ],
         [
             'title'    => __('Life & Skills Profile', 'codebymonk'),
-            'subtitle' => __('Ability and direction', 'codebymonk'),
+            'subtitle' => __('FIND OUT WHAT YOU THINK OF YOURSELF AND HOW YOU UTILIZE OR RESTRAINT YOUR LIFE SKILLS', 'codebymonk'),
         ],
         [
             'title'    => __('Body Profile', 'codebymonk'),
-            'subtitle' => __('Energy and health', 'codebymonk'),
+            'subtitle' => __('DISCOVER YOUR FUTURE PHYSICAL SHAPE', 'codebymonk'),
         ],
     ];
 }
@@ -92,8 +92,8 @@ $zonesTitle = get_field('zones_title') ?: __('The four Zones', 'codebymonk');
       <?php foreach ($areas as $index => $area): 
         $isLast = ($index === count($areas) - 1);
       ?>
-        <div class="row" style="padding:11px 0;<?= $isLast ? 'border:0;' : '' ?>">
-          <div class="grow" style="font-weight:600"><?= esc_html($area['title']); ?></div>
+        <div class="row"<?= $isLast ? ' style="border:0;"' : '' ?>>
+          <div class="grow"><?= esc_html($area['title']); ?></div>
           <span class="tiny"><?= esc_html($area['subtitle']); ?></span>
         </div>
       <?php endforeach; ?>
@@ -109,7 +109,7 @@ $zonesTitle = get_field('zones_title') ?: __('The four Zones', 'codebymonk');
       </div>
       <div class="zlabels">
         <span class="tiny"><?php esc_html_e('Red', 'codebymonk'); ?></span>
-        <span class="tiny"><?php esc_html_e('Amber', 'codebymonk'); ?></span>
+        <span class="tiny"><?php esc_html_e('Yellow', 'codebymonk'); ?></span>
         <span class="tiny"><?php esc_html_e('Green', 'codebymonk'); ?></span>
         <span class="tiny"><?php esc_html_e('Golden', 'codebymonk'); ?></span>
       </div>

@@ -6,34 +6,40 @@ document.addEventListener('DOMContentLoaded', function () {
   if (!quizSection) return;
 
   var Q = [
-    { a: "Financial", t: "When money gets tight, what do you do first?", o: [["Avoid looking at it until there is no choice", 1], ["Work more hours and hope it settles", 2], ["Review the numbers and adjust the plan", 3], ["Bring in someone who knows more than I do", 4]] },
-    { a: "Financial", t: "How far ahead can you see your finances?", o: [["Not at all", 1], ["To the end of the month", 2], ["A year, roughly", 3], ["Several years, with a structure behind it", 4]] },
-    { a: "Financial", t: "When income arrives, what happens to it?", o: [["It disappears before I notice", 1], ["It covers what is overdue", 2], ["It follows a plan I set", 3], ["It is allocated before it arrives", 4]] },
-    { a: "Financial", t: "How do you feel discussing money with people close to you?", o: [["I avoid it entirely", 1], ["Tense but able", 2], ["Straightforward", 3], ["It is a normal working conversation", 4]] },
-    { a: "Financial", t: "Your last significant financial decision was made by…", o: [["Circumstances, not me", 1], ["Me, under pressure", 2], ["Me, with time to think", 3], ["Me, against a longer plan", 4]] },
-    { a: "Life & Skills", t: "When something important is not working, you…", o: [["Push harder at the same thing", 1], ["Notice it, and stall", 2], ["Name it and change the approach", 3], ["Have already redesigned it", 4]] },
-    { a: "Life & Skills", t: "How consistently do you produce your best work?", o: [["Rarely, and I cannot predict when", 1], ["When conditions are right", 2], ["Most weeks", 3], ["Consistently, because it does not rely on mood", 4]] },
-    { a: "Life & Skills", t: "How clear is your direction for the next two years?", o: [["I have none", 1], ["A vague sense", 2], ["Clear, written down", 3], ["Clear, and I am already executing it", 4]] },
-    { a: "Life & Skills", t: "When you learn something useful, what usually happens?", o: [["Nothing changes", 1], ["I try it once", 2], ["I apply it and keep what works", 3], ["I apply it and teach it to someone", 4]] },
-    { a: "Life & Skills", t: "How often do you finish what you start?", o: [["Seldom", 1], ["When someone is waiting on it", 2], ["Usually", 3], ["Almost always, by design", 4]] },
-    { a: "Body", t: "How is your energy through an ordinary day?", o: [["It runs out early", 1], ["It dips and I push through", 2], ["Steady most days", 3], ["Reliable, and I know what maintains it", 4]] },
-    { a: "Body", t: "How well do you sleep?", o: [["Badly, most nights", 1], ["Unevenly", 2], ["Well most nights", 3], ["Well, and it is protected deliberately", 4]] },
-    { a: "Body", t: "How does your body respond under pressure?", o: [["It gives out", 1], ["It complains and I ignore it", 2], ["It holds", 3], ["It holds, and I adjust before it has to", 4]] },
-    { a: "Body", t: "Movement in your week is…", o: [["Absent", 1], ["Occasional", 2], ["Regular", 3], ["Regular and matched to what I need", 4]] }
+    { a: "Life & Skills", t: "Do you complete activities quickly?", o: [["Yes", 4], ["Maybe", 2], ["No", 1]] },
+    { a: "Financial", t: "Are you positioned for success?", o: [["Yes", 4], ["Maybe", 2], ["No", 1]] },
+    { a: "Life & Skills", t: "Do you perceive other people's games?", o: [["Yes", 4], ["Maybe", 2], ["No", 1]] },
+    { a: "Financial", t: "Do you drive a luxury car?", o: [["Yes", 4], ["Maybe", 2], ["No", 1]] },
+    { a: "Life & Skills", t: "Is your future uncertain?", o: [["Yes", 1], ["Maybe", 2], ["No", 4]] },
+    { a: "Body", t: "Do you like to have a lot of action?", o: [["Yes", 4], ["Maybe", 2], ["No", 1]] },
+    { a: "Financial", t: "Do you go into debt at the end of the year?", o: [["Yes", 1], ["Maybe", 2], ["No", 4]] },
+    { a: "Life & Skills", t: "Do you tend to misperceive people?", o: [["Yes", 1], ["Maybe", 2], ["No", 4]] },
+    { a: "Financial", t: "Do you travel in economy class instead of first class?", o: [["Yes", 1], ["Maybe", 2], ["No", 4]] },
+    { a: "Financial", t: "Are you unsure about your material desires?", o: [["Yes", 1], ["Maybe", 2], ["No", 4]] },
+    { a: "Life & Skills", t: "Do you wish you were living your dream?", o: [["Yes", 1], ["Maybe", 2], ["No", 4]] },
+    { a: "Financial", t: "Has your career become less than what you wanted?", o: [["Yes", 1], ["Maybe", 2], ["No", 4]] },
+    { a: "Life & Skills", t: "Do you wish you had acted faster?", o: [["Yes", 1], ["Maybe", 2], ["No", 4]] },
+    { a: "Financial", t: "Will your career provide you with future wealth?", o: [["Yes", 4], ["Maybe", 2], ["No", 1]] },
+    { a: "Life & Skills", t: "Do you always strive to be the best you can be?", o: [["Yes", 4], ["Maybe", 2], ["No", 1]] },
+    { a: "Life & Skills", t: "Do you dislike people?", o: [["Yes", 1], ["Maybe", 2], ["No", 4]] },
+    { a: "Life & Skills", t: "Do you take action to up your game?", o: [["Yes", 4], ["Maybe", 2], ["No", 1]] },
+    { a: "Life & Skills", t: "Do you feel you know more than others, even those more successful than you?", o: [["Yes", 1], ["Maybe", 2], ["No", 4]] },
+    { a: "Body", t: "Do you like staying close to home during holidays?", o: [["Yes", 1], ["Maybe", 2], ["No", 4]] },
+    { a: "Body", t: "Are you easily distracted?", o: [["Yes", 1], ["Maybe", 2], ["No", 4]] }
   ];
 
   var ZONE = {
     1: { n: "Red", i: 1, col: "var(--red)" },
-    2: { n: "Amber", i: 2, col: "#B98F0C" },
+    2: { n: "Yellow", i: 2, col: "#B98F0C" },
     3: { n: "Green", i: 3, col: "var(--shgreen)" },
     4: { n: "Golden Magic", i: 4, col: "#8A7440" }
   };
 
   var COPY = {
-    "Red": "Red means you are out of flow. Effort goes in and very little comes back, because you are reacting to what happens instead of directing it. It is the most expensive Zone to stay in and the one where a single structural change makes the biggest difference.",
-    "Amber": "Amber means you are already awake. You can recognise what is not working and you have words for it, but change still depends on your willpower on the day rather than on a structure holding it. It is where most people get stuck — and also where the climb is fastest once it starts.",
-    "Green": "Green means you are in flow. Results arrive consistently because there is structure behind them, not because you forced them. The work from here is holding it under load and widening it into the areas that are still lagging.",
-    "Golden Magic": "Golden Magic means mastery. You operate in your Zone reliably and you can take other people there. The work from here is transmission — turning what you do into something others can learn."
+    "Red": "This is someone who is in the wrong place at the wrong time, connected to the wrong people. Effort produces little, because you are reacting to what happens instead of directing it.",
+    "Yellow": "This is the “daily grind” or “rut” where the person doesn’t take risks but works only for security. Awake, but change still depends on how you feel that day.",
+    "Green": "This is someone who is in the right place at the right time, making things go right. This person is living their dream. Results arrive consistently because structure holds them, not willpower.",
+    "Golden Magic": "You are outside of the physical universe. You operate above the laws of the physical universe and are totally telepathic. Mastery in your Zone reliably."
   };
 
   var answers = [];
@@ -157,7 +163,8 @@ document.addEventListener('DOMContentLoaded', function () {
     var rAreas = document.getElementById('rAreas');
 
     if (rZone) {
-      rZone.textContent = 'You are in the ' + z.n + ' Zone';
+      var zoneLabel = z.n.toLowerCase().indexOf('zone') !== -1 ? z.n : (z.n + ' Zone');
+      rZone.textContent = 'You are in the ' + zoneLabel;
       rZone.style.color = z.col;
     }
     if (rHere) {
@@ -172,7 +179,7 @@ document.addEventListener('DOMContentLoaded', function () {
       rBar.innerHTML = barHtml;
     }
     if (rBody) {
-      rBody.textContent = COPY[z.n] || COPY["Amber"];
+      rBody.textContent = COPY[z.n] || COPY["Yellow"];
     }
 
     var worstIdx = scores.indexOf(Math.min.apply(null, scores));

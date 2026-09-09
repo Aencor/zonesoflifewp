@@ -17,7 +17,7 @@ if (!empty($block['className'])) {
 
 // Content fields
 $kicker = get_field('kicker') ?: 'Free weekly';
-$title = get_field('title') ?: 'The Zone Letter';
+$title = get_field('title') ?: 'In The Zone Newsletter';
 $description = get_field('description') ?: 'One idea a week on moving up the Zones, plus new cohort dates before they open publicly.';
 $formType = get_field('form_type') ?: 'default';
 $embedCode = get_field('mailchimp_embed_code');

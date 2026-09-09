@@ -30,23 +30,24 @@ mix
 		processCssUrls: false,
 		postCss: [require('@tailwindcss/postcss'), require('autoprefixer')],
 	})
-	.sourceMaps(true, 'source-map')
-	.browserSync(PROXY);
+	.sourceMaps(true, 'source-map');
 
-mix.browserSync({
-	proxy: PROXY,
-	files: [
-		`${BUILD_DIR}/master.css`,
-		`${BUILD_DIR}/main.js`,
-		`${THEME_DIRECTORY}/**/*.+(html|php)`,
-	],
-	notify: {
-		styles: {
-			top: 'auto',
-			bottom: '0',
+if (!mix.inProduction() && PROXY) {
+	mix.browserSync({
+		proxy: PROXY,
+		files: [
+			`${BUILD_DIR}/master.css`,
+			`${BUILD_DIR}/main.js`,
+			`${THEME_DIRECTORY}/**/*.+(html|php)`,
+		],
+		notify: {
+			styles: {
+				top: 'auto',
+				bottom: '0',
+			},
 		},
-	},
-});
+	});
+}
 
 mix.webpackConfig({
 	watchOptions: {

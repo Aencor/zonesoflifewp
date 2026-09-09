@@ -25,15 +25,15 @@ if (empty($zones)) {
             'icon'        => 'compass',
             'icon_style'  => 'navy',
             'title_color' => 'var(--red)',
-            'description' => __('Out of flow. You react to what happens rather than directing it. Effort produces little.', 'codebymonk'),
+            'description' => __('This is someone who is in the wrong place at the wrong time, connected to the wrong people.', 'codebymonk'),
         ],
         [
-            'title'       => __('Amber', 'codebymonk'),
+            'title'       => __('Yellow', 'codebymonk'),
             'level'       => 2,
             'icon'        => 'spark',
             'icon_style'  => 'gold',
             'title_color' => '#B98F0C',
-            'description' => __('Awake. You can name what is not working, but change still depends on how you feel that day.', 'codebymonk'),
+            'description' => __('This is the “daily grind” or “rut” where the person doesn’t take risks but works only for security.', 'codebymonk'),
         ],
         [
             'title'       => __('Green', 'codebymonk'),
@@ -41,7 +41,7 @@ if (empty($zones)) {
             'icon'        => 'chart',
             'icon_style'  => 'green',
             'title_color' => 'var(--shgreen)',
-            'description' => __('In flow. Results come consistently because structure holds them, not willpower.', 'codebymonk'),
+            'description' => __('This is someone who is in the right place at the right time, making things go right. This person is living their dream.', 'codebymonk'),
         ],
         [
             'title'       => __('Golden Magic', 'codebymonk'),
@@ -49,7 +49,7 @@ if (empty($zones)) {
             'icon'        => 'target',
             'icon_style'  => 'gold',
             'title_color' => '#8A7440',
-            'description' => __('Mastery. You operate in your Zone and you can take others there.', 'codebymonk'),
+            'description' => __('You are outside of the physical universe. You operate above the laws of the physical universe and are totally telepathic.', 'codebymonk'),
         ],
     ];
 }
@@ -60,7 +60,7 @@ if ($showCTA === null || $showCTA === '') {
     $showCTA = true;
 }
 $ctaTitle = get_field('cta_title') ?: __('Reading about the Zones is not the same as knowing yours', 'codebymonk');
-$ctaDesc = get_field('cta_description') ?: __('Fourteen questions, two minutes, no card.', 'codebymonk');
+$ctaDesc = get_field('cta_description') ?: __('Twenty questions, two minutes, no card.', 'codebymonk');
 $ctaBtnText = get_field('cta_button_text') ?: __('Find your Zone', 'codebymonk');
 $ctaBtnLink = get_field('cta_button_link');
 if (empty($ctaBtnLink) || $ctaBtnLink === '#quiz') {

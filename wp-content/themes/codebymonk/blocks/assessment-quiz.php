@@ -16,7 +16,7 @@ if (!empty($block['className'])) {
 }
 
 $introKicker = get_field('intro_kicker') ?: __('Free · two minutes', 'codebymonk');
-$introTitle = get_field('intro_title') ?: __('Fourteen questions', 'codebymonk');
+$introTitle = get_field('intro_title') ?: __('Twenty questions', 'codebymonk');
 $introDesc = get_field('intro_desc') ?: __('No right answers. Nobody else sees this. We ask for your email at the end, not now.', 'codebymonk');
 $btnText = get_field('start_button_text') ?: __('Start', 'codebymonk');
 ?>
@@ -32,11 +32,11 @@ $btnText = get_field('start_button_text') ?: __('Start', 'codebymonk');
       <button type="button" class="btn btn-go btn-block mt32" id="startQuiz"><?= esc_html($btnText); ?></button>
     </div>
 
-    <!-- Screen 2: Running Quiz (14 Questions) -->
+    <!-- Screen 2: Running Quiz (20 Questions) -->
     <div id="quizRun" class="quiz-screen" hidden>
       <div class="hgroup" style="justify-content:space-between">
         <span class="tiny" id="qArea">Area</span>
-        <span class="tiny" id="qCount">1 / 14</span>
+        <span class="tiny" id="qCount">1 / 20</span>
       </div>
       <div class="progress" id="qBar"></div>
       <h2 id="qText" class="mt16" style="min-height:74px"></h2>
@@ -102,7 +102,7 @@ $btnText = get_field('start_button_text') ?: __('Start', 'codebymonk');
           <div class="card pad-lg tint" style="border-color:#D6EDE0">
             <div class="kicker"><?= esc_html__('Next step', 'codebymonk'); ?></div>
             <h3 class="mt8"><?= esc_html__('You know where you are.', 'codebymonk'); ?><br><?= esc_html__('This is how you get out.', 'codebymonk'); ?></h3>
-            <p class="sm mt16"><?= esc_html__('The full report breaks down all fourteen answers and builds the route: what to move first, with what, and in what order.', 'codebymonk'); ?></p>
+            <p class="sm mt16"><?= esc_html__('The full report breaks down all twenty answers and builds the route: what to move first, with what, and in what order.', 'codebymonk'); ?></p>
             <div class="hgroup mt24" style="justify-content:space-between;align-items:center;">
               <span class="tiny"><?= esc_html__('Full report', 'codebymonk'); ?></span>
               <span class="pending"><?= esc_html__('price TBD', 'codebymonk'); ?></span>
