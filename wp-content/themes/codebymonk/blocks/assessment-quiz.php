@@ -19,7 +19,64 @@ $introKicker = get_field('intro_kicker') ?: __('Free · two minutes', 'codebymon
 $introTitle = get_field('intro_title') ?: __('Twenty questions', 'codebymonk');
 $introDesc = get_field('intro_desc') ?: __('No right answers. Nobody else sees this. We ask for your email at the end, not now.', 'codebymonk');
 $btnText = get_field('start_button_text') ?: __('Start', 'codebymonk');
+
+$currentLang = function_exists('apply_filters') ? apply_filters('wpml_current_language', null) : (defined('ICL_LANGUAGE_CODE') ? ICL_LANGUAGE_CODE : 'en');
+$isSpanish = ($currentLang === 'es');
+
+$spanishQuizData = [
+  'isSpanish' => $isSpanish,
+  'questions' => [
+    ['a' => 'Life & Skills', 't' => '¿Completas tus actividades con rapidez?', 'o' => [['Sí', 4], ['Tal vez', 2], ['No', 1]]],
+    ['a' => 'Financial', 't' => '¿Estás posicionado para el éxito?', 'o' => [['Sí', 4], ['Tal vez', 2], ['No', 1]]],
+    ['a' => 'Life & Skills', 't' => '¿Percibes los juegos o intenciones de otras personas?', 'o' => [['Sí', 4], ['Tal vez', 2], ['No', 1]]],
+    ['a' => 'Financial', 't' => '¿Conduces un automóvil de lujo?', 'o' => [['Sí', 4], ['Tal vez', 2], ['No', 1]]],
+    ['a' => 'Life & Skills', 't' => '¿Tu futuro es incierto?', 'o' => [['Sí', 1], ['Tal vez', 2], ['No', 4]]],
+    ['a' => 'Body', 't' => '¿Te gusta tener mucha acción y actividad?', 'o' => [['Sí', 4], ['Tal vez', 2], ['No', 1]]],
+    ['a' => 'Financial', 't' => '¿Te endeudas al final del año?', 'o' => [['Sí', 1], ['Tal vez', 2], ['No', 4]]],
+    ['a' => 'Life & Skills', 't' => '¿Tiendes a percibir erróneamente a las personas?', 'o' => [['Sí', 1], ['Tal vez', 2], ['No', 4]]],
+    ['a' => 'Financial', 't' => '¿Viajas en clase económica en lugar de primera clase?', 'o' => [['Sí', 1], ['Tal vez', 2], ['No', 4]]],
+    ['a' => 'Financial', 't' => '¿Estás inseguro sobre tus deseos materiales?', 'o' => [['Sí', 1], ['Tal vez', 2], ['No', 4]]],
+    ['a' => 'Life & Skills', 't' => '¿Desearías estar viviendo el sueño que anhelas?', 'o' => [['Sí', 1], ['Tal vez', 2], ['No', 4]]],
+    ['a' => 'Financial', 't' => '¿Tu carrera se ha convertido en menos de lo que deseabas?', 'o' => [['Sí', 1], ['Tal vez', 2], ['No', 4]]],
+    ['a' => 'Life & Skills', 't' => '¿Desearías haber actuado más rápido en el pasado?', 'o' => [['Sí', 1], ['Tal vez', 2], ['No', 4]]],
+    ['a' => 'Financial', 't' => '¿Tu carrera te brindará riqueza en el futuro?', 'o' => [['Sí', 4], ['Tal vez', 2], ['No', 1]]],
+    ['a' => 'Life & Skills', 't' => '¿Siempre te esfuerzas por ser lo mejor que puedes ser?', 'o' => [['Sí', 4], ['Tal vez', 2], ['No', 1]]],
+    ['a' => 'Life & Skills', 't' => '¿Te desagradan las personas?', 'o' => [['Sí', 1], ['Tal vez', 2], ['No', 4]]],
+    ['a' => 'Life & Skills', 't' => '¿Tomas acciones concretas para elevar tu nivel de juego?', 'o' => [['Sí', 4], ['Tal vez', 2], ['No', 1]]],
+    ['a' => 'Life & Skills', 't' => '¿Sientes que sabes más que otros, incluso que aquellos con más éxito que tú?', 'o' => [['Sí', 1], ['Tal vez', 2], ['No', 4]]],
+    ['a' => 'Body', 't' => '¿Prefieres quedarte cerca de casa durante las vacaciones?', 'o' => [['Sí', 1], ['Tal vez', 2], ['No', 4]]],
+    ['a' => 'Body', 't' => '¿Te distraes con facilidad?', 'o' => [['Sí', 1], ['Tal vez', 2], ['No', 4]]],
+  ],
+  'zones' => [
+    1 => ['n' => 'Roja', 'i' => 1, 'col' => 'var(--red)'],
+    2 => ['n' => 'Amarilla', 'i' => 2, 'col' => '#B98F0C'],
+    3 => ['n' => 'Verde', 'i' => 3, 'col' => 'var(--shgreen)'],
+    4 => ['n' => 'Magia Dorada', 'i' => 4, 'col' => '#8A7440'],
+  ],
+  'copy' => [
+    'Roja'         => 'Esta es una persona que está en el lugar equivocado en el momento equivocado, conectada con las personas equivocadas. El esfuerzo produce poco, porque estás reaccionando a lo que sucede en lugar de dirigirlo.',
+    'Amarilla'     => 'Esta es la “rutina diaria” o “estancamiento” donde la persona no toma riesgos sino que trabaja solo por seguridad. Despierto, pero el cambio aún depende de cómo te sientas ese día.',
+    'Verde'        => 'Esta es una persona que está en el lugar correcto en el momento correcto, haciendo que las cosas salgan bien. Esta persona está viviendo su sueño. Los resultados llegan de manera consistente porque la estructura los sostiene, no la fuerza de voluntad.',
+    'Magia Dorada' => 'Estás fuera del universo físico. Operas por encima de las leyes del universo físico y con claridad total. Maestría en tu Zona de manera confiable.',
+  ],
+  'labels' => [
+    'area'          => 'Área: ',
+    'you_are_in'    => 'Estás en la Zona ',
+    'you_are_here'  => ' · tú estás aquí',
+    'start_here'    => ' · comienza aquí',
+    'privacy_error' => 'Por favor acepta la Política de Privacidad para ver tu resultado.',
+    'email_error'   => 'Por favor ingresa un correo electrónico válido.',
+    'area_names'    => [
+      'Financial'     => 'Financiero',
+      'Life & Skills' => 'Vida y Habilidades',
+      'Body'          => 'Cuerpo',
+    ]
+  ]
+];
 ?>
+<script>
+window.zolQuizData = <?= json_encode($spanishQuizData); ?>;
+</script>
 
 <section id="<?= esc_attr($blockID); ?>" data-block="assessment-quiz" class="<?= esc_attr(implode(' ', $blockClasses)); ?>">
   <div class="wrap qwrap">
@@ -81,10 +138,10 @@ $btnText = get_field('start_button_text') ?: __('Start', 'codebymonk');
           
           <div class="mt24" id="rBar"></div>
           <div class="zlabels">
-            <span class="tiny">Red</span>
+            <span class="tiny"><?= esc_html__('Red', 'codebymonk'); ?></span>
             <span class="tiny" id="rHere"></span>
-            <span class="tiny">Green</span>
-            <span class="tiny">Golden</span>
+            <span class="tiny"><?= esc_html__('Green', 'codebymonk'); ?></span>
+            <span class="tiny"><?= esc_html__('Golden', 'codebymonk'); ?></span>
           </div>
 
           <p class="lede mt24" id="rBody"></p>

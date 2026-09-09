@@ -2681,9 +2681,11 @@ header.site .bar {
   gap: 18px;
   padding: 13px 0;
 }
-header.site .logo {
-  height: 26px;
+header.site .logo,
+header.site .custom-logo {
+  height: 28px;
   width: auto;
+  display: block;
 }
 header.site .wordmark {
   font-family: var(--mono);
@@ -2727,6 +2729,37 @@ nav.main a.on, nav.main a.current-menu-item, nav.main a.current_page_item {
   display: flex;
   align-items: center;
   gap: 14px;
+}
+
+.lang-switch {
+  display: inline-flex;
+  align-items: center;
+  gap: 2px;
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  border-radius: 6px;
+  padding: 2px 3px;
+  font-family: var(--mono);
+  font-size: 11px;
+  font-weight: 700;
+}
+
+.lang-switch .lang-btn {
+  color: rgba(255, 255, 255, 0.65);
+  padding: 3px 6px;
+  border-radius: 4px;
+  text-decoration: none;
+  transition: all 0.2s ease;
+  line-height: 1;
+}
+
+.lang-switch .lang-btn:hover {
+  color: #fff;
+}
+
+.lang-switch .lang-btn.active {
+  color: #fff;
+  background: rgba(255, 255, 255, 0.22);
 }
 
 .pendingmark {

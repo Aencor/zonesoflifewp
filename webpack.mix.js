@@ -26,6 +26,7 @@ mix
 	.setPublicPath(BUILD_DIR)
 	.js(`${ASSETS_DIR}/js/main.js`, BUILD_DIR)
 	.sass(`${ASSETS_DIR}/scss/style.scss`, BUILD_DIR)
+	.sass(`${ASSETS_DIR}/scss/style-editor.scss`, BUILD_DIR)
 	.options({
 		processCssUrls: false,
 		postCss: [require('@tailwindcss/postcss'), require('autoprefixer')],

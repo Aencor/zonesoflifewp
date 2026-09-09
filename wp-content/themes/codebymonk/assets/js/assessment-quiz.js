@@ -5,7 +5,9 @@ document.addEventListener('DOMContentLoaded', function () {
   var quizSection = document.getElementById('quiz');
   if (!quizSection) return;
 
-  var Q = [
+  var i18n = (window.zolQuizData && window.zolQuizData.isSpanish) ? window.zolQuizData : null;
+
+  var Q = (i18n && i18n.questions) ? i18n.questions : [
     { a: "Life & Skills", t: "Do you complete activities quickly?", o: [["Yes", 4], ["Maybe", 2], ["No", 1]] },
     { a: "Financial", t: "Are you positioned for success?", o: [["Yes", 4], ["Maybe", 2], ["No", 1]] },
     { a: "Life & Skills", t: "Do you perceive other people's games?", o: [["Yes", 4], ["Maybe", 2], ["No", 1]] },
@@ -28,18 +30,28 @@ document.addEventListener('DOMContentLoaded', function () {
     { a: "Body", t: "Are you easily distracted?", o: [["Yes", 1], ["Maybe", 2], ["No", 4]] }
   ];
 
-  var ZONE = {
+  var ZONE = (i18n && i18n.zones) ? i18n.zones : {
     1: { n: "Red", i: 1, col: "var(--red)" },
     2: { n: "Yellow", i: 2, col: "#B98F0C" },
     3: { n: "Green", i: 3, col: "var(--shgreen)" },
     4: { n: "Golden Magic", i: 4, col: "#8A7440" }
   };
 
-  var COPY = {
+  var COPY = (i18n && i18n.copy) ? i18n.copy : {
     "Red": "This is someone who is in the wrong place at the wrong time, connected to the wrong people. Effort produces little, because you are reacting to what happens instead of directing it.",
     "Yellow": "This is the “daily grind” or “rut” where the person doesn’t take risks but works only for security. Awake, but change still depends on how you feel that day.",
     "Green": "This is someone who is in the right place at the right time, making things go right. This person is living their dream. Results arrive consistently because structure holds them, not willpower.",
     "Golden Magic": "You are outside of the physical universe. You operate above the laws of the physical universe and are totally telepathic. Mastery in your Zone reliably."
+  };
+
+  var LBL = (i18n && i18n.labels) ? i18n.labels : {
+    area: 'Area: ',
+    you_are_in: 'You are in the ',
+    you_are_here: ' · you are here',
+    start_here: ' · start here',
+    privacy_error: 'Please accept the Privacy Policy to view your result.',
+    email_error: 'Please enter a valid email address.',
+    area_names: {}
   };
 
   var answers = [];
@@ -97,7 +109,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
   function drawQ() {
     var item = Q[idx];
-    qArea.textContent = 'Area: ' + item.a;
+    qArea.textContent = LBL.area + (LBL.area_names[item.a] || item.a);
     qCount.textContent = (idx + 1) + ' / ' + Q.length;
     paintBar(qBar, Q.length, idx + 1);
     qText.textContent = item.t;
@@ -163,12 +175,12 @@ document.addEventListener('DOMContentLoaded', function () {
     var rAreas = document.getElementById('rAreas');
 
     if (rZone) {
-      var zoneLabel = z.n.toLowerCase().indexOf('zone') !== -1 ? z.n : (z.n + ' Zone');
-      rZone.textContent = 'You are in the ' + zoneLabel;
+      var zoneLabel = z.n.toLowerCase().indexOf('zone') !== -1 || z.n.toLowerCase().indexOf('zona') !== -1 ? z.n : (z.n + (i18n ? ' Zona' : ' Zone'));
+      rZone.textContent = LBL.you_are_in + zoneLabel;
       rZone.style.color = z.col;
     }
     if (rHere) {
-      rHere.textContent = z.n + ' · you are here';
+      rHere.textContent = z.n + LBL.you_are_here;
     }
     if (rBar) {
       var barHtml = '<div class="zones dim">';
@@ -179,7 +191,7 @@ document.addEventListener('DOMContentLoaded', function () {
       rBar.innerHTML = barHtml;
     }
     if (rBody) {
-      rBody.textContent = COPY[z.n] || COPY["Yellow"];
+      rBody.textContent = COPY[z.n] || COPY["Yellow"] || COPY["Amarilla"];
     }
 
     var worstIdx = scores.indexOf(Math.min.apply(null, scores));
@@ -190,8 +202,8 @@ document.addEventListener('DOMContentLoaded', function () {
         var zz = ZONE[scores[i]] || ZONE[2];
         var isLowest = (i === worstIdx);
         areaHtml += '<div class="row area-score-row" style="padding:12px 0;border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;">';
-        areaHtml += '  <div class="grow" style="font-weight:600;font-size:15px;color:var(--ink);">' + a + '</div>';
-        areaHtml += '  <span class="tiny" style="color:' + zz.col + ';font-weight:600;letter-spacing:0.06em;">' + zz.n + (isLowest ? ' · start here' : '') + '</span>';
+        areaHtml += '  <div class="grow" style="font-weight:600;font-size:15px;color:var(--ink);">' + (LBL.area_names[a] || a) + '</div>';
+        areaHtml += '  <span class="tiny" style="color:' + zz.col + ';font-weight:600;letter-spacing:0.06em;">' + zz.n + (isLowest ? LBL.start_here : '') + '</span>';
         areaHtml += '</div>';
       });
       rAreas.innerHTML = areaHtml;
@@ -227,18 +239,18 @@ document.addEventListener('DOMContentLoaded', function () {
 
       if (gOk && !gOk.checked) {
         if (err) {
-          err.textContent = 'Please accept the Privacy Policy to view your result.';
+          err.textContent = LBL.privacy_error;
           err.style.display = 'block';
         }
         return;
       }
 
       var emailVal = gMail ? gMail.value.trim() : '';
-      var nameVal = gName ? gName.value.trim() : 'Participant';
+      var nameVal = gName ? gName.value.trim() : (i18n ? 'Participante' : 'Participant');
 
       if (!emailVal || emailVal.indexOf('@') < 1 || emailVal.indexOf('.') < 0) {
         if (err) {
-          err.textContent = 'Please enter a valid email address.';
+          err.textContent = LBL.email_error;
           err.style.display = 'block';
         }
         if (gMail) gMail.focus();

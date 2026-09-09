@@ -1,0 +1,258 @@
+@charset "UTF-8";
+/**
+ * Editor Styles — Zones of Life
+ * Scoped to .editor-styles-wrapper for Gutenberg block previews.
+ * This file is compiled separately and loaded via add_editor_style().
+ */
+.editor-styles-wrapper {
+  --red: #E81D2D;
+  --amber: #F5D93E;
+  --green: #00A84F;
+  --gold: #EBAB21;
+  --kn: #001722;
+  --navy: #1F3A5F;
+  --fuego: #C2602A;
+  --navysoft: #E7EDF4;
+  --shgreen: #1A5632;
+  --ink: #16222B;
+  --muted: #5A6875;
+  --line: #E1E7ED;
+  --paper: #fff;
+  --display: "Fraunces", Georgia, serif;
+  --body: "Myriad Pro", system-ui, -apple-system, sans-serif;
+  --mono: "Space Mono", monospace;
+  --brand: var(--shgreen);
+  --brand-ink: #fff;
+  --accent: var(--fuego);
+  --ground: var(--shgreen);
+  --tint: #F2FAF5;
+  --maxw: 1160px;
+  --r: 10px;
+  font-family: var(--body);
+  color: var(--ink);
+  background: var(--paper);
+  -webkit-font-smoothing: antialiased;
+  line-height: 1.6;
+}
+.editor-styles-wrapper *,
+.editor-styles-wrapper *::before,
+.editor-styles-wrapper *::after {
+  box-sizing: border-box;
+}
+.editor-styles-wrapper img {
+  max-width: 100%;
+  display: block;
+}
+.editor-styles-wrapper a {
+  color: inherit;
+  text-decoration: none;
+  cursor: pointer;
+}
+.editor-styles-wrapper button {
+  font: inherit;
+  cursor: pointer;
+  border: none;
+  background: none;
+}
+.editor-styles-wrapper [hidden] {
+  display: none !important;
+}
+.editor-styles-wrapper h1, .editor-styles-wrapper h2, .editor-styles-wrapper h3, .editor-styles-wrapper h4 {
+  font-family: var(--display);
+  font-weight: 600;
+  line-height: 1.12;
+  letter-spacing: -0.015em;
+}
+.editor-styles-wrapper h1 {
+  font-size: clamp(32px, 4.6vw, 52px);
+}
+.editor-styles-wrapper h2 {
+  font-size: clamp(25px, 3vw, 35px);
+}
+.editor-styles-wrapper h3 {
+  font-size: 19px;
+}
+.editor-styles-wrapper h4 {
+  font-size: 16px;
+}
+.editor-styles-wrapper .kicker {
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+.editor-styles-wrapper .lede {
+  font-size: 17px;
+  line-height: 1.65;
+  color: #3D4A57;
+}
+.editor-styles-wrapper .sm {
+  font-size: 14px;
+  line-height: 1.62;
+  color: #4A5764;
+}
+.editor-styles-wrapper .xs {
+  font-size: 13px;
+  line-height: 1.6;
+  color: #5A6875;
+}
+.editor-styles-wrapper .tiny {
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.11em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+.editor-styles-wrapper .wrap {
+  max-width: var(--maxw);
+  margin: 0 auto;
+  padding: 0 24px;
+}
+.editor-styles-wrapper .split {
+  display: grid;
+  gap: 40px;
+  grid-template-columns: 1fr 1fr;
+}
+.editor-styles-wrapper .split.top {
+  align-items: start;
+}
+.editor-styles-wrapper .hgroup {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+.editor-styles-wrapper .stack {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.editor-styles-wrapper .mt8 {
+  margin-top: 8px;
+}
+.editor-styles-wrapper .mt16 {
+  margin-top: 16px;
+}
+.editor-styles-wrapper .mt20 {
+  margin-top: 20px;
+}
+.editor-styles-wrapper .mt24 {
+  margin-top: 24px;
+}
+.editor-styles-wrapper .mt32 {
+  margin-top: 32px;
+}
+.editor-styles-wrapper .mb8 {
+  margin-bottom: 8px;
+}
+.editor-styles-wrapper .mb16 {
+  margin-bottom: 16px;
+}
+.editor-styles-wrapper .mb32 {
+  margin-bottom: 32px;
+}
+.editor-styles-wrapper .center {
+  text-align: center;
+}
+.editor-styles-wrapper .btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 12px 22px;
+  border-radius: 8px;
+  font-size: 14.5px;
+  font-weight: 600;
+  white-space: nowrap;
+  border: none;
+  cursor: pointer;
+  text-decoration: none;
+}
+.editor-styles-wrapper .btn-go {
+  background: var(--green);
+  color: #fff;
+}
+.editor-styles-wrapper .btn-ghost {
+  border: 1px solid var(--line);
+  color: var(--ink);
+  background: #fff;
+}
+.editor-styles-wrapper .btn-sm {
+  padding: 9px 16px;
+  font-size: 13px;
+}
+.editor-styles-wrapper .btn-block {
+  display: flex;
+  width: 100%;
+}
+.editor-styles-wrapper .card {
+  background: #fff;
+  border: 1px solid var(--line);
+  border-radius: var(--r);
+  padding: 20px;
+}
+.editor-styles-wrapper .card.tint {
+  background: var(--tint);
+}
+.editor-styles-wrapper .card.pad-lg {
+  padding: 28px 32px;
+}
+.editor-styles-wrapper .input {
+  width: 100%;
+  padding: 10px 14px;
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  font-size: 15px;
+  font-family: var(--body);
+  background: #fff;
+  color: var(--ink);
+}
+.editor-styles-wrapper .field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.editor-styles-wrapper .field label {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--ink);
+}
+.editor-styles-wrapper .block {
+  padding: 64px 0;
+}
+.editor-styles-wrapper .block.pad-none {
+  padding: 0;
+}
+.editor-styles-wrapper .block.pad-sm {
+  padding: 32px 0;
+}
+.editor-styles-wrapper .block.pad-lg {
+  padding: 96px 0;
+}
+.editor-styles-wrapper .block.bg-tint {
+  background: var(--tint);
+}
+.editor-styles-wrapper .block.bg-dark {
+  background: var(--kn);
+  color: #fff;
+}
+.editor-styles-wrapper .block.bg-ink {
+  background: var(--ink);
+  color: #fff;
+}
+.editor-styles-wrapper .rule {
+  border: none;
+  border-top: 1px solid var(--line);
+  margin: 0;
+}
+.editor-styles-wrapper .text-muted {
+  color: var(--muted);
+}
+.editor-styles-wrapper .pending {
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--muted);
+}

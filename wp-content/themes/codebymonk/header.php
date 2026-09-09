@@ -20,14 +20,11 @@
   <header class="site">
     <div class="wrap bar">
       <a href="<?php echo esc_url(home_url('/')); ?>" class="hgroup">
-        <span class="hgroup">
-          <?php if (has_custom_logo()): ?>
-            <?php the_custom_logo(); ?>
-          <?php else: ?>
-            <span class="wordmark"><?php bloginfo('name'); ?></span>
-            <span class="pendingmark">logo TBD</span>
-          <?php endif; ?>
-        </span>
+        <?php if (has_custom_logo()): ?>
+          <?php the_custom_logo(); ?>
+        <?php else: ?>
+          <img src="<?php echo esc_url(get_template_directory_uri()); ?>/assets/img/logos/logo-white.png" alt="<?php echo esc_attr(get_bloginfo('name')); ?>" class="logo">
+        <?php endif; ?>
       </a>
 
       <nav class="main">
@@ -42,16 +39,33 @@
           ]);
         } else {
         ?>
-          <a href="<?php echo esc_url(home_url('/#zones')); ?>">The Zones</a>
-          <a href="<?php echo esc_url(home_url('/#assessment')); ?>">The Assessment</a>
-          <a href="<?php echo esc_url(home_url('/#cohorts')); ?>">Cohorts</a>
-          <a href="<?php echo esc_url(home_url('/#stories')); ?>">Stories</a>
-          <a href="<?php echo esc_url(home_url('/#articles')); ?>">Articles</a>
+          <a href="<?php echo esc_url(home_url('/#zones')); ?>"><?php esc_html_e('The Zones', 'codebymonk'); ?></a>
+          <a href="<?php echo esc_url(home_url('/#assessment')); ?>"><?php esc_html_e('The Assessment', 'codebymonk'); ?></a>
+          <a href="<?php echo esc_url(home_url('/#cohorts')); ?>"><?php esc_html_e('Cohorts', 'codebymonk'); ?></a>
+          <a href="<?php echo esc_url(home_url('/#stories')); ?>"><?php esc_html_e('Stories', 'codebymonk'); ?></a>
+          <a href="<?php echo esc_url(home_url('/#articles')); ?>"><?php esc_html_e('Articles', 'codebymonk'); ?></a>
         <?php } ?>
       </nav>
 
       <div class="hgroup">
-        <a class="btn btn-go btn-sm" href="<?php echo esc_url(home_url('/short-quiz/')); ?>">Find your Zone</a>
+        <?php
+        $languages = function_exists('apply_filters') ? apply_filters('wpml_active_languages', NULL, 'skip_missing=0') : [];
+        if (!empty($languages) && count($languages) > 1):
+        ?>
+          <div class="lang-switch">
+            <?php foreach ($languages as $l): ?>
+              <a href="<?php echo esc_url($l['url']); ?>" class="lang-btn <?php echo !empty($l['active']) ? 'active' : ''; ?>" title="<?php echo esc_attr($l['native_name']); ?>">
+                <?php echo esc_html(strtoupper($l['language_code'])); ?>
+              </a>
+            <?php endforeach; ?>
+          </div>
+        <?php endif; ?>
+
+        <?php
+        $currentLang = function_exists('apply_filters') ? apply_filters('wpml_current_language', null) : (defined('ICL_LANGUAGE_CODE') ? ICL_LANGUAGE_CODE : 'en');
+        $quiz_url = ($currentLang === 'es') ? home_url('/es/perfil-corto/') : home_url('/short-quiz/');
+        ?>
+        <a class="btn btn-go btn-sm" href="<?php echo esc_url($quiz_url); ?>"><?php esc_html_e('Find your Zone', 'codebymonk'); ?></a>
         <button class="burger" aria-label="<?php esc_attr_e('Menu', 'codebymonk'); ?>"><i></i><i></i><i></i></button>
       </div>
     </div>

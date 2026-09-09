@@ -1,0 +1,2 @@
+<?php
+return ['items'=>['Block - WYSIWYG'=>['saveStringInDb'=>true,'cmp'=>['wpml-string-translation',1],'names'=>['group-group_block_wysiwyg-title-3d5a2a37505d7cd4d4a122d87695d16d'],'urls'=>[]],'General WYSIWYG and rich-text content block'=>['saveStringInDb'=>true,'cmp'=>['wpml-string-translation',1],'names'=>['group-group_block_wysiwyg-description-5a0b7b7959b7c588872f0341f008bb77'],'urls'=>[]]]];

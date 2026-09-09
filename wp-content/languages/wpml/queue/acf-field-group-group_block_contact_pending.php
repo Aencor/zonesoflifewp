@@ -1,0 +1,2 @@
+<?php
+return ['items'=>['Block - Contact'=>['saveStringInDb'=>true,'cmp'=>['wpml-string-translation',1],'names'=>['group-group_block_contact-title-f544a7eb2ac105203f7b5b8cabac62e7'],'urls'=>[]],'Contact form powered by Contact Form 7 with side info card'=>['saveStringInDb'=>true,'cmp'=>['wpml-string-translation',1],'names'=>['group-group_block_contact-description-208fef19a981d47aa54c40cbcc5e489a'],'urls'=>[]]]];

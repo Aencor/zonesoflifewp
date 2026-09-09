@@ -3,6 +3,9 @@
  * Initial setup and constants
  */
 function monk_theme_setup() {
+	// Load translations
+	load_theme_textdomain('codebymonk', get_template_directory() . '/languages');
+
 	// Enable plugins to manage the document title
 	add_theme_support("title-tag");
 
@@ -21,6 +24,10 @@ function monk_theme_setup() {
 
 	// Add HTML5 markup for captions
 	add_theme_support("html5", ["caption", "comment-form", "comment-list"]);
+
+	// Load theme styles into the block editor so ACF blocks look correct in the backend
+	add_theme_support("editor-styles");
+	add_editor_style("assets/build/style-editor.css");
 }
 add_action("after_setup_theme", "monk_theme_setup");
 

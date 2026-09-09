@@ -40,9 +40,19 @@ function register_acf_block_types() {
 		];
 
 		// Si existe un JS con el mismo nombre, lo agrega automáticamente
+		// Depends on 'theme-defer' so window.zolData (nonce + ajaxUrl) is available.
 		$js_path = get_template_directory() . "/assets/js/{$name}.js";
 		if (file_exists($js_path)) {
-			$block['enqueue_script'] = get_template_directory_uri() . "/assets/js/{$name}.js";
+			$handle = 'block-' . $name;
+			add_action('wp_enqueue_scripts', function() use ($name, $handle) {
+				wp_enqueue_script(
+					$handle,
+					get_template_directory_uri() . "/assets/js/{$name}.js",
+					['theme-defer'],
+					'1.0.0',
+					true
+				);
+			});
 		}
 
 		// Registrar bloque

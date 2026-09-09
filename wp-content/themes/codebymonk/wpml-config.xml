@@ -86,6 +86,7 @@
             <key name="step_3_title">step_3_title</key>
             <key name="step_3_strong">step_3_strong</key>
             <key name="step_3_desc">step_3_desc</key>
+        </gutenberg-block>
         <gutenberg-block name="acf/assessment-tiers" translate="1">
             <xpath>//*</xpath>
             <key name="card_1_title">card_1_title</key>

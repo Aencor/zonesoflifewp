@@ -37,13 +37,6 @@ function nylon_include($includes) {
 }
 nylon_include($monk_includes);
 
-/*
- * Editor styles
- * Uncomment to bring custom styles or fonts into the admin editor.
- * add_theme_support('editor-styles');
- * add_editor_style('/assets/build/style-editor.css');
- *
- */
 
 add_theme_support("disable-custom-colors");
 
