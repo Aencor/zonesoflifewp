@@ -10,6 +10,18 @@ function register_acf_block_types() {
 		'cta-label',
 		'logo-grid',
 		'styleguide',
+		'newsletter',
+		'short-stories',
+		'home-hero',
+		'general-hero',
+		'four-zones',
+		'find-your-zone',
+		'cohorts',
+		'articles',
+		'assessment-tiers',
+		'assessment-quiz',
+		'wysiwyg',
+		'contact',
 	];
 
 	foreach ($block_names as $name) {

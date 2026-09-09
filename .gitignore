@@ -11,3 +11,4 @@ wp-content/themes/twentytwentytwo/
 wp-content/themes/twentytwentyfive/
 node_modules
 *.map
+.env

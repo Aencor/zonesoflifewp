@@ -1,0 +1,96 @@
+{
+    "key": "group_cpt_story",
+    "title": "Story Details",
+    "fields": [
+        {
+            "key": "field_story_content",
+            "label": "Story Content / Testimonial",
+            "name": "story",
+            "type": "textarea",
+            "instructions": "Enter the quote or testimonial text",
+            "required": 1,
+            "rows": 4
+        },
+        {
+            "key": "field_story_author",
+            "label": "Author Name",
+            "name": "author",
+            "type": "text",
+            "instructions": "Name of the person sharing the story (e.g. Rita Khagram)",
+            "required": 1
+        },
+        {
+            "key": "field_story_photo",
+            "label": "Author Photo",
+            "name": "photo",
+            "type": "image",
+            "instructions": "Upload author photo or headshot (optional, falls back to default avatar)",
+            "required": 0,
+            "return_format": "array",
+            "preview_size": "thumbnail",
+            "library": "all"
+        },
+        {
+            "key": "field_story_position",
+            "label": "Position / Role",
+            "name": "position",
+            "type": "text",
+            "instructions": "Role or professional title (e.g. Business owner and investor)",
+            "required": 0
+        },
+        {
+            "key": "field_story_location",
+            "label": "Location",
+            "name": "location",
+            "type": "text",
+            "instructions": "Location or countries (e.g. England, Kenya & India)",
+            "required": 0
+        },
+        {
+            "key": "field_story_before_level",
+            "label": "Before Zone Level",
+            "name": "before_level",
+            "type": "select",
+            "instructions": "Number of active segments before training (1=Red, 2=Amber, 3=Green, 4=Gold)",
+            "choices": {
+                "1": "Level 1 (Red)",
+                "2": "Level 2 (Amber)",
+                "3": "Level 3 (Green)",
+                "4": "Level 4 (Golden Magic)"
+            },
+            "default_value": "1",
+            "required": 0
+        },
+        {
+            "key": "field_story_after_level",
+            "label": "After Zone Level",
+            "name": "after_level",
+            "type": "select",
+            "instructions": "Number of active segments after training (1=Red, 2=Amber, 3=Green, 4=Gold)",
+            "choices": {
+                "1": "Level 1 (Red)",
+                "2": "Level 2 (Amber)",
+                "3": "Level 3 (Green)",
+                "4": "Level 4 (Golden Magic)"
+            },
+            "default_value": "3",
+            "required": 0
+        }
+    ],
+    "location": [
+        [
+            {
+                "param": "post_type",
+                "operator": "==",
+                "value": "story"
+            }
+        ]
+    ],
+    "menu_order": 0,
+    "position": "normal",
+    "style": "default",
+    "label_placement": "top",
+    "instruction_placement": "label",
+    "active": true,
+    "description": "Custom fields for Story CPT"
+}

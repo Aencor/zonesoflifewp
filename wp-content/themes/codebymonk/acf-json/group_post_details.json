@@ -1,0 +1,30 @@
+{
+    "key": "group_post_details",
+    "title": "Article Details",
+    "fields": [
+        {
+            "key": "field_post_author_label",
+            "label": "Author / Subtitle Label",
+            "name": "author_label",
+            "type": "text",
+            "instructions": "Author name or category shown above title (e.g. Jeff Crippen, Ceil Stanford, Coaching & Training)",
+            "placeholder": "Jeff Crippen"
+        }
+    ],
+    "location": [
+        [
+            {
+                "param": "post_type",
+                "operator": "==",
+                "value": "post"
+            }
+        ]
+    ],
+    "menu_order": 0,
+    "position": "normal",
+    "style": "default",
+    "label_placement": "top",
+    "instruction_placement": "label",
+    "active": true,
+    "description": "Custom fields for standard blog posts"
+}

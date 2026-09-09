@@ -1,0 +1,69 @@
+{
+    "key": "group_block_assessment_quiz",
+    "title": "Block - Assessment Quiz",
+    "fields": [
+        {
+            "key": "field_acc_assessment_quiz",
+            "label": "Block - Assessment Quiz",
+            "name": "",
+            "aria-label": "",
+            "type": "accordion",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "open": 0,
+            "multi_expand": 0,
+            "endpoint": 0
+        },
+        {
+            "key": "field_aq_intro_kicker",
+            "label": "Intro Kicker",
+            "name": "intro_kicker",
+            "type": "text",
+            "default_value": "Free · two minutes"
+        },
+        {
+            "key": "field_aq_intro_title",
+            "label": "Intro Title",
+            "name": "intro_title",
+            "type": "text",
+            "default_value": "Fourteen questions"
+        },
+        {
+            "key": "field_aq_intro_desc",
+            "label": "Intro Description",
+            "name": "intro_desc",
+            "type": "textarea",
+            "rows": 2,
+            "default_value": "No right answers. Nobody else sees this. We ask for your email at the end, not now."
+        },
+        {
+            "key": "field_aq_btn_text",
+            "label": "Start Button Text",
+            "name": "start_button_text",
+            "type": "text",
+            "default_value": "Start"
+        }
+    ],
+    "location": [
+        [
+            {
+                "param": "block",
+                "operator": "==",
+                "value": "acf/assessment-quiz"
+            }
+        ]
+    ],
+    "menu_order": 0,
+    "position": "normal",
+    "style": "default",
+    "label_placement": "top",
+    "instruction_placement": "label",
+    "active": true,
+    "description": "Interactive 14-question Personal Zones Profile Assessment Quiz"
+}

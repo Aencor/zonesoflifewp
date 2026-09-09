@@ -1,0 +1,133 @@
+{
+    "key": "group_block_contact",
+    "title": "Block - Contact",
+    "fields": [
+        {
+            "key": "field_acc_contact",
+            "label": "Block - Contact",
+            "name": "",
+            "type": "accordion",
+            "open": 1,
+            "multi_expand": 1,
+            "endpoint": 0
+        },
+        {
+            "key": "field_contact_cf7_id",
+            "label": "Contact Form 7",
+            "name": "cf7_form_id",
+            "type": "post_object",
+            "instructions": "Select the Contact Form 7 to display.",
+            "post_type": [
+                "wpcf7_contact_form"
+            ],
+            "return_format": "id",
+            "allow_null": 1,
+            "multiple": 0
+        },
+        {
+            "key": "field_contact_cf7_shortcode",
+            "label": "Or CF7 Shortcode",
+            "name": "cf7_shortcode",
+            "type": "text",
+            "instructions": "Optional direct shortcode, e.g. [contact-form-7 id=\"54\" title=\"Contact form 1\"]",
+            "default_value": "[contact-form-7 id=\"54\" title=\"Contact form 1\"]"
+        },
+        {
+            "key": "field_contact_show_card",
+            "label": "Show Info Card",
+            "name": "show_info_card",
+            "type": "true_false",
+            "default_value": 1,
+            "ui": 1
+        },
+        {
+            "key": "field_contact_card_title",
+            "label": "Company Name",
+            "name": "company_name",
+            "type": "text",
+            "default_value": "Advanced Coaching & Leadership Center, Inc.",
+            "conditional_logic": [
+                [
+                    {
+                        "field": "field_contact_show_card",
+                        "operator": "==",
+                        "value": "1"
+                    }
+                ]
+            ]
+        },
+        {
+            "key": "field_contact_card_address",
+            "label": "Address",
+            "name": "address",
+            "type": "textarea",
+            "rows": 3,
+            "default_value": "1400 Camp Letoli Road\nSaint Jo, Texas 76265\nUnited States",
+            "conditional_logic": [
+                [
+                    {
+                        "field": "field_contact_show_card",
+                        "operator": "==",
+                        "value": "1"
+                    }
+                ]
+            ]
+        },
+        {
+            "key": "field_contact_card_phone",
+            "label": "Phone Number",
+            "name": "phone",
+            "type": "text",
+            "default_value": "+1 940-995-2054",
+            "conditional_logic": [
+                [
+                    {
+                        "field": "field_contact_show_card",
+                        "operator": "==",
+                        "value": "1"
+                    }
+                ]
+            ]
+        },
+        {
+            "key": "field_contact_card_dev_note",
+            "label": "Dev Note (Optional)",
+            "name": "dev_note",
+            "type": "textarea",
+            "rows": 3,
+            "default_value": "Dev note · Conflicting data: aclc.us publishes +1 940-995-3187 for this same address. Confirm which is correct before launch.",
+            "conditional_logic": [
+                [
+                    {
+                        "field": "field_contact_show_card",
+                        "operator": "==",
+                        "value": "1"
+                    }
+                ]
+            ]
+        },
+        {
+            "key": "field_contact_block_id",
+            "label": "Custom Anchor ID",
+            "name": "block_id",
+            "type": "text"
+        }
+    ],
+    "location": [
+        [
+            {
+                "param": "block",
+                "operator": "==",
+                "value": "acf/contact"
+            }
+        ]
+    ],
+    "menu_order": 0,
+    "position": "normal",
+    "style": "default",
+    "label_placement": "top",
+    "instruction_placement": "label",
+    "hide_on_screen": "",
+    "active": true,
+    "description": "Contact form powered by Contact Form 7 with side info card"
+}

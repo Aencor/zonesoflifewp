@@ -1,0 +1,90 @@
+{
+    "key": "group_block_wysiwyg",
+    "title": "Block - WYSIWYG",
+    "fields": [
+        {
+            "key": "field_acc_wysiwyg",
+            "label": "Block - WYSIWYG Content",
+            "name": "",
+            "type": "accordion",
+            "open": 1,
+            "multi_expand": 1,
+            "endpoint": 0
+        },
+        {
+            "key": "field_wysiwyg_content",
+            "label": "Content",
+            "name": "content",
+            "type": "wysiwyg",
+            "instructions": "Rich text and HTML content for the page.",
+            "tabs": "all",
+            "toolbar": "full",
+            "media_upload": 1,
+            "delay": 0
+        },
+        {
+            "key": "field_wysiwyg_max_width",
+            "label": "Max Width",
+            "name": "max_width",
+            "type": "text",
+            "instructions": "Container max width (e.g. 760px, 68ch, 100%). Default is 760px.",
+            "default_value": "760px"
+        },
+        {
+            "key": "field_wysiwyg_bg_style",
+            "label": "Background Style",
+            "name": "background_style",
+            "type": "select",
+            "choices": {
+                "default": "White (Default)",
+                "tint": "Tinted Gray (#F5F7F8)",
+                "dark": "Dark Navy"
+            },
+            "default_value": "default"
+        },
+        {
+            "key": "field_wysiwyg_padding",
+            "label": "Vertical Spacing",
+            "name": "padding",
+            "type": "select",
+            "choices": {
+                "normal": "Normal (64px)",
+                "compact": "Compact (32px)",
+                "spacious": "Spacious (96px)"
+            },
+            "default_value": "normal"
+        },
+        {
+            "key": "field_wysiwyg_custom_class",
+            "label": "Container Custom Class",
+            "name": "custom_class",
+            "type": "text",
+            "instructions": "Optional classes to append to content wrapper (e.g. legalpage, rich-text).",
+            "default_value": "legalpage"
+        },
+        {
+            "key": "field_wysiwyg_block_id",
+            "label": "Custom Anchor ID",
+            "name": "block_id",
+            "type": "text",
+            "instructions": "Optional HTML id for linking or anchors."
+        }
+    ],
+    "location": [
+        [
+            {
+                "param": "block",
+                "operator": "==",
+                "value": "acf/wysiwyg"
+            }
+        ]
+    ],
+    "menu_order": 0,
+    "position": "normal",
+    "style": "default",
+    "label_placement": "top",
+    "instruction_placement": "label",
+    "hide_on_screen": "",
+    "active": true,
+    "description": "General WYSIWYG and rich-text content block"
+}

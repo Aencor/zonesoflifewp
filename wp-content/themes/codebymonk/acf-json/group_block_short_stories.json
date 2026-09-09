@@ -1,0 +1,172 @@
+{
+    "key": "group_block_short_stories",
+    "title": "Block - Short Stories",
+    "fields": [
+        {
+            "key": "field_acc_short_stories",
+            "label": "Block - Short Stories",
+            "name": "",
+            "aria-label": "",
+            "type": "accordion",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "open": 0,
+            "multi_expand": 0,
+            "endpoint": 0
+        },
+        {
+            "key": "field_ss_layout",
+            "label": "Cards Layout",
+            "name": "layout",
+            "type": "button_group",
+            "instructions": "Simple (3 cols compact for homepage) or Detailed (2 cols with before/after chart & photo for stories page)",
+            "choices": {
+                "simple": "Simple (3 Cols)",
+                "detailed": "Detailed (2 Cols with Charts)"
+            },
+            "default_value": "simple"
+        },
+        {
+            "key": "field_ss_show_header",
+            "label": "Show Header (Title & Button)",
+            "name": "show_header",
+            "type": "true_false",
+            "instructions": "Turn off if a hero banner is already above this block",
+            "default_value": 1,
+            "ui": 1
+        },
+        {
+            "key": "field_ss_title",
+            "label": "Heading Title",
+            "name": "title",
+            "type": "text",
+            "instructions": "Section title (e.g. People who changed Zone)",
+            "required": 0,
+            "default_value": "People who changed Zone",
+            "placeholder": "People who changed Zone",
+            "conditional_logic": [
+                [
+                    {
+                        "field": "field_ss_show_header",
+                        "operator": "==",
+                        "value": "1"
+                    }
+                ]
+            ]
+        },
+        {
+            "key": "field_ss_button_text",
+            "label": "Button Text",
+            "name": "button_text",
+            "type": "text",
+            "instructions": "Call to action button text (e.g. All stories)",
+            "required": 0,
+            "default_value": "All stories",
+            "placeholder": "All stories",
+            "conditional_logic": [
+                [
+                    {
+                        "field": "field_ss_show_header",
+                        "operator": "==",
+                        "value": "1"
+                    }
+                ]
+            ]
+        },
+        {
+            "key": "field_ss_button_link",
+            "label": "Button Link",
+            "name": "button_link",
+            "type": "text",
+            "instructions": "URL or hash for the button (e.g. /stories/)",
+            "required": 0,
+            "default_value": "/stories/",
+            "placeholder": "/stories/",
+            "conditional_logic": [
+                [
+                    {
+                        "field": "field_ss_show_header",
+                        "operator": "==",
+                        "value": "1"
+                    }
+                ]
+            ]
+        },
+        {
+            "key": "field_ss_source",
+            "label": "Stories Source",
+            "name": "stories_source",
+            "type": "button_group",
+            "instructions": "Choose whether to automatically query stories or select specific stories",
+            "required": 0,
+            "choices": {
+                "latest": "Auto Query",
+                "custom": "Select Specific Stories"
+            },
+            "default_value": "latest",
+            "return_format": "value"
+        },
+        {
+            "key": "field_ss_posts_per_page",
+            "label": "Number of Stories to Show",
+            "name": "posts_per_page",
+            "type": "number",
+            "default_value": 4,
+            "min": 1,
+            "max": 20,
+            "conditional_logic": [
+                [
+                    {
+                        "field": "field_ss_source",
+                        "operator": "==",
+                        "value": "latest"
+                    }
+                ]
+            ]
+        },
+        {
+            "key": "field_ss_selected",
+            "label": "Select Stories",
+            "name": "selected_stories",
+            "type": "post_object",
+            "instructions": "Choose which stories to display and in what order",
+            "required": 0,
+            "post_type": [
+                "story"
+            ],
+            "multiple": 1,
+            "return_format": "object",
+            "conditional_logic": [
+                [
+                    {
+                        "field": "field_ss_source",
+                        "operator": "==",
+                        "value": "custom"
+                    }
+                ]
+            ]
+        }
+    ],
+    "location": [
+        [
+            {
+                "param": "block",
+                "operator": "==",
+                "value": "acf/short-stories"
+            }
+        ]
+    ],
+    "menu_order": 0,
+    "position": "normal",
+    "style": "default",
+    "label_placement": "top",
+    "instruction_placement": "label",
+    "active": true,
+    "description": "Short Stories testimonial cards block"
+}

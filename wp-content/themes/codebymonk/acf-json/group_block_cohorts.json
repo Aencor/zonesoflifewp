@@ -1,0 +1,149 @@
+{
+    "key": "group_block_cohorts",
+    "title": "Block - Cohorts",
+    "fields": [
+        {
+            "key": "field_acc_cohorts",
+            "label": "Block - Cohorts",
+            "name": "",
+            "aria-label": "",
+            "type": "accordion",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "open": 0,
+            "multi_expand": 0,
+            "endpoint": 0
+        },
+        {
+            "key": "field_cb_source",
+            "label": "Cohorts Source",
+            "name": "cohorts_source",
+            "type": "button_group",
+            "choices": {
+                "latest": "Auto Query (All Cohorts)",
+                "custom": "Select Specific Cohorts"
+            },
+            "default_value": "latest"
+        },
+        {
+            "key": "field_cb_selected",
+            "label": "Select Cohorts",
+            "name": "selected_cohorts",
+            "type": "post_object",
+            "post_type": [
+                "cohort"
+            ],
+            "multiple": 1,
+            "return_format": "object",
+            "conditional_logic": [
+                [
+                    {
+                        "field": "field_cb_source",
+                        "operator": "==",
+                        "value": "custom"
+                    }
+                ]
+            ]
+        },
+        {
+            "key": "field_cb_tab_steps",
+            "label": "Steps Cards",
+            "name": "",
+            "type": "tab",
+            "placement": "top"
+        },
+        {
+            "key": "field_cb_show_steps",
+            "label": "Show 3 Steps Underneath",
+            "name": "show_steps",
+            "type": "true_false",
+            "default_value": 1,
+            "ui": 1
+        },
+        {
+            "key": "field_cb_s1_title",
+            "label": "Step 1 Label",
+            "name": "step_1_title",
+            "type": "text",
+            "default_value": "Step one"
+        },
+        {
+            "key": "field_cb_s1_strong",
+            "label": "Step 1 Headline",
+            "name": "step_1_strong",
+            "type": "text",
+            "default_value": "Take the profile."
+        },
+        {
+            "key": "field_cb_s1_desc",
+            "label": "Step 1 Description",
+            "name": "step_1_desc",
+            "type": "text",
+            "default_value": "The cohort starts already knowing which Zone you are in."
+        },
+        {
+            "key": "field_cb_s2_title",
+            "label": "Step 2 Label",
+            "name": "step_2_title",
+            "type": "text",
+            "default_value": "Step two"
+        },
+        {
+            "key": "field_cb_s2_strong",
+            "label": "Step 2 Headline",
+            "name": "step_2_strong",
+            "type": "text",
+            "default_value": "Check fit in three steps."
+        },
+        {
+            "key": "field_cb_s2_desc",
+            "label": "Step 2 Description",
+            "name": "step_2_desc",
+            "type": "text",
+            "default_value": "Two minutes, to see whether this cohort is the right one."
+        },
+        {
+            "key": "field_cb_s3_title",
+            "label": "Step 3 Label",
+            "name": "step_3_title",
+            "type": "text",
+            "default_value": "Step three"
+        },
+        {
+            "key": "field_cb_s3_strong",
+            "label": "Step 3 Headline",
+            "name": "step_3_strong",
+            "type": "text",
+            "default_value": "A short call."
+        },
+        {
+            "key": "field_cb_s3_desc",
+            "label": "Step 3 Description",
+            "name": "step_3_desc",
+            "type": "text",
+            "default_value": "Fit is confirmed and your place is held."
+        }
+    ],
+    "location": [
+        [
+            {
+                "param": "block",
+                "operator": "==",
+                "value": "acf/cohorts"
+            }
+        ]
+    ],
+    "menu_order": 0,
+    "position": "normal",
+    "style": "default",
+    "label_placement": "top",
+    "instruction_placement": "label",
+    "active": true,
+    "description": "Cohorts schedule list with in-page qualification quiz and step cards"
+}

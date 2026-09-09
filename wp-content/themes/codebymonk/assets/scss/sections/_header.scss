@@ -1,0 +1,131 @@
+/*
+ * Header: Zones of Life
+ */
+
+header.site {
+  position: sticky;
+  top: 0;
+  z-index: 60;
+  background: var(--ground);
+  color: #fff;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+
+  .bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 18px;
+    padding: 13px 0;
+  }
+
+  .logo {
+    height: 26px;
+    width: auto;
+  }
+
+  .wordmark {
+    font-family: var(--mono);
+    font-size: 13px;
+    letter-spacing: 0.17em;
+    text-transform: uppercase;
+    font-weight: 700;
+    color: #fff;
+  }
+}
+
+nav.main {
+  display: flex;
+  gap: 22px;
+  font-size: 14px;
+  font-weight: 500;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+
+  li {
+    list-style: none;
+  }
+
+  a {
+    opacity: 0.8;
+    padding: 4px 0;
+    border-bottom: 2px solid transparent;
+    color: #fff;
+    text-decoration: none;
+    transition: opacity 0.2s;
+    display: inline-block;
+
+    &:hover {
+      opacity: 1;
+    }
+
+    &.on,
+    &.current-menu-item,
+    &.current_page_item {
+      opacity: 1;
+      border-bottom-color: var(--accent);
+    }
+  }
+}
+
+.hgroup {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.pendingmark {
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.04em;
+  border: 1px dashed var(--fuego);
+  color: var(--fuego);
+  border-radius: 4px;
+  padding: 2px 7px;
+}
+
+.burger {
+  display: none;
+  flex-direction: column;
+  gap: 4px;
+  padding: 8px;
+  cursor: pointer;
+  background: none;
+  border: none;
+
+  i {
+    width: 20px;
+    height: 2px;
+    background: #fff;
+    display: block;
+    border-radius: 2px;
+  }
+}
+
+@media (max-width: 900px) {
+  nav.main {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    background: var(--ground);
+    flex-direction: column;
+    gap: 0;
+    padding: 8px 24px 18px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+
+    &.open {
+      display: flex;
+    }
+
+    a {
+      padding: 11px 0;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.09);
+    }
+  }
+
+  .burger {
+    display: flex;
+  }
+}

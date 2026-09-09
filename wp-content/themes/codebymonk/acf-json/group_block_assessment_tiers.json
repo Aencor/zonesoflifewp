@@ -1,0 +1,182 @@
+{
+    "key": "group_block_assessment_tiers",
+    "title": "Block - Assessment Tiers",
+    "fields": [
+        {
+            "key": "field_acc_assessment_tiers",
+            "label": "Block - Assessment Tiers",
+            "name": "",
+            "aria-label": "",
+            "type": "accordion",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "open": 0,
+            "multi_expand": 0,
+            "endpoint": 0
+        },
+        {
+            "key": "field_at_c1_badge",
+            "label": "Card 1 Badge",
+            "name": "card_1_badge",
+            "type": "text",
+            "default_value": "Step 1 · free"
+        },
+        {
+            "key": "field_at_c1_title",
+            "label": "Card 1 Title",
+            "name": "card_1_title",
+            "type": "text",
+            "default_value": "Short profile"
+        },
+        {
+            "key": "field_at_c1_desc",
+            "label": "Card 1 Description",
+            "name": "card_1_desc",
+            "type": "textarea",
+            "rows": 3,
+            "default_value": "Fourteen questions, two minutes. You get your Zone, why you are in it, and which of the three areas is holding you back."
+        },
+        {
+            "key": "field_at_c1_btn_text",
+            "label": "Card 1 Button Text",
+            "name": "card_1_btn_text",
+            "type": "text",
+            "default_value": "Start"
+        },
+        {
+            "key": "field_at_c1_btn_link",
+            "label": "Card 1 Button Link",
+            "name": "card_1_btn_link",
+            "type": "text",
+            "default_value": "/short-quiz/"
+        },
+        {
+            "key": "field_at_c2_badge",
+            "label": "Card 2 Badge",
+            "name": "card_2_badge",
+            "type": "text",
+            "default_value": "Step 2 · paid"
+        },
+        {
+            "key": "field_at_c2_title",
+            "label": "Card 2 Title",
+            "name": "card_2_title",
+            "type": "text",
+            "default_value": "Full report"
+        },
+        {
+            "key": "field_at_c2_desc",
+            "label": "Card 2 Description",
+            "name": "card_2_desc",
+            "type": "textarea",
+            "rows": 3,
+            "default_value": "Question-by-question breakdown of all three areas, what to move first and in what order, and what the Green Zone looks like in your specific case."
+        },
+        {
+            "key": "field_at_c2_price",
+            "label": "Card 2 Price / Badge",
+            "name": "card_2_price",
+            "type": "text",
+            "default_value": "price TBD"
+        },
+        {
+            "key": "field_at_c3_badge",
+            "label": "Card 3 Badge",
+            "name": "card_3_badge",
+            "type": "text",
+            "default_value": "Step 3 · with support"
+        },
+        {
+            "key": "field_at_c3_title",
+            "label": "Card 3 Title",
+            "name": "card_3_title",
+            "type": "text",
+            "default_value": "Cohort or coaching"
+        },
+        {
+            "key": "field_at_c3_desc",
+            "label": "Card 3 Description",
+            "name": "card_3_desc",
+            "type": "textarea",
+            "rows": 3,
+            "default_value": "A cohort with a start date and a group here, or continuous one-to-one coaching with an assigned coach at ACLC."
+        },
+        {
+            "key": "field_at_c3_btn_text",
+            "label": "Card 3 Button Text",
+            "name": "card_3_btn_text",
+            "type": "text",
+            "default_value": "See options"
+        },
+        {
+            "key": "field_at_c3_btn_link",
+            "label": "Card 3 Button Link",
+            "name": "card_3_btn_link",
+            "type": "text",
+            "default_value": "/cohorts/"
+        },
+        {
+            "key": "field_at_show_guarantee",
+            "label": "Show Guarantee Card",
+            "name": "show_guarantee",
+            "type": "true_false",
+            "default_value": 1,
+            "ui": 1
+        },
+        {
+            "key": "field_at_guarantee_title",
+            "label": "Guarantee Title",
+            "name": "guarantee_title",
+            "type": "text",
+            "default_value": "Money-back guarantee",
+            "conditional_logic": [
+                [
+                    {
+                        "field": "field_at_show_guarantee",
+                        "operator": "==",
+                        "value": "1"
+                    }
+                ]
+            ]
+        },
+        {
+            "key": "field_at_guarantee_desc",
+            "label": "Guarantee Text",
+            "name": "guarantee_desc",
+            "type": "textarea",
+            "rows": 2,
+            "default_value": "The guarantee already exists on the current site and improves conversion. Keep it visible next to every buy button, not buried in the footer.",
+            "conditional_logic": [
+                [
+                    {
+                        "field": "field_at_show_guarantee",
+                        "operator": "==",
+                        "value": "1"
+                    }
+                ]
+            ]
+        }
+    ],
+    "location": [
+        [
+            {
+                "param": "block",
+                "operator": "==",
+                "value": "acf/assessment-tiers"
+            }
+        ]
+    ],
+    "menu_order": 0,
+    "position": "normal",
+    "style": "default",
+    "label_placement": "top",
+    "instruction_placement": "label",
+    "active": true,
+    "description": "Assessment 3-tier pricing and guarantee block"
+}

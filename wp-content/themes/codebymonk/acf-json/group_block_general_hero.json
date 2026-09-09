@@ -1,0 +1,105 @@
+{
+    "key": "group_block_general_hero",
+    "title": "Block - General Hero",
+    "fields": [
+        {
+            "key": "field_acc_general_hero",
+            "label": "Block - General Hero",
+            "name": "",
+            "aria-label": "",
+            "type": "accordion",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "open": 0,
+            "multi_expand": 0,
+            "endpoint": 0
+        },
+        {
+            "key": "field_gh_kicker_icon",
+            "label": "Kicker Icon",
+            "name": "kicker_icon",
+            "type": "select",
+            "choices": {
+                "": "None",
+                "calendar": "Calendar (Cohorts)",
+                "users": "Users (Stories)",
+                "mail": "Mail (Contact)",
+                "compass": "Compass (Method)",
+                "shield": "Shield (Legal)",
+                "pin": "Pin (Location)"
+            },
+            "default_value": "",
+            "allow_null": 1
+        },
+        {
+            "key": "field_gh_kicker",
+            "label": "Kicker",
+            "name": "kicker",
+            "type": "text",
+            "instructions": "Section kicker or category (e.g. Stories, The method, Diagnostic)",
+            "default_value": "The method",
+            "placeholder": "The method"
+        },
+        {
+            "key": "field_gh_title",
+            "label": "Page Heading",
+            "name": "title",
+            "type": "text",
+            "instructions": "Main hero title",
+            "default_value": "Four Zones, and what each one costs you",
+            "placeholder": "Four Zones, and what each one costs you"
+        },
+        {
+            "key": "field_gh_description",
+            "label": "Description",
+            "name": "description",
+            "type": "textarea",
+            "instructions": "Lede paragraph under the title",
+            "default_value": "This is the vocabulary the whole ecosystem runs on. Knowing which Zone you are in is what makes every other decision obvious.",
+            "rows": 3
+        },
+        {
+            "key": "field_gh_bg_style",
+            "label": "Background Style",
+            "name": "background_style",
+            "type": "button_group",
+            "choices": {
+                "tint": "Light Tint",
+                "white": "White",
+                "dark": "Dark"
+            },
+            "default_value": "tint",
+            "return_format": "value"
+        },
+        {
+            "key": "field_gh_max_width",
+            "label": "Description Max Width",
+            "name": "max_width",
+            "type": "text",
+            "instructions": "CSS max-width for the lede paragraph (e.g. 64ch or 720px)",
+            "default_value": "64ch"
+        }
+    ],
+    "location": [
+        [
+            {
+                "param": "block",
+                "operator": "==",
+                "value": "acf/general-hero"
+            }
+        ]
+    ],
+    "menu_order": 0,
+    "position": "normal",
+    "style": "default",
+    "label_placement": "top",
+    "instruction_placement": "label",
+    "active": true,
+    "description": "General Page Hero header block"
+}

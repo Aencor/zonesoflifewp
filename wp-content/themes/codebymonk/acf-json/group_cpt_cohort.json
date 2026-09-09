@@ -1,0 +1,91 @@
+{
+    "key": "group_cpt_cohort",
+    "title": "Cohort Details",
+    "fields": [
+        {
+            "key": "field_cohort_month",
+            "label": "Month Abbreviation",
+            "name": "month",
+            "type": "text",
+            "instructions": "3-letter uppercase month (e.g. OCT, JAN, APR)",
+            "default_value": "OCT",
+            "required": 1
+        },
+        {
+            "key": "field_cohort_day",
+            "label": "Day of Month",
+            "name": "day",
+            "type": "text",
+            "instructions": "Day number (e.g. 14, 20)",
+            "default_value": "14",
+            "required": 1
+        },
+        {
+            "key": "field_cohort_start_date_full",
+            "label": "Full Start Date",
+            "name": "start_date_full",
+            "type": "text",
+            "instructions": "Full readable start date (e.g. 14 October, 20 January)",
+            "default_value": "14 October"
+        },
+        {
+            "key": "field_cohort_details",
+            "label": "Cohort Details / Subtitle",
+            "name": "details",
+            "type": "text",
+            "instructions": "Description of duration, format, capacity (e.g. Eight weeks · online · maximum 12 people)",
+            "default_value": "Eight weeks · online · maximum 12 people"
+        },
+        {
+            "key": "field_cohort_status",
+            "label": "Cohort Status",
+            "name": "status",
+            "type": "select",
+            "choices": {
+                "open": "Open for Application (Check Fit)",
+                "waitlist": "Waiting List (Notify Me)"
+            },
+            "default_value": "open"
+        },
+        {
+            "key": "field_cohort_badge_text",
+            "label": "Badge Text",
+            "name": "badge_text",
+            "type": "text",
+            "instructions": "Badge shown next to button (e.g. price TBD, Waiting list)",
+            "default_value": "price TBD"
+        },
+        {
+            "key": "field_cohort_highlight",
+            "label": "Highlight Row",
+            "name": "highlight",
+            "type": "true_false",
+            "instructions": "Apply soft mint tint background to this cohort row",
+            "default_value": 0,
+            "ui": 1
+        },
+        {
+            "key": "field_cohort_button_text",
+            "label": "Button Text",
+            "name": "button_text",
+            "type": "text",
+            "instructions": "Leave blank for default (Check fit for open, Notify me for waitlist)"
+        }
+    ],
+    "location": [
+        [
+            {
+                "param": "post_type",
+                "operator": "==",
+                "value": "cohort"
+            }
+        ]
+    ],
+    "menu_order": 0,
+    "position": "normal",
+    "style": "default",
+    "label_placement": "top",
+    "instruction_placement": "label",
+    "active": true,
+    "description": "Custom fields for Cohort CPT"
+}

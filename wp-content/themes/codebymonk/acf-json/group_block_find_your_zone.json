@@ -1,0 +1,89 @@
+{
+    "key": "group_block_find_your_zone",
+    "title": "Block - Find Your Zone CTA",
+    "fields": [
+        {
+            "key": "field_acc_find_your_zone",
+            "label": "Block - Find Your Zone",
+            "name": "",
+            "aria-label": "",
+            "type": "accordion",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "open": 0,
+            "multi_expand": 0,
+            "endpoint": 0
+        },
+        {
+            "key": "field_fyz_kicker",
+            "label": "Kicker",
+            "name": "kicker",
+            "type": "text",
+            "default_value": "ZONE STORIES",
+            "placeholder": "ZONE STORIES"
+        },
+        {
+            "key": "field_fyz_title",
+            "label": "Title",
+            "name": "title",
+            "type": "text",
+            "default_value": "The monthly franchise",
+            "required": 1
+        },
+        {
+            "key": "field_fyz_description",
+            "label": "Description",
+            "name": "description",
+            "type": "textarea",
+            "rows": 2,
+            "default_value": "One real story a month with its profile chart, before and after. It is the proof no competitor can copy, because it depends on the assessment."
+        },
+        {
+            "key": "field_fyz_btn_text",
+            "label": "Button Text",
+            "name": "button_text",
+            "type": "text",
+            "default_value": "Find your Zone"
+        },
+        {
+            "key": "field_fyz_btn_link",
+            "label": "Button Link",
+            "name": "button_link",
+            "type": "text",
+            "default_value": "/short-quiz/"
+        },
+        {
+            "key": "field_fyz_bg_style",
+            "label": "Background Style",
+            "name": "background_style",
+            "type": "select",
+            "choices": {
+                "tint": "Tint (#F2FAF5)",
+                "white": "White"
+            },
+            "default_value": "tint"
+        }
+    ],
+    "location": [
+        [
+            {
+                "param": "block",
+                "operator": "==",
+                "value": "acf/find-your-zone"
+            }
+        ]
+    ],
+    "menu_order": 0,
+    "position": "normal",
+    "style": "default",
+    "label_placement": "top",
+    "instruction_placement": "label",
+    "active": true,
+    "description": "Find Your Zone CTA banner block"
+}

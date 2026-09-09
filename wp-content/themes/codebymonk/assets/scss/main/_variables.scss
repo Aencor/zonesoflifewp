@@ -1,35 +1,56 @@
+:root {
+  --red: #E81D2D;
+  --amber: #F5D93E;
+  --green: #00A84F;
+  --gold: #EBAB21;
+  --kn: #001722;
+  --navy: #1F3A5F;
+  --fuego: #C2602A;
+  --navysoft: #E7EDF4;
+  --shgreen: #1A5632;
+  --ink: #16222B;
+  --muted: #5A6875;
+  --line: #E1E7ED;
+  --paper: #fff;
+  --display: "Fraunces", Georgia, serif;
+  --body: "Myriad Pro", system-ui, -apple-system, sans-serif;
+  --mono: "Space Mono", monospace;
+  --brand: var(--shgreen);
+  --brand-ink: #fff;
+  --accent: var(--fuego);
+  --ground: var(--shgreen);
+  --tint: #F2FAF5;
+  --maxw: 1160px;
+  --r: 10px;
+}
+
 // Colors 
-$white           : #FFF;
-$black           : #071E3C;
-$primaryColor    : #4050c6;
-$secondaryColor  : #00bfa5;
-$tertiaryColor   : #52b1ff;
-$gray            : #999;
+$white    : #FFF;
+$black    : #16222B;
+$shgreen  : #1A5632;
+$fuego    : #C2602A;
+$navysoft : #E7EDF4;
+$line     : #E1E7ED;
+$primaryColor   : #1A5632;
+$secondaryColor : #C2602A;
+$tertiaryColor  : #EBAB21;
+$gray           : #5A6875;
+$body-color     : #16222B;
+$border-color   : #E1E7ED;
+$body1          : $black;
+$body2          : $secondaryColor;
+$body3          : $tertiaryColor;
 
-$brand-primary           : $primaryColor; // Primary Brand Color
-$brand-primary-darken    : darken($brand-primary, 5%);
-$brand-primary-lighten   : lighten($brand-primary, 5%);
-$brand-secondary         : $secondaryColor; // Secondary Brand Color
-$brand-secondary-darken  : darken($brand-secondary, 5%);
-$brand-secondary-lighten : lighten($brand-secondary, 5%);
-$brand-tertiary          : $tertiaryColor; // Tertiary Brand Color
-$brand-tertiary-darken   : darken($brand-tertiary, 5%);
-$brand-tertiary-lighten  : lighten($brand-tertiary, 5%);
 
-$body-color   : $black;
-$border-color : $primaryColor;
-$body1        : $black;
-$body2        : $secondaryColor;
-$body3        : $tertiaryColor;
 
 // Typography
-$font-family-body     : "Poppins", sans-serif;
-$font-family-headline : "Open Sans", sans-serif;
+$font-family-body     : "Inter", system-ui, -apple-system, sans-serif;
+$font-family-headline : "Fraunces", Georgia, serif;
+$font-family-mono     : "Space Mono", monospace;
 
 // Font Weights
 $weight-black    : 900;
 $weight-bold     : 700;
-$weight-semibold : 500;
+$weight-semibold : 600;
 $weight-normal   : 400;
 $weight-light    : 300;
-$weight-lightest : 200;

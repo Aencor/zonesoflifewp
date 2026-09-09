@@ -16,7 +16,9 @@ $monk_includes = [
 	"functions/security.php", // Security focused settings
 	"functions/options.php", // ACF Theme Options
 	"functions/shortcodes.php", // Custom Wordpress Shortcodes for WYSIWYGs
-	"functions/blocks.php" // Declare Custom Blocks
+	"functions/blocks.php", // Declare Custom Blocks
+	"functions/cpt.php", // Custom Post Types
+	"functions/cohorts.php" // Cohort Leads & Handling
 ];
 
 function nylon_include($includes) {
@@ -77,3 +79,7 @@ add_theme_support("editor-color-palette", [
 		"color" => "transparent"
 	]
 ]);
+
+// Disable CF7 automatic paragraph formatting
+add_filter('wpcf7_autop_or_not', '__return_false');
+

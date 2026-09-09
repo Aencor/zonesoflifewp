@@ -2,8 +2,9 @@ version: "3.9"
 
 services:
   database:
+    container_name: newzonesoflife-db
     mem_limit: 2048m
-    image: mariadb
+    image: mariadb:10.11
     restart: unless-stopped
     ports:
       - 3306:3306
@@ -19,6 +20,7 @@ services:
       - wordpress-network
 
   phpmyadmin:
+    container_name: newzonesoflife-phpmyadmin
     depends_on:
       - database
     image: phpmyadmin/phpmyadmin
@@ -32,9 +34,10 @@ services:
       - wordpress-network
 
   wordpress:
+    container_name: newzonesoflife-wp
     depends_on:
       - database
-    image: wordpress
+    image: wordpress:latest
     restart: unless-stopped
     ports:
       - 8080:80
@@ -43,11 +46,16 @@ services:
       WORDPRESS_DB_NAME: '${MYSQL_DATABASE}'
       WORDPRESS_DB_USER: '${MYSQL_USER}'
       WORDPRESS_DB_PASSWORD: '${MYSQL_PASSWORD}'
+      WORDPRESS_CONFIG_EXTRA: |
+        if (isset($$_SERVER['HTTP_X_FORWARDED_PROTO']) && strpos($$_SERVER['HTTP_X_FORWARDED_PROTO'], 'https') !== false) {
+            $$_SERVER['HTTPS'] = 'on';
+        }
     volumes:
       - ./wp-content:/var/www/html/wp-content
       - ./uploads.ini:/usr/local/etc/php/conf.d/uploads.ini
     networks:
       - wordpress-network
+      - local-proxy
 
 volumes:
   db-data:
@@ -55,3 +63,7 @@ volumes:
 networks:
   wordpress-network:
     driver: bridge
+  local-proxy:
+    name: local-proxy
+    external: true
+

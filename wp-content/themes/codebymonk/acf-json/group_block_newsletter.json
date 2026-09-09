@@ -1,0 +1,174 @@
+{
+    "key": "group_block_newsletter",
+    "title": "Block - Newsletter",
+    "fields": [
+        {
+            "key": "field_acc_newsletter",
+            "label": "Block - Newsletter",
+            "name": "",
+            "aria-label": "",
+            "type": "accordion",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "open": 0,
+            "multi_expand": 0,
+            "endpoint": 0
+        },
+        {
+            "key": "field_nl_tab_content",
+            "label": "Content",
+            "name": "",
+            "type": "tab",
+            "instructions": "",
+            "required": 0,
+            "placement": "top"
+        },
+        {
+            "key": "field_nl_kicker",
+            "label": "Kicker",
+            "name": "kicker",
+            "type": "text",
+            "instructions": "Badge or kicker above the title",
+            "required": 0,
+            "default_value": "Free weekly",
+            "placeholder": "Free weekly"
+        },
+        {
+            "key": "field_nl_title",
+            "label": "Title",
+            "name": "title",
+            "type": "text",
+            "instructions": "",
+            "required": 0,
+            "default_value": "The Zone Letter",
+            "placeholder": "The Zone Letter"
+        },
+        {
+            "key": "field_nl_description",
+            "label": "Description",
+            "name": "description",
+            "type": "textarea",
+            "instructions": "",
+            "required": 0,
+            "default_value": "One idea a week on moving up the Zones, plus new cohort dates before they open publicly.",
+            "rows": 3
+        },
+        {
+            "key": "field_nl_tab_form",
+            "label": "Form Settings",
+            "name": "",
+            "type": "tab",
+            "instructions": "",
+            "required": 0,
+            "placement": "top"
+        },
+        {
+            "key": "field_nl_form_type",
+            "label": "Form Type",
+            "name": "form_type",
+            "type": "button_group",
+            "instructions": "Choose whether to use the default interactive form or a custom Mailchimp embed code",
+            "required": 0,
+            "choices": {
+                "default": "Default Form",
+                "embed": "Mailchimp / Embed Code"
+            },
+            "default_value": "default",
+            "return_format": "value"
+        },
+        {
+            "key": "field_nl_embed_code",
+            "label": "Mailchimp Embed Code",
+            "name": "mailchimp_embed_code",
+            "type": "textarea",
+            "instructions": "Paste the HTML embed code from Mailchimp or your email provider here",
+            "required": 0,
+            "conditional_logic": [
+                [
+                    {
+                        "field": "field_nl_form_type",
+                        "operator": "==",
+                        "value": "embed"
+                    }
+                ]
+            ],
+            "rows": 6
+        },
+        {
+            "key": "field_nl_placeholder",
+            "label": "Email Input Placeholder",
+            "name": "email_placeholder",
+            "type": "text",
+            "instructions": "",
+            "required": 0,
+            "default_value": "jane@example.com",
+            "conditional_logic": [
+                [
+                    {
+                        "field": "field_nl_form_type",
+                        "operator": "==",
+                        "value": "default"
+                    }
+                ]
+            ]
+        },
+        {
+            "key": "field_nl_button_text",
+            "label": "Button Text",
+            "name": "button_text",
+            "type": "text",
+            "instructions": "",
+            "required": 0,
+            "default_value": "Subscribe",
+            "conditional_logic": [
+                [
+                    {
+                        "field": "field_nl_form_type",
+                        "operator": "==",
+                        "value": "default"
+                    }
+                ]
+            ]
+        },
+        {
+            "key": "field_nl_privacy_text",
+            "label": "Privacy Checkbox Text",
+            "name": "privacy_text",
+            "type": "text",
+            "instructions": "",
+            "required": 0,
+            "default_value": "I agree to the Privacy Policy. Unsubscribe anytime.",
+            "conditional_logic": [
+                [
+                    {
+                        "field": "field_nl_form_type",
+                        "operator": "==",
+                        "value": "default"
+                    }
+                ]
+            ]
+        }
+    ],
+    "location": [
+        [
+            {
+                "param": "block",
+                "operator": "==",
+                "value": "acf/newsletter"
+            }
+        ]
+    ],
+    "menu_order": 0,
+    "position": "normal",
+    "style": "default",
+    "label_placement": "top",
+    "instruction_placement": "label",
+    "active": true,
+    "description": "Newsletter signup banner block"
+}

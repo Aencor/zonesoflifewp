@@ -1,0 +1,64 @@
+/*
+ * Block: General Hero (block-general-hero)
+ */
+
+.block-general-hero {
+  padding: 60px 0 52px;
+
+  @media (max-width: 900px) {
+    padding: 40px 0 32px;
+  }
+
+  &.tint {
+    background: var(--tint);
+  }
+
+  &.dark {
+    background: var(--ground);
+    color: #fff;
+
+    .hero-title {
+      color: #fff;
+    }
+
+    .kicker {
+      color: var(--gold);
+    }
+
+    .lede {
+      color: rgba(255, 255, 255, 0.72);
+    }
+  }
+
+  &.white {
+    background: #fff;
+  }
+
+  .kicker {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--shgreen);
+    margin-bottom: 8px;
+  }
+
+  .hero-title {
+    font-family: var(--display);
+    font-size: clamp(32px, 4.4vw, 48px);
+    font-weight: 600;
+    line-height: 1.12;
+    letter-spacing: -0.015em;
+    color: var(--ink);
+    margin: 0;
+  }
+
+  .lede {
+    font-size: 17px;
+    line-height: 1.65;
+    color: #3D4A57;
+    margin-top: 16px;
+  }
+
+  .mt16 { margin-top: 16px; }
+}

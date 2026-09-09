@@ -1,0 +1,145 @@
+/*
+ * Block: Home Hero (block-home-hero)
+ */
+
+.block-home-hero {
+  padding: 64px 0 56px;
+  background: var(--tint);
+
+  @media (max-width: 900px) {
+    padding: 40px 0 34px;
+  }
+
+  .split {
+    display: grid;
+    grid-template-columns: 1.15fr 0.85fr;
+    gap: 48px;
+    align-items: center;
+
+    @media (max-width: 900px) {
+      grid-template-columns: 1fr;
+      gap: 36px;
+    }
+  }
+
+  .kicker {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--shgreen);
+
+    .ic {
+      color: var(--shgreen);
+    }
+  }
+
+  .hero-title {
+    font-family: var(--display);
+    font-size: clamp(32px, 4.6vw, 52px);
+    font-weight: 600;
+    line-height: 1.12;
+    letter-spacing: -0.015em;
+    color: var(--shgreen);
+    margin: 0;
+  }
+
+  .lede {
+    font-size: 17px;
+    line-height: 1.65;
+    color: #3D4A57;
+    max-width: 45ch;
+  }
+
+  .hgroup {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex-wrap: wrap;
+
+    .btn {
+      margin: 0;
+    }
+  }
+
+  .hero-card {
+    border: 1px solid var(--line);
+    border-radius: var(--r);
+    padding: 24px;
+    background: #fff;
+    box-shadow: 0 4px 20px rgba(0, 23, 34, 0.04);
+
+    .tiny {
+      font-family: var(--mono);
+      font-size: 10px;
+      letter-spacing: 0.11em;
+      text-transform: uppercase;
+      color: var(--muted);
+
+      .ic {
+        vertical-align: -0.18em;
+        margin-right: 4px;
+      }
+    }
+
+    .row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      border-bottom: 1px solid var(--line);
+      padding: 12px 0;
+
+      .grow {
+        flex: 1;
+        min-width: 0;
+        font-size: 14.5px;
+        color: var(--ink);
+      }
+    }
+
+    .rule {
+      height: 1px;
+      background: var(--line);
+      border: 0;
+      margin: 20px 0;
+    }
+
+    .zones {
+      display: flex;
+      gap: 3px;
+      height: 7px;
+      border-radius: 4px;
+      overflow: hidden;
+      margin-top: 8px;
+
+      i {
+        flex: 1;
+        display: block;
+      }
+
+      .z1 { background: var(--red); }
+      .z2 { background: var(--amber); }
+      .z3 { background: var(--green); }
+      .z4 { background: var(--gold); }
+    }
+
+    .zlabels {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 7px;
+
+      .tiny {
+        font-size: 10px;
+      }
+    }
+  }
+
+  .mt16 { margin-top: 16px; }
+  .mt24 { margin-top: 24px; }
+  .mt32 { margin-top: 32px; }
+  .mb16 { margin-bottom: 16px; }
+}

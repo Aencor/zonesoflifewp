@@ -1,0 +1,114 @@
+{
+    "key": "group_block_articles",
+    "title": "Block - Articles Grid",
+    "fields": [
+        {
+            "key": "field_acc_articles",
+            "label": "Block - Articles",
+            "name": "",
+            "aria-label": "",
+            "type": "accordion",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "open": 0,
+            "multi_expand": 0,
+            "endpoint": 0
+        },
+        {
+            "key": "field_art_source",
+            "label": "Articles Source",
+            "name": "articles_source",
+            "type": "button_group",
+            "choices": {
+                "latest": "Latest Posts",
+                "custom": "Select Specific Posts"
+            },
+            "default_value": "latest"
+        },
+        {
+            "key": "field_art_posts_per_page",
+            "label": "Number of Articles",
+            "name": "posts_per_page",
+            "type": "number",
+            "default_value": 3,
+            "min": 1,
+            "max": 12,
+            "conditional_logic": [
+                [
+                    {
+                        "field": "field_art_source",
+                        "operator": "==",
+                        "value": "latest"
+                    }
+                ]
+            ]
+        },
+        {
+            "key": "field_art_selected",
+            "label": "Select Posts",
+            "name": "selected_posts",
+            "type": "post_object",
+            "post_type": [
+                "post"
+            ],
+            "multiple": 1,
+            "return_format": "object",
+            "conditional_logic": [
+                [
+                    {
+                        "field": "field_art_source",
+                        "operator": "==",
+                        "value": "custom"
+                    }
+                ]
+            ]
+        },
+        {
+            "key": "field_art_show_read_more",
+            "label": "Show 'Read More' Button",
+            "name": "show_read_more",
+            "type": "true_false",
+            "default_value": 1,
+            "ui": 1
+        },
+        {
+            "key": "field_art_read_more_text",
+            "label": "Read More Button Text",
+            "name": "read_more_text",
+            "type": "text",
+            "default_value": "Read more",
+            "placeholder": "Read more",
+            "conditional_logic": [
+                [
+                    {
+                        "field": "field_art_show_read_more",
+                        "operator": "==",
+                        "value": "1"
+                    }
+                ]
+            ]
+        }
+    ],
+    "location": [
+        [
+            {
+                "param": "block",
+                "operator": "==",
+                "value": "acf/articles"
+            }
+        ]
+    ],
+    "menu_order": 0,
+    "position": "normal",
+    "style": "default",
+    "label_placement": "top",
+    "instruction_placement": "label",
+    "active": true,
+    "description": "Grid of blog articles / posts"
+}

@@ -1,0 +1,220 @@
+/*
+ * Block: Contact (block-contact)
+ */
+
+.block-contact {
+  padding: 48px 0 80px;
+
+  .split.top {
+    display: grid;
+    grid-template-columns: 1.35fr 1fr;
+    gap: 48px;
+    align-items: start;
+
+    @media (max-width: 900px) {
+      grid-template-columns: 1fr;
+      gap: 36px;
+    }
+  }
+
+  /* Contact Form 7 integration */
+  .cf7-container {
+    .wpcf7 form {
+      margin: 0;
+    }
+
+    .g2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+
+      @media (max-width: 600px) {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .field {
+      margin-bottom: 16px;
+
+      label {
+        display: block;
+        font-size: 13px;
+        font-weight: 600;
+        margin-bottom: 6px;
+        color: var(--ink);
+      }
+    }
+
+    span.wpcf7-form-control-wrap {
+      display: block;
+      width: 100%;
+    }
+
+    .input,
+    input[type="text"],
+    input[type="email"],
+    input[type="tel"],
+    textarea {
+      width: 100%;
+      padding: 11px 13px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      font: inherit;
+      font-size: 14px;
+      background: #fff;
+      color: var(--ink);
+      transition: border-color 0.15s ease, box-shadow 0.15s ease;
+      box-sizing: border-box;
+
+      &:focus {
+        outline: 2px solid var(--brand);
+        outline-offset: -1px;
+        border-color: var(--brand);
+      }
+
+      &::placeholder {
+        color: #9DB2C8;
+      }
+    }
+
+    textarea {
+      min-height: 120px;
+      resize: vertical;
+    }
+
+    input[type="submit"],
+    .wpcf7-submit {
+      background: var(--green);
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      padding: 12px 28px;
+      font-size: 14.5px;
+      font-weight: 600;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      margin-top: 14px;
+      transition: transform 0.15s ease, background 0.15s ease;
+
+      &:hover {
+        transform: translateY(-1px);
+        background: #008f43;
+      }
+    }
+
+    .wpcf7-not-valid-tip {
+      color: #D9534F;
+      font-size: 12px;
+      margin-top: 4px;
+      display: block;
+      font-weight: 500;
+    }
+
+    .wpcf7-response-output {
+      margin: 20px 0 0 !important;
+      padding: 13px 16px !important;
+      border-radius: 8px !important;
+      font-size: 13.5px !important;
+      line-height: 1.5 !important;
+      border: 1px solid var(--line) !important;
+    }
+
+    form.sent .wpcf7-response-output {
+      background: #EBF7EE;
+      border-color: var(--shgreen) !important;
+      color: #1E6B37;
+    }
+
+    form.invalid .wpcf7-response-output,
+    form.unaccepted .wpcf7-response-output {
+      background: #FDF2F2;
+      border-color: #E27C7C !important;
+      color: #9E2A2B;
+    }
+
+    .wpcf7-spinner {
+      margin-left: 12px;
+      vertical-align: middle;
+    }
+  }
+
+  /* Info Card */
+  .contact-info-col {
+    .card.tint {
+      background: var(--tint);
+      border: 1px solid var(--line);
+      border-radius: var(--r);
+      padding: 28px;
+    }
+
+    .kicker-pin {
+      font-family: var(--mono);
+      font-size: 11px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      font-weight: 600;
+      color: var(--muted);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+
+      svg {
+        color: var(--brand);
+        flex-shrink: 0;
+      }
+    }
+
+    .address-text {
+      line-height: 1.6;
+      color: #4A5764;
+      font-size: 14px;
+      margin: 0;
+    }
+
+    .rule {
+      border: 0;
+      border-top: 1px solid var(--line);
+      margin: 20px 0;
+    }
+
+    .phone-text {
+      font-size: 14px;
+      margin: 0;
+
+      a {
+        color: var(--ink);
+        text-decoration: none;
+        font-weight: 600;
+        font-size: 15px;
+        transition: color 0.15s ease;
+
+        &:hover {
+          color: var(--brand);
+        }
+      }
+    }
+
+    .note {
+      border-left: 3px solid #D9534F;
+      background: #FDF7F2;
+      padding: 13px 15px;
+      border-radius: 0 8px 8px 0;
+      font-size: 12.5px;
+      line-height: 1.55;
+      color: #7A4318;
+
+      .tiny {
+        color: #B07340;
+        margin-bottom: 5px;
+        display: block;
+        font-family: var(--mono);
+        text-transform: uppercase;
+        font-size: 10px;
+        font-weight: 600;
+        letter-spacing: 0.08em;
+      }
+    }
+  }
+}

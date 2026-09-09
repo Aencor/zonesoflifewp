@@ -1,0 +1,110 @@
+<wpml-config>
+    <custom-types>
+        <custom-type translate="1">story</custom-type>
+        <custom-type translate="1">cohort</custom-type>
+    </custom-types>
+    <custom-fields>
+        <custom-field action="translate">story</custom-field>
+        <custom-field action="translate">author</custom-field>
+        <custom-field action="translate">position</custom-field>
+        <custom-field action="translate">location</custom-field>
+        <custom-field action="copy">before_level</custom-field>
+        <custom-field action="copy">after_level</custom-field>
+        <custom-field action="copy">photo</custom-field>
+        <custom-field action="translate">month</custom-field>
+        <custom-field action="copy">day</custom-field>
+        <custom-field action="translate">start_date_full</custom-field>
+        <custom-field action="translate">details</custom-field>
+        <custom-field action="translate">badge_text</custom-field>
+        <custom-field action="translate">title</custom-field>
+        <custom-field action="translate">button_text</custom-field>
+        <custom-field action="translate">button_link</custom-field>
+        <custom-field action="translate">kicker</custom-field>
+        <custom-field action="translate">description</custom-field>
+        <custom-field action="translate">email_placeholder</custom-field>
+        <custom-field action="translate">author_label</custom-field>
+        <custom-field action="translate">read_more_text</custom-field>
+    </custom-fields>
+    <gutenberg-blocks>
+        <gutenberg-block name="acf/articles" translate="1">
+            <xpath>//*</xpath>
+            <key name="read_more_text">read_more_text</key>
+        </gutenberg-block>
+        <gutenberg-block name="acf/newsletter" translate="1">
+            <xpath>//*</xpath>
+            <key name="title">title</key>
+            <key name="kicker">kicker</key>
+            <key name="description">description</key>
+            <key name="button_text">button_text</key>
+            <key name="privacy_text">privacy_text</key>
+        </gutenberg-block>
+        <gutenberg-block name="acf/short-stories" translate="1">
+            <xpath>//*</xpath>
+            <key name="title">title</key>
+            <key name="button_text">button_text</key>
+            <key name="button_link">button_link</key>
+        </gutenberg-block>
+        <gutenberg-block name="acf/home-hero" translate="1">
+            <xpath>//*</xpath>
+            <key name="title">title</key>
+            <key name="kicker">kicker</key>
+            <key name="description">description</key>
+            <key name="button_primary_text">button_primary_text</key>
+            <key name="button_secondary_text">button_secondary_text</key>
+            <key name="card_title">card_title</key>
+            <key name="zones_title">zones_title</key>
+        </gutenberg-block>
+        <gutenberg-block name="acf/general-hero" translate="1">
+            <xpath>//*</xpath>
+            <key name="title">title</key>
+            <key name="kicker">kicker</key>
+            <key name="description">description</key>
+        </gutenberg-block>
+        <gutenberg-block name="acf/four-zones" translate="1">
+            <xpath>//*</xpath>
+            <key name="cta_title">cta_title</key>
+            <key name="cta_description">cta_description</key>
+            <key name="cta_button_text">cta_button_text</key>
+            <key name="cta_button_link">cta_button_link</key>
+        </gutenberg-block>
+        <gutenberg-block name="acf/find-your-zone" translate="1">
+            <xpath>//*</xpath>
+            <key name="kicker">kicker</key>
+            <key name="title">title</key>
+            <key name="description">description</key>
+            <key name="button_text">button_text</key>
+            <key name="button_link">button_link</key>
+        </gutenberg-block>
+        <gutenberg-block name="acf/cohorts" translate="1">
+            <xpath>//*</xpath>
+            <key name="step_1_title">step_1_title</key>
+            <key name="step_1_strong">step_1_strong</key>
+            <key name="step_1_desc">step_1_desc</key>
+            <key name="step_2_title">step_2_title</key>
+            <key name="step_2_strong">step_2_strong</key>
+            <key name="step_2_desc">step_2_desc</key>
+            <key name="step_3_title">step_3_title</key>
+            <key name="step_3_strong">step_3_strong</key>
+            <key name="step_3_desc">step_3_desc</key>
+        <gutenberg-block name="acf/assessment-tiers" translate="1">
+            <xpath>//*</xpath>
+            <key name="card_1_title">card_1_title</key>
+            <key name="card_1_desc">card_1_desc</key>
+            <key name="card_1_btn_text">card_1_btn_text</key>
+            <key name="card_2_title">card_2_title</key>
+            <key name="card_2_desc">card_2_desc</key>
+            <key name="card_3_title">card_3_title</key>
+            <key name="card_3_desc">card_3_desc</key>
+            <key name="card_3_btn_text">card_3_btn_text</key>
+            <key name="guarantee_title">guarantee_title</key>
+            <key name="guarantee_desc">guarantee_desc</key>
+        </gutenberg-block>
+        <gutenberg-block name="acf/assessment-quiz" translate="1">
+            <xpath>//*</xpath>
+            <key name="intro_kicker">intro_kicker</key>
+            <key name="intro_title">intro_title</key>
+            <key name="intro_desc">intro_desc</key>
+            <key name="start_button_text">start_button_text</key>
+        </gutenberg-block>
+    </gutenberg-blocks>
+</wpml-config>

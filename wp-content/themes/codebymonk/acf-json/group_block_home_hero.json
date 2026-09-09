@@ -1,0 +1,154 @@
+{
+    "key": "group_block_home_hero",
+    "title": "Block - Home Hero",
+    "fields": [
+        {
+            "key": "field_acc_home_hero",
+            "label": "Block - Home Hero",
+            "name": "",
+            "aria-label": "",
+            "type": "accordion",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "open": 0,
+            "multi_expand": 0,
+            "endpoint": 0
+        },
+        {
+            "key": "field_hh_tab_content",
+            "label": "Hero Content",
+            "name": "",
+            "type": "tab",
+            "placement": "top"
+        },
+        {
+            "key": "field_hh_kicker",
+            "label": "Kicker",
+            "name": "kicker",
+            "type": "text",
+            "instructions": "Badge text above heading (e.g. The assessment)",
+            "default_value": "The assessment",
+            "placeholder": "The assessment"
+        },
+        {
+            "key": "field_hh_title",
+            "label": "Headline",
+            "name": "title",
+            "type": "text",
+            "instructions": "Main hero title",
+            "default_value": "Which Zone are you in today?",
+            "placeholder": "Which Zone are you in today?"
+        },
+        {
+            "key": "field_hh_description",
+            "label": "Description",
+            "name": "description",
+            "type": "textarea",
+            "instructions": "Lede paragraph under title",
+            "default_value": "Your level of success, prosperity, happiness and the quality of your relationships depend on the Zone you are operating from. Fourteen questions to find out which one.",
+            "rows": 3
+        },
+        {
+            "key": "field_hh_tab_buttons",
+            "label": "Buttons",
+            "name": "",
+            "type": "tab",
+            "placement": "top"
+        },
+        {
+            "key": "field_hh_btn_pri_text",
+            "label": "Primary Button Text",
+            "name": "button_primary_text",
+            "type": "text",
+            "default_value": "Find your Zone — free"
+        },
+        {
+            "key": "field_hh_btn_pri_link",
+            "label": "Primary Button Link",
+            "name": "button_primary_link",
+            "type": "text",
+            "default_value": "/short-quiz/"
+        },
+        {
+            "key": "field_hh_btn_sec_text",
+            "label": "Secondary Button Text",
+            "name": "button_secondary_text",
+            "type": "text",
+            "default_value": "How it works"
+        },
+        {
+            "key": "field_hh_btn_sec_link",
+            "label": "Secondary Button Link",
+            "name": "button_secondary_link",
+            "type": "text",
+            "default_value": "#assessment"
+        },
+        {
+            "key": "field_hh_tab_card",
+            "label": "Card (Right Column)",
+            "name": "",
+            "type": "tab",
+            "placement": "top"
+        },
+        {
+            "key": "field_hh_card_title",
+            "label": "Card Header Title",
+            "name": "card_title",
+            "type": "text",
+            "default_value": "The three areas it measures"
+        },
+        {
+            "key": "field_hh_areas",
+            "label": "Areas Measured",
+            "name": "areas",
+            "type": "repeater",
+            "layout": "table",
+            "button_label": "Add Area",
+            "sub_fields": [
+                {
+                    "key": "field_hh_area_title",
+                    "label": "Area Title",
+                    "name": "title",
+                    "type": "text",
+                    "placeholder": "Financial Profile"
+                },
+                {
+                    "key": "field_hh_area_subtitle",
+                    "label": "Area Subtitle / Metric",
+                    "name": "subtitle",
+                    "type": "text",
+                    "placeholder": "Money and prosperity"
+                }
+            ]
+        },
+        {
+            "key": "field_hh_zones_title",
+            "label": "Zones Section Title",
+            "name": "zones_title",
+            "type": "text",
+            "default_value": "The four Zones"
+        }
+    ],
+    "location": [
+        [
+            {
+                "param": "block",
+                "operator": "==",
+                "value": "acf/home-hero"
+            }
+        ]
+    ],
+    "menu_order": 0,
+    "position": "normal",
+    "style": "default",
+    "label_placement": "top",
+    "instruction_placement": "label",
+    "active": true,
+    "description": "Home Hero block settings"
+}

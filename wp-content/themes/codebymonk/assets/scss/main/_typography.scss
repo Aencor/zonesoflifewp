@@ -1,362 +1,85 @@
-@import url("https://fonts.googleapis.com/css?family=Playfair+Display|Source+Sans+Pro:300,400,700&display=swap");
-@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap");
-
 /*
- * Typography: Setting up global font-related properties for all the elements
-*/
+ * Typography: Zones of Life Design System
+ */
 
-a {
-	text-decoration: none;
-	color: $body-color !important;
-	transition: .2s;
-	&:hover,
-	&:focus {
-		text-decoration: underline;
-		color: $primaryColor !important;
-	}
-
-	&:active {
-		color: $black !important;
-	}
-}
-
-.dark-bg {
-	a {
-		text-decoration: none;
-		color: $white !important;
-		transition: .2s;
-		&:hover,
-		&:focus {
-			color: $secondaryColor !important;
-			text-decoration: underline;
-		}
-
-		&:active {
-			color: $secondaryColor !important;
-		}
-	}
+@font-face {
+  font-family: 'Myriad Pro';
+  src: url('../fonts/MyriadPro-Regular.eot');
+  src: url('../fonts/MyriadPro-Regular.eot?#iefix') format('embedded-opentype'),
+       url('../fonts/MyriadPro-Regular.woff2') format('woff2'),
+       url('../fonts/MyriadPro-Regular.woff') format('woff'),
+       url('../fonts/MyriadPro-Regular.ttf') format('truetype'),
+       url('../fonts/MyriadPro-Regular.svg#MyriadPro-Regular') format('svg');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
 }
 
 body {
-	font-family: $font-family-body;
-	font-size: 12px !important;
-	@include media(tablet){
-		font-size: 14px !important;
-	}
-
-	@include media(desktop){
-		font-size: 14px !important;
-	}
-}
-p{
-	font-size: 12px !important;
-	@include media(tablet){
-		font-size: 14px !important;
-	}
-
-	@include media(desktop){
-		font-size: 14px !important;
-	}
+  font-family: var(--body);
 }
 
-b,
-strong {
-	font-weight: $weight-bold;
+.font-myriad {
+  font-family: 'Myriad Pro', sans-serif;
 }
 
-i,
-em {
-	font-style: italic;
-}
-
-img {
-	max-width: 100%;
-}
-
-blockquote {
-	color: $body-color;
-	margin: 30px 0;
-	padding: 10px 0 0 40px;
-	box-sizing: border-box;
-	display: block;
-	width: 100%;
-	border-left: 4px solid $brand-primary;
-	.byline {
-		font-size: 16px;
-		font-weight: $weight-light;
-		display: block;
-	}
-}
-
-p.lead {
-	@include make-lead;
-}
-
-p.small {
-	@include make-small;
-}
-
-
-.content-styled {
-	a {
-		color: $brand-primary;
-		@include transition();
-
-		&:hover {
-			color: $brand-primary-darken;
-			text-decoration: none;
-		}
-
-		&:active {
-			color: $brand-primary-lighten;
-			text-decoration: none;
-		}
-	}
-
-	ul {
-		list-style-type: circle;
-		margin-left: 1em;
-
-		li {
-			margin: 1em 0;
-		}
-	}
-
-	hr {
-		margin-top: 1.5rem;
-		margin-bottom: 1.5rem;
-		width: 100%;
-		height: 1px;
-		background-color: $border-color;
-	}
-
-	img {
-		&.alignleft {
-			float: left;
-			margin-right: 20px;
-			margin-bottom: 20px;
-		}
-		&.alignright {
-			float: right;
-			margin-left: 20px;
-			margin-bottom: 20px;
-		}
-		&.aligncenter {
-			clear: both;
-			float: none;
-			margin: 0 auto;
-		}
-	}
-
-	+ .btn,
-	+ p {
-		margin-top: 20px;
-	}
-
-	ul {
-		display: block;
-		list-style: none;
-		margin-bottom: 0;
-	}
-}
-
-p {
-	font-family: $font-family-body;
-	font-weight: $weight-normal;
-	font-size: 14px;
-	line-height: 20px;
-	color: $body-color;
-	margin-bottom: 20px;
-	@include media(tablet) {
-		font-size: 16px;
-		line-height: 24px;
-	}
-	@include media(desktop) {
-		font-size: 18px;
-		line-height: 140%;
-	}
-}
-
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
-	letter-spacing: 0;
-	color: $body-color;
-	margin-bottom: 1.2rem !important;
+h1, h2, h3, h4 {
+  font-family: var(--display);
+  font-weight: 600;
+  line-height: 1.12;
+  letter-spacing: -0.015em;
 }
 
 h1 {
-	font-family: $font-family-body;
-	font-size: 28px !important;
-	line-height: 32px;
-	color: $body-color;
-	font-weight: 500 !important;
-	@include media(tablet) {
-		font-size: 50px !important;
-		line-height: 56px;
-	}
-	@include media(desktop) {
-		font-size: 60px !important;
-		line-height: 75px;
-	}
+  font-size: clamp(32px, 4.6vw, 52px);
 }
 
 h2 {
-	font-size: 24px !important;
-	line-height: 28px;
-	color: $body-color;
-	font-weight: 500 !important;
-	@include media(tablet) {
-		font-size: 40px !important;
-		line-height: 48px;
-	}
-	@include media(desktop) {
-		font-size: 48px !important;
-		line-height: 52px;
-	}
+  font-size: clamp(25px, 3vw, 35px);
 }
 
 h3 {
-	font-size: 22px !important;
-	line-height: 26px;
-	color: $body-color;
-	font-weight: 500 !important;
-	@include media(tablet) {
-		font-size: 30px !important;
-		line-height: 32px;
-	}
-	@include media(desktop) {
-		font-size: 36px !important;
-		line-height: 100%;
-	}
+  font-size: 19px;
 }
 
 h4 {
-	font-size: 20px !important;
-	line-height: 24px;
-	color: $body-color;
-	font-weight: 500 !important;
-	@include media(tablet) {
-		font-size: 24px !important;
-		line-height: 28px;
-	}
-	@include media(desktop) {
-		font-size: 26px !important;
-		line-height: 120%;
-	}
+  font-size: 16px;
 }
 
-h5 {
-	font-size: 18px !important;
-	line-height: 22px;
-	color: $body-color;
-	font-weight: 500 !important;
-	@include media(tablet) {
-		font-size: 18px !important;
-		line-height: 120%;
-	}
-	@include media(desktop) {
-		font-size: 20px !important;
-		line-height: 120%;
-	}
+.kicker {
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--accent);
 }
 
-h6 {
-	font-size: 14px !important;
-	line-height: 18px;
-	color: $body-color;
-	font-weight: 500 !important;
-	@include media(tablet) {
-		font-size: 16px !important;
-		line-height: 20px;
-	}
-	@include media(desktop) {
-		font-size: 18px !important;
-		line-height: 120%;
-	}
+.lede {
+  font-size: 17px;
+  line-height: 1.65;
+  color: #3D4A57;
 }
 
-ul {
-	li {
-		padding-left: 30px;
-		position: relative;
-		margin-bottom: 15px;
-		&:before {
-			content: " ";
-			display: block;
-			width: 6px;
-			height: 6px;
-			border-radius: 100%;
-			background-color: $primaryColor;
-			position: absolute;
-			left: 0;
-			top: 5px;
-		}
-		ul{
-			padding-top: 15px;
-		}
-	}
-	&.graphic-list {
-		li {
-			&:before {
-				background-color: transparent;
-				width: 16px;
-				height: 16px;
-				background-image: url("../img/icons/bullet.svg");
-			}
-		}
-	}
+.sm {
+  font-size: 14px;
+  line-height: 1.62;
+  color: #4A5764;
 }
 
-ol {
-	counter-reset: item;
-	padding: 0;
-	li {
-		counter-increment: item;
-		list-style: none inside;
-		padding-left: 30px;
-		position: relative;
-
-		&:before {
-			color: $brand-primary;
-			content: "" counter(item) "";
-			display: inline-block;
-			left: 10px;
-			top: 5px;
-			line-height: 15px;
-			position: absolute;
-			font-weight: bold;
-			text-align: center;
-		}
-	}
+.xs {
+  font-size: 13px;
+  line-height: 1.6;
+  color: #5A6875;
 }
 
-.dark {
-	ul {
-		li {
-			color: $white;
-			&:before {
-				background-color: $secondaryColor;
-			}
-		}
-		&.graphic-list {
-			li {
-				&:before {
-					background-image: url("../img/icons/bullet-light.svg");
-				}
-			}
-		}
-	}
+.mono {
+  font-family: var(--mono);
+}
 
-	ol {
-		li {
-			color: $white;
-			&::before {
-				color: $secondaryColor;
-			}
-		}
-	}
+.tiny {
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.11em;
+  text-transform: uppercase;
+  color: var(--muted);
 }

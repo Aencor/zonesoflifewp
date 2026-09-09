@@ -1,0 +1,198 @@
+{
+    "key": "group_block_four_zones",
+    "title": "Block - Four Zones",
+    "fields": [
+        {
+            "key": "field_acc_four_zones",
+            "label": "Block - Four Zones",
+            "name": "",
+            "aria-label": "",
+            "type": "accordion",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "open": 0,
+            "multi_expand": 0,
+            "endpoint": 0
+        },
+        {
+            "key": "field_fz_tab_zones",
+            "label": "Zones Cards",
+            "name": "",
+            "type": "tab",
+            "placement": "top"
+        },
+        {
+            "key": "field_fz_zones_repeater",
+            "label": "Zones Cards List",
+            "name": "zones",
+            "type": "repeater",
+            "instructions": "Cards showing each zone with color indicators and descriptions",
+            "layout": "block",
+            "button_label": "Add Zone Card",
+            "sub_fields": [
+                {
+                    "key": "field_fz_zone_title",
+                    "label": "Zone Title",
+                    "name": "title",
+                    "type": "text",
+                    "placeholder": "Red"
+                },
+                {
+                    "key": "field_fz_zone_level",
+                    "label": "Active Zone Level",
+                    "name": "level",
+                    "type": "select",
+                    "instructions": "How many segments are active (1 = Red, 2 = Amber, 3 = Green, 4 = Golden)",
+                    "choices": {
+                        "1": "Level 1 (Red)",
+                        "2": "Level 2 (Amber)",
+                        "3": "Level 3 (Green)",
+                        "4": "Level 4 (Golden Magic)"
+                    },
+                    "default_value": "1"
+                },
+                {
+                    "key": "field_fz_zone_icon",
+                    "label": "Icon",
+                    "name": "icon",
+                    "type": "select",
+                    "choices": {
+                        "compass": "Compass",
+                        "spark": "Spark",
+                        "chart": "Chart",
+                        "target": "Target"
+                    },
+                    "default_value": "compass"
+                },
+                {
+                    "key": "field_fz_zone_icon_style",
+                    "label": "Icon Box Color",
+                    "name": "icon_style",
+                    "type": "select",
+                    "choices": {
+                        "navy": "Soft Blue / Navy",
+                        "gold": "Soft Gold",
+                        "green": "Soft Green"
+                    },
+                    "default_value": "navy"
+                },
+                {
+                    "key": "field_fz_zone_title_color",
+                    "label": "Title Color",
+                    "name": "title_color",
+                    "type": "text",
+                    "instructions": "CSS color for the zone title (e.g. var(--red), #B98F0C, var(--shgreen), #8A7440)",
+                    "placeholder": "var(--red)"
+                },
+                {
+                    "key": "field_fz_zone_desc",
+                    "label": "Description",
+                    "name": "description",
+                    "type": "textarea",
+                    "rows": 2
+                }
+            ]
+        },
+        {
+            "key": "field_fz_tab_cta",
+            "label": "CTA Banner",
+            "name": "",
+            "type": "tab",
+            "placement": "top"
+        },
+        {
+            "key": "field_fz_show_cta",
+            "label": "Show CTA Banner",
+            "name": "show_cta",
+            "type": "true_false",
+            "default_value": 1,
+            "ui": 1
+        },
+        {
+            "key": "field_fz_cta_title",
+            "label": "CTA Title",
+            "name": "cta_title",
+            "type": "text",
+            "default_value": "Reading about the Zones is not the same as knowing yours",
+            "conditional_logic": [
+                [
+                    {
+                        "field": "field_fz_show_cta",
+                        "operator": "==",
+                        "value": "1"
+                    }
+                ]
+            ]
+        },
+        {
+            "key": "field_fz_cta_desc",
+            "label": "CTA Description",
+            "name": "cta_description",
+            "type": "text",
+            "default_value": "Fourteen questions, two minutes, no card.",
+            "conditional_logic": [
+                [
+                    {
+                        "field": "field_fz_show_cta",
+                        "operator": "==",
+                        "value": "1"
+                    }
+                ]
+            ]
+        },
+        {
+            "key": "field_fz_cta_btn_text",
+            "label": "CTA Button Text",
+            "name": "cta_button_text",
+            "type": "text",
+            "default_value": "Find your Zone",
+            "conditional_logic": [
+                [
+                    {
+                        "field": "field_fz_show_cta",
+                        "operator": "==",
+                        "value": "1"
+                    }
+                ]
+            ]
+        },
+        {
+            "key": "field_fz_cta_btn_link",
+            "label": "CTA Button Link",
+            "name": "cta_button_link",
+            "type": "text",
+            "default_value": "/short-quiz/",
+            "conditional_logic": [
+                [
+                    {
+                        "field": "field_fz_show_cta",
+                        "operator": "==",
+                        "value": "1"
+                    }
+                ]
+            ]
+        }
+    ],
+    "location": [
+        [
+            {
+                "param": "block",
+                "operator": "==",
+                "value": "acf/four-zones"
+            }
+        ]
+    ],
+    "menu_order": 0,
+    "position": "normal",
+    "style": "default",
+    "label_placement": "top",
+    "instruction_placement": "label",
+    "active": true,
+    "description": "Four Zones grid and CTA block"
+}
