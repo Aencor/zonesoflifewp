@@ -8,26 +8,26 @@ document.addEventListener('DOMContentLoaded', function () {
   var i18n = (window.zolQuizData && window.zolQuizData.isSpanish) ? window.zolQuizData : null;
 
   var Q = (i18n && i18n.questions) ? i18n.questions : [
-    { a: "Life & Skills", t: "Do you complete activities quickly?", o: [["Yes", 4], ["Maybe", 2], ["No", 1]] },
-    { a: "Financial", t: "Are you positioned for success?", o: [["Yes", 4], ["Maybe", 2], ["No", 1]] },
-    { a: "Life & Skills", t: "Do you perceive other people's games?", o: [["Yes", 4], ["Maybe", 2], ["No", 1]] },
-    { a: "Financial", t: "Do you drive a luxury car?", o: [["Yes", 4], ["Maybe", 2], ["No", 1]] },
-    { a: "Life & Skills", t: "Is your future uncertain?", o: [["Yes", 1], ["Maybe", 2], ["No", 4]] },
-    { a: "Body", t: "Do you like to have a lot of action?", o: [["Yes", 4], ["Maybe", 2], ["No", 1]] },
-    { a: "Financial", t: "Do you go into debt at the end of the year?", o: [["Yes", 1], ["Maybe", 2], ["No", 4]] },
-    { a: "Life & Skills", t: "Do you tend to misperceive people?", o: [["Yes", 1], ["Maybe", 2], ["No", 4]] },
-    { a: "Financial", t: "Do you travel in economy class instead of first class?", o: [["Yes", 1], ["Maybe", 2], ["No", 4]] },
-    { a: "Financial", t: "Are you unsure about your material desires?", o: [["Yes", 1], ["Maybe", 2], ["No", 4]] },
-    { a: "Life & Skills", t: "Do you wish you were living your dream?", o: [["Yes", 1], ["Maybe", 2], ["No", 4]] },
-    { a: "Financial", t: "Has your career become less than what you wanted?", o: [["Yes", 1], ["Maybe", 2], ["No", 4]] },
-    { a: "Life & Skills", t: "Do you wish you had acted faster?", o: [["Yes", 1], ["Maybe", 2], ["No", 4]] },
-    { a: "Financial", t: "Will your career provide you with future wealth?", o: [["Yes", 4], ["Maybe", 2], ["No", 1]] },
-    { a: "Life & Skills", t: "Do you always strive to be the best you can be?", o: [["Yes", 4], ["Maybe", 2], ["No", 1]] },
-    { a: "Life & Skills", t: "Do you dislike people?", o: [["Yes", 1], ["Maybe", 2], ["No", 4]] },
-    { a: "Life & Skills", t: "Do you take action to up your game?", o: [["Yes", 4], ["Maybe", 2], ["No", 1]] },
-    { a: "Life & Skills", t: "Do you feel you know more than others, even those more successful than you?", o: [["Yes", 1], ["Maybe", 2], ["No", 4]] },
-    { a: "Body", t: "Do you like staying close to home during holidays?", o: [["Yes", 1], ["Maybe", 2], ["No", 4]] },
-    { a: "Body", t: "Are you easily distracted?", o: [["Yes", 1], ["Maybe", 2], ["No", 4]] }
+    { a: "Life & Skills", ab: "Produce", t: "Do you complete activities quickly?", o: [["Yes", 4], ["Maybe", 2], ["No", 1]] },
+    { a: "Financial", ab: "Focus", t: "Are you positioned for success?", o: [["Yes", 4], ["Maybe", 2], ["No", 1]] },
+    { a: "Life & Skills", ab: "Investigate", t: "Do you perceive other people's games?", o: [["Yes", 4], ["Maybe", 2], ["No", 1]] },
+    { a: "Financial", ab: "Have", t: "Do you drive a luxury car?", o: [["Yes", 4], ["Maybe", 2], ["No", 1]] },
+    { a: "Life & Skills", ab: "Focus", t: "Is your future uncertain?", o: [["Yes", 1], ["Maybe", 2], ["No", 4]] },
+    { a: "Body", ab: "Produce", t: "Do you like to have a lot of action?", o: [["Yes", 4], ["Maybe", 2], ["No", 1]] },
+    { a: "Financial", ab: "Have", t: "Do you go into debt at the end of the year?", o: [["Yes", 1], ["Maybe", 2], ["No", 4]] },
+    { a: "Life & Skills", ab: "Investigate", t: "Do you tend to misperceive people?", o: [["Yes", 1], ["Maybe", 2], ["No", 4]] },
+    { a: "Financial", ab: "Have", t: "Do you travel in economy class instead of first class?", o: [["Yes", 1], ["Maybe", 2], ["No", 4]] },
+    { a: "Financial", ab: "Have", t: "Are you unsure about your material desires?", o: [["Yes", 1], ["Maybe", 2], ["No", 4]] },
+    { a: "Life & Skills", ab: "Invest", t: "Do you wish you were living your dream?", o: [["Yes", 1], ["Maybe", 2], ["No", 4]] },
+    { a: "Financial", ab: "Produce", t: "Has your career become less than what you wanted?", o: [["Yes", 1], ["Maybe", 2], ["No", 4]] },
+    { a: "Life & Skills", ab: "Invest", t: "Do you wish you had acted faster?", o: [["Yes", 1], ["Maybe", 2], ["No", 4]] },
+    { a: "Financial", ab: "Invest", t: "Will your career provide you with future wealth?", o: [["Yes", 4], ["Maybe", 2], ["No", 1]] },
+    { a: "Life & Skills", ab: "Focus", t: "Do you always strive to be the best you can be?", o: [["Yes", 4], ["Maybe", 2], ["No", 1]] },
+    { a: "Life & Skills", ab: "Investigate", t: "Do you dislike people?", o: [["Yes", 1], ["Maybe", 2], ["No", 4]] },
+    { a: "Life & Skills", ab: "Invest", t: "Do you take action to up your game?", o: [["Yes", 4], ["Maybe", 2], ["No", 1]] },
+    { a: "Life & Skills", ab: "Investigate", t: "Do you feel you know more than others, even those more successful than you?", o: [["Yes", 1], ["Maybe", 2], ["No", 4]] },
+    { a: "Body", ab: "Focus", t: "Do you like staying close to home during holidays?", o: [["Yes", 1], ["Maybe", 2], ["No", 4]] },
+    { a: "Body", ab: "Focus", t: "Are you easily distracted?", o: [["Yes", 1], ["Maybe", 2], ["No", 4]] }
   ];
 
   var ZONE = (i18n && i18n.zones) ? i18n.zones : {
@@ -44,18 +44,31 @@ document.addEventListener('DOMContentLoaded', function () {
     "Golden Magic": "You are outside of the physical universe. You operate above the laws of the physical universe and are totally telepathic. Mastery in your Zone reliably."
   };
 
+  var ABILITY_QUOTES = (i18n && i18n.ability_quotes) ? i18n.ability_quotes : {
+    "Have": "You can earn more and still end up with nothing: if you don't feel entitled to keep it, money finds its own way out.",
+    "Investigate": "Expensive decisions are rarely made for lack of money. They're made for lack of questions before signing.",
+    "Focus": "Your attention is spread across so many fronts that none of them reaches the point where results start.",
+    "Invest": "Your time, your energy and your money are already invested in something. The question is whether it's giving anything back.",
+    "Produce": "You're busy most of the day and still find it hard to point at what you produced this week.",
+    "Create Wealth": "It can't be trained on its own: it's the average of the other five, showing you the result of all of them together."
+  };
+
   var LBL = (i18n && i18n.labels) ? i18n.labels : {
     area: 'Area: ',
     you_are_in: 'You are in the ',
     you_are_here: ' · you are here',
-    start_here: ' · start here',
+    start_here: ' · lowest ability',
     privacy_error: 'Please accept the Privacy Policy to view your result.',
     email_error: 'Please enter a valid email address.',
+    phone_error: 'Please enter a valid phone or WhatsApp number.',
+    email_sent: '✓ Sent to your email',
+    gap_template: "What this result still doesn't tell you: why {ability} sits where it does, which of the other five is dragging it down, and which first move has the most impact. That's in your Financial Health Profile: 100 questions, your full chart, the report on all six abilities, the Financial Fitness Workbook and Alan C. Walter's audio lesson.",
     area_names: {}
   };
 
   var answers = [];
   var idx = 0;
+  var lastLeadData = null;
 
   var intro = document.getElementById('quizIntro');
   var run = document.getElementById('quizRun');
@@ -66,6 +79,7 @@ document.addEventListener('DOMContentLoaded', function () {
   var btnBack = document.getElementById('qBack');
   var btnGateGo = document.getElementById('gGo');
   var btnRetake = document.getElementById('retake');
+  var btnEmailMe = document.getElementById('rBtnEmailMe');
 
   var qArea = document.getElementById('qArea');
   var qCount = document.getElementById('qCount');
@@ -73,24 +87,14 @@ document.addEventListener('DOMContentLoaded', function () {
   var qText = document.getElementById('qText');
   var qOpts = document.getElementById('qOpts');
 
-  function paintBar(el, total, done) {
-    if (!el) return;
-    el.innerHTML = '';
-    for (var i = 0; i < total; i++) {
-      var span = document.createElement('span');
-      if (i < done) span.className = 'on';
-      el.appendChild(span);
-    }
-  }
-
   function startAssessment() {
-    answers = [];
-    idx = 0;
     intro.hidden = true;
-    gate.hidden = true;
     res.hidden = true;
+    gate.hidden = true;
     run.hidden = false;
-    drawQ();
+    answers = new Array(Q.length);
+    idx = 0;
+    renderQuestion();
     quizSection.scrollIntoView({ behavior: 'smooth' });
   }
 
@@ -107,54 +111,59 @@ document.addEventListener('DOMContentLoaded', function () {
     }
   });
 
-  function drawQ() {
-    var item = Q[idx];
-    qArea.textContent = LBL.area + (LBL.area_names[item.a] || item.a);
+  function renderQuestion() {
+    var q = Q[idx];
     qCount.textContent = (idx + 1) + ' / ' + Q.length;
-    paintBar(qBar, Q.length, idx + 1);
-    qText.textContent = item.t;
+    qArea.textContent = (LBL.area_names && LBL.area_names[q.a]) ? LBL.area_names[q.a] : q.a;
+    qBar.style.width = Math.round(((idx + 1) / Q.length) * 100) + '%';
+    qText.textContent = q.t;
 
-    var html = '';
-    item.o.forEach(function (o) {
-      var val = o[1];
-      var isSel = answers[idx] === val;
-      html += '<button type="button" class="choice' + (isSel ? ' sel' : '') + '" data-val="' + val + '">';
-      html += '<span>' + o[0] + '</span>';
-      html += '<i class="radio-indicator"></i>';
-      html += '</button>';
-    });
-    qOpts.innerHTML = html;
-
-    var choiceBtns = qOpts.querySelectorAll('.choice');
-    choiceBtns.forEach(function (btn) {
+    qOpts.innerHTML = '';
+    q.o.forEach(function (opt) {
+      var btn = document.createElement('button');
+      btn.type = 'button';
+      btn.className = 'btn btn-ghost btn-block q-btn' + (answers[idx] === opt[1] ? ' active' : '');
+      btn.textContent = opt[0];
       btn.addEventListener('click', function () {
-        answers[idx] = parseInt(btn.dataset.val, 10);
-        if (idx < Q.length - 1) {
-          idx++;
-          drawQ();
-        } else {
-          run.hidden = true;
-          gate.hidden = false;
-        }
+        selectOption(opt[1]);
       });
+      qOpts.appendChild(btn);
     });
 
-    btnBack.disabled = (idx === 0);
+    if (btnBack) {
+      btnBack.style.visibility = (idx > 0) ? 'visible' : 'hidden';
+    }
+  }
+
+  function selectOption(val) {
+    answers[idx] = val;
+    if (idx < Q.length - 1) {
+      idx++;
+      renderQuestion();
+    } else {
+      finishQuestions();
+    }
   }
 
   if (btnBack) {
     btnBack.addEventListener('click', function () {
       if (idx > 0) {
         idx--;
-        drawQ();
+        renderQuestion();
       }
     });
   }
 
-  function scoreArea(areaName) {
+  function finishQuestions() {
+    run.hidden = true;
+    gate.hidden = false;
+    quizSection.scrollIntoView({ behavior: 'smooth' });
+  }
+
+  function scoreAbility(abKey) {
     var vals = [];
     Q.forEach(function (item, i) {
-      if (item.a === areaName && answers[i]) {
+      if (item.ab === abKey && answers[i]) {
         vals.push(answers[i]);
       }
     });
@@ -162,30 +171,100 @@ document.addEventListener('DOMContentLoaded', function () {
     return Math.round(vals.reduce(function (a, b) { return a + b; }, 0) / vals.length);
   }
 
-  function renderResult(nameVal, emailVal) {
-    var areas = ["Financial", "Life & Skills", "Body"];
-    var scores = areas.map(scoreArea);
-    var overall = Math.round(scores.reduce(function (a, b) { return a + b; }, 0) / scores.length);
-    var z = ZONE[overall] || ZONE[2];
+  function renderResult(nameVal, emailVal, phoneVal, waOptinVal) {
+    var isEs = !!i18n;
+    var baseAbilities = isEs
+      ? [
+          { key: "Tener", label: "Tener" },
+          { key: "Investigar", label: "Investigar" },
+          { key: "Enfocarse", label: "Enfocarse" },
+          { key: "Invertir", label: "Invertir" },
+          { key: "Producir", label: "Producir" }
+        ]
+      : [
+          { key: "Have", label: "Have" },
+          { key: "Investigate", label: "Investigate" },
+          { key: "Focus", label: "Focus" },
+          { key: "Invest", label: "Invest" },
+          { key: "Produce", label: "Produce" }
+        ];
 
-    var rZone = document.getElementById('rZone');
-    var rHere = document.getElementById('rHere');
+    var abilityScores = baseAbilities.map(function (ab) {
+      return scoreAbility(ab.key);
+    });
+
+    var sum = abilityScores.reduce(function (a, b) { return a + b; }, 0);
+    var createWealthScore = Math.max(1, Math.min(4, Math.round(sum / abilityScores.length)));
+    var createWealthKey = isEs ? "Crear riqueza" : "Create Wealth";
+
+    var allAbilities = baseAbilities.concat([{ key: createWealthKey, label: createWealthKey }]);
+    var allScores = abilityScores.concat([createWealthScore]);
+
+    // Overall zone score
+    var overallScore = Math.max(1, Math.min(4, Math.round(allScores.reduce(function (a, b) { return a + b; }, 0) / allScores.length)));
+    var z = ZONE[overallScore] || ZONE[2];
+
+    // Find lowest ability (among base 5 abilities first, to give actionable focus)
+    var lowestBaseScore = Math.min.apply(null, abilityScores);
+    var lowestBaseIdx = abilityScores.indexOf(lowestBaseScore);
+    var worstAbilityObj = baseAbilities[lowestBaseIdx];
+    var worstAbilityName = worstAbilityObj.label;
+    var worstQuote = ABILITY_QUOTES[worstAbilityObj.key] || "";
+
+    // DOM Elements - R1 Layout
+    var rUserName = document.getElementById('rUserName');
+    var rLowestAbility = document.getElementById('rLowestAbility');
+    var rAbilityQuote = document.getElementById('rAbilityQuote');
+    var rAbilitiesBreakdown = document.getElementById('rAbilitiesBreakdown');
+    var rZoneName = document.getElementById('rZoneName');
+    var rZoneScoreLabel = document.getElementById('rZoneScoreLabel');
     var rBar = document.getElementById('rBar');
     var rBody = document.getElementById('rBody');
-    var rAreas = document.getElementById('rAreas');
 
-    if (rZone) {
-      var zoneLabel = z.n.toLowerCase().indexOf('zone') !== -1 || z.n.toLowerCase().indexOf('zona') !== -1 ? z.n : (z.n + (i18n ? ' Zona' : ' Zone'));
-      rZone.textContent = LBL.you_are_in + zoneLabel;
-      rZone.style.color = z.col;
+    if (rUserName) {
+      rUserName.textContent = nameVal;
     }
-    if (rHere) {
-      rHere.textContent = z.n + LBL.you_are_here;
+    if (rLowestAbility) {
+      rLowestAbility.textContent = worstAbilityName;
+    }
+    if (rAbilityQuote) {
+      rAbilityQuote.textContent = worstQuote ? '“' + worstQuote + '”' : '';
+    }
+
+    if (rAbilitiesBreakdown) {
+      var abHtml = '';
+      allAbilities.forEach(function (ab, i) {
+        var score = allScores[i];
+        var zz = ZONE[score] || ZONE[2];
+        var isLowest = (ab.key === worstAbilityObj.key);
+        abHtml += '<div class="row ability-score-row" style="padding:12px 0;border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;">';
+        abHtml += '  <div class="grow" style="font-weight:600;font-size:15px;color:var(--ink);display:flex;align-items:center;gap:8px;">';
+        abHtml += '    <span>' + ab.label + '</span>';
+        if (i === 5) {
+          abHtml += '    <span class="tiny text-muted" style="font-size:11px;font-weight:400;">(' + (isEs ? 'promedio' : 'average') + ')</span>';
+        }
+        abHtml += '  </div>';
+        abHtml += '  <span class="tiny" style="color:' + zz.col + ';font-weight:700;letter-spacing:0.06em;">' + zz.n + (isLowest ? LBL.start_here : '') + '</span>';
+        abHtml += '</div>';
+      });
+      rAbilitiesBreakdown.innerHTML = abHtml;
+    }
+
+    var rGapCopy = document.getElementById('rGapCopy');
+    if (rGapCopy && LBL.gap_template) {
+      rGapCopy.textContent = LBL.gap_template.replace('{ability}', worstAbilityName);
+    }
+
+    if (rZoneName) {
+      rZoneName.textContent = z.n;
+    }
+    if (rZoneScoreLabel) {
+      rZoneScoreLabel.textContent = (isEs ? 'Nivel ' : 'Level ') + overallScore + ' / 4';
     }
     if (rBar) {
       var barHtml = '<div class="zones dim">';
-      for (var i = 1; i <= 4; i++) {
-        barHtml += '<i class="z' + i + (i <= z.i ? ' on' : '') + '"></i>';
+      for (var b = 1; b <= 4; b++) {
+        barHtml += '<i class="z' + b + (b <= z.i ? ' on' : '') + '"></i>';
       }
       barHtml += '</div>';
       rBar.innerHTML = barHtml;
@@ -194,24 +273,20 @@ document.addEventListener('DOMContentLoaded', function () {
       rBody.textContent = COPY[z.n] || COPY["Yellow"] || COPY["Amarilla"];
     }
 
-    var worstIdx = scores.indexOf(Math.min.apply(null, scores));
-
-    if (rAreas) {
-      var areaHtml = '';
-      areas.forEach(function (a, i) {
-        var zz = ZONE[scores[i]] || ZONE[2];
-        var isLowest = (i === worstIdx);
-        areaHtml += '<div class="row area-score-row" style="padding:12px 0;border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;">';
-        areaHtml += '  <div class="grow" style="font-weight:600;font-size:15px;color:var(--ink);">' + (LBL.area_names[a] || a) + '</div>';
-        areaHtml += '  <span class="tiny" style="color:' + zz.col + ';font-weight:600;letter-spacing:0.06em;">' + zz.n + (isLowest ? LBL.start_here : '') + '</span>';
-        areaHtml += '</div>';
-      });
-      rAreas.innerHTML = areaHtml;
-    }
-
     gate.hidden = true;
     res.hidden = false;
     quizSection.scrollIntoView({ behavior: 'smooth' });
+
+    lastLeadData = {
+      name: nameVal,
+      email: emailVal,
+      phone: phoneVal,
+      whatsapp_optin: waOptinVal ? '1' : '0',
+      zone: z.n,
+      lowest_ability: worstAbilityName,
+      lowest_ability_quote: worstQuote,
+      lang: isEs ? 'es' : 'en'
+    };
 
     // Send to database
     var formData = new FormData();
@@ -221,10 +296,15 @@ document.addEventListener('DOMContentLoaded', function () {
     }
     formData.append('name', nameVal);
     formData.append('email', emailVal);
+    formData.append('phone', phoneVal);
+    formData.append('whatsapp_optin', waOptinVal ? '1' : '0');
     formData.append('zone', z.n);
-    formData.append('financial_zone', ZONE[scores[0]].n);
-    formData.append('life_zone', ZONE[scores[1]].n);
-    formData.append('body_zone', ZONE[scores[2]].n);
+    formData.append('lowest_ability', worstAbilityName);
+    formData.append('lowest_ability_quote', worstQuote);
+    formData.append('lang', isEs ? 'es' : 'en');
+    allAbilities.forEach(function(ab, idx) {
+      formData.append('ability_' + ab.key.toLowerCase().replace(/\s+/g, '_'), allScores[idx]);
+    });
 
     var ajaxUrl = (window.zolData && window.zolData.ajaxUrl) ? window.zolData.ajaxUrl : '/wp-admin/admin-ajax.php';
     fetch(ajaxUrl, { method: 'POST', body: formData });
@@ -233,8 +313,10 @@ document.addEventListener('DOMContentLoaded', function () {
   if (btnGateGo) {
     btnGateGo.addEventListener('click', function () {
       var gOk = document.getElementById('gOk');
+      var gWaOptin = document.getElementById('gWaOptin');
       var gName = document.getElementById('gName');
       var gMail = document.getElementById('gMail');
+      var gPhone = document.getElementById('gPhone');
       var err = document.getElementById('quizGateError');
 
       if (gOk && !gOk.checked) {
@@ -246,7 +328,9 @@ document.addEventListener('DOMContentLoaded', function () {
       }
 
       var emailVal = gMail ? gMail.value.trim() : '';
+      var phoneVal = gPhone ? gPhone.value.trim() : '';
       var nameVal = gName ? gName.value.trim() : (i18n ? 'Participante' : 'Participant');
+      var waOptinVal = gWaOptin ? gWaOptin.checked : true;
 
       if (!emailVal || emailVal.indexOf('@') < 1 || emailVal.indexOf('.') < 0) {
         if (err) {
@@ -257,8 +341,40 @@ document.addEventListener('DOMContentLoaded', function () {
         return;
       }
 
+      if (!phoneVal || phoneVal.length < 7) {
+        if (err) {
+          err.textContent = LBL.phone_error || 'Por favor ingresa un número de teléfono válido.';
+          err.style.display = 'block';
+        }
+        if (gPhone) gPhone.focus();
+        return;
+      }
+
       if (err) err.style.display = 'none';
-      renderResult(nameVal, emailVal);
+      renderResult(nameVal, emailVal, phoneVal, waOptinVal);
+    });
+  }
+
+  if (btnEmailMe) {
+    btnEmailMe.addEventListener('click', function () {
+      if (!lastLeadData) return;
+      btnEmailMe.disabled = true;
+      var emailSentMsg = document.getElementById('rEmailSentMsg');
+      if (emailSentMsg) emailSentMsg.style.display = 'block';
+
+      var sendData = new FormData();
+      sendData.append('action', 'zol_email_mini_profile');
+      if (window.zolData && window.zolData.nonce) {
+        sendData.append('nonce', window.zolData.nonce);
+      }
+      sendData.append('name', lastLeadData.name);
+      sendData.append('email', lastLeadData.email);
+      sendData.append('lowest_ability', lastLeadData.lowest_ability);
+      sendData.append('lowest_ability_quote', lastLeadData.lowest_ability_quote);
+      sendData.append('lang', lastLeadData.lang || 'en');
+
+      var ajaxUrl = (window.zolData && window.zolData.ajaxUrl) ? window.zolData.ajaxUrl : '/wp-admin/admin-ajax.php';
+      fetch(ajaxUrl, { method: 'POST', body: sendData });
     });
   }
 

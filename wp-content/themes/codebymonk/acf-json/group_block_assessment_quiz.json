@@ -48,6 +48,20 @@
             "name": "start_button_text",
             "type": "text",
             "default_value": "Start"
+        },
+        {
+            "key": "field_aq_report_btn_text",
+            "label": "Full Report Button Text",
+            "name": "report_btn_text",
+            "type": "text",
+            "default_value": "Get the full report"
+        },
+        {
+            "key": "field_aq_report_btn_link",
+            "label": "Full Report Button Link",
+            "name": "report_btn_link",
+            "type": "text",
+            "default_value": "/finance/"
         }
     ],
     "location": [

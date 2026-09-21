@@ -315,15 +315,21 @@
         color: #384654;
       }
 
-      .areas-breakdown {
+      .areas-breakdown,
+      .abilities-breakdown {
         border: 1px solid var(--line);
         border-radius: 9px;
         padding: 6px 20px;
         background: #fff;
 
-        .area-score-row:last-child {
+        .area-score-row:last-child,
+        .ability-score-row:last-child {
           border-bottom: none !important;
         }
+      }
+
+      .quote-card {
+        border-radius: 8px;
       }
     }
 

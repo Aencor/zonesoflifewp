@@ -86,6 +86,20 @@
             "default_value": "price TBD"
         },
         {
+            "key": "field_at_c2_btn_text",
+            "label": "Card 2 Button Text",
+            "name": "card_2_btn_text",
+            "type": "text",
+            "default_value": "Get the full report"
+        },
+        {
+            "key": "field_at_c2_btn_link",
+            "label": "Card 2 Button Link",
+            "name": "card_2_btn_link",
+            "type": "text",
+            "default_value": "/finance/"
+        },
+        {
             "key": "field_at_c3_badge",
             "label": "Card 3 Badge",
             "name": "card_3_badge",

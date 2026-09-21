@@ -29,7 +29,12 @@ if (empty($c1BtnLink) || $c1BtnLink === '#quiz') {
 $c2Badge = get_field('card_2_badge') ?: __('Step 2 · paid', 'codebymonk');
 $c2Title = get_field('card_2_title') ?: __('Full Report Automated', 'codebymonk');
 $c2Desc  = get_field('card_2_desc') ?: __('Question-by-question breakdown of all three areas, what to move first and in what order, and what the Green Zone looks like in your specific case.', 'codebymonk');
-$c2Price = get_field('card_2_price') ?: 'price TBD';
+$c2Price = get_field('card_2_price');
+$c2BtnText = get_field('card_2_btn_text') ?: __('Get the full report', 'codebymonk');
+$c2BtnLink = get_field('card_2_btn_link');
+if (empty($c2BtnLink)) {
+    $c2BtnLink = home_url('/finance/');
+}
 
 // Card 3
 $c3Badge = get_field('card_3_badge') ?: __('60 minutes of Personalized Coaching', 'codebymonk');
@@ -68,7 +73,13 @@ $guaranteeDesc = get_field('guarantee_desc') ?: __('The guarantee already exists
         <h4 class="mt8"><?= esc_html($c2Title); ?></h4>
         <p class="sm mt16"><?= esc_html($c2Desc); ?></p>
         <div class="mt24">
-          <span class="pending"><?= esc_html($c2Price); ?></span>
+          <?php if (!empty($c2BtnText)): ?>
+            <a class="btn btn-go btn-sm btn-block" href="<?= esc_url($c2BtnLink); ?>">
+              <?= esc_html($c2BtnText); ?>
+            </a>
+          <?php elseif (!empty($c2Price)): ?>
+            <span class="pending"><?= esc_html($c2Price); ?></span>
+          <?php endif; ?>
         </div>
       </div>
 

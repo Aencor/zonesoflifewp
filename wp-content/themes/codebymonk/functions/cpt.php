@@ -137,14 +137,15 @@ add_action('init', 'zol_register_post_types');
  */
 function zol_profile_lead_columns($columns) {
 	return [
-		'cb'         => $columns['cb'],
-		'title'      => __('Name', 'codebymonk'),
-		'lead_email' => __('Email', 'codebymonk'),
-		'zone'       => __('Assigned Zone', 'codebymonk'),
-		'financial'  => __('Financial', 'codebymonk'),
-		'life'       => __('Life & Skills', 'codebymonk'),
-		'body'       => __('Body', 'codebymonk'),
-		'date'       => __('Submission Date', 'codebymonk'),
+		'cb'             => $columns['cb'],
+		'title'          => __('Name', 'codebymonk'),
+		'lead_email'     => __('Email', 'codebymonk'),
+		'lead_phone'     => __('WhatsApp / Phone', 'codebymonk'),
+		'funnel_stage'   => __('Funnel Stage', 'codebymonk'),
+		'lowest_ability' => __('Lowest Ability', 'codebymonk'),
+		'zone'           => __('Assigned Zone', 'codebymonk'),
+		'lead_lang'      => __('Lang', 'codebymonk'),
+		'date'           => __('Submission Date', 'codebymonk'),
 	];
 }
 add_filter('manage_profile_lead_posts_columns', 'zol_profile_lead_columns');
@@ -155,23 +156,44 @@ function zol_profile_lead_custom_column($column, $post_id) {
 			$email = get_post_meta($post_id, 'lead_email', true);
 			echo $email ? '<a href="mailto:' . esc_attr($email) . '">' . esc_html($email) . '</a>' : '—';
 			break;
+		case 'lead_phone':
+			$phone = get_post_meta($post_id, 'lead_phone', true);
+			$wa = get_post_meta($post_id, 'whatsapp_optin', true);
+			if ($phone) {
+				$clean = preg_replace('/[^0-9]/', '', $phone);
+				echo esc_html($phone) . ($wa === '1' ? ' <a href="https://wa.me/' . esc_attr($clean) . '" target="_blank" style="text-decoration:none;" title="WhatsApp Opt-in">💬</a>' : '');
+			} else {
+				echo '—';
+			}
+			break;
+		case 'funnel_stage':
+			$stage = get_post_meta($post_id, 'funnel_stage', true) ?: 'R1_completed';
+			if ($stage === 'profile_completed') {
+				echo '<span style="background:#dcfce7; color:#15803d; padding:2px 7px; border-radius:10px; font-size:11px; font-weight:700;">✓ Completed</span>';
+			} elseif ($stage === 'purchased_profile') {
+				echo '<span style="background:#dbeafe; color:#1d4ed8; padding:2px 7px; border-radius:10px; font-size:11px; font-weight:700;">$ Purchased</span>';
+			} elseif ($stage === 'in_progress') {
+				echo '<span style="background:#fef3c7; color:#b45309; padding:2px 7px; border-radius:10px; font-size:11px; font-weight:700;">⏳ In Progress</span>';
+			} else {
+				echo '<span style="background:#f3f4f6; color:#4b5563; padding:2px 7px; border-radius:10px; font-size:11px; font-weight:700;">Mini Profile (R1)</span>';
+			}
+			break;
+		case 'lowest_ability':
+			$ab = get_post_meta($post_id, 'lowest_ability', true);
+			echo $ab ? '<strong style="color:#d97706;">' . esc_html($ab) . '</strong>' : '—';
+			break;
 		case 'zone':
 			$zone = get_post_meta($post_id, 'zone', true);
 			$color = '#333';
-			if ($zone === 'Red') $color = '#D93829';
-			if ($zone === 'Amber') $color = '#B98F0C';
-			if ($zone === 'Green') $color = '#00A84F';
-			if ($zone === 'Golden Magic') $color = '#8A7440';
+			if (in_array($zone, ['Red', 'Roja'])) $color = '#D93829';
+			if (in_array($zone, ['Amber', 'Amarilla'])) $color = '#B98F0C';
+			if (in_array($zone, ['Green', 'Verde'])) $color = '#00A84F';
+			if (in_array($zone, ['Golden Magic', 'Magia Dorada'])) $color = '#8A7440';
 			echo '<strong style="color:' . esc_attr($color) . '">' . esc_html($zone ?: '—') . '</strong>';
 			break;
-		case 'financial':
-			echo esc_html(get_post_meta($post_id, 'financial_zone', true) ?: '—');
-			break;
-		case 'life':
-			echo esc_html(get_post_meta($post_id, 'life_zone', true) ?: '—');
-			break;
-		case 'body':
-			echo esc_html(get_post_meta($post_id, 'body_zone', true) ?: '—');
+		case 'lead_lang':
+			$lang = get_post_meta($post_id, 'lead_lang', true) ?: 'es';
+			echo '<span style="font-weight:700; font-size:11px; text-transform:uppercase;">' . esc_html($lang) . '</span>';
 			break;
 	}
 }

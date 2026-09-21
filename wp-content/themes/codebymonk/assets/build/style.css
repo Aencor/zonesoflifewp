@@ -2193,14 +2193,21 @@ h4 {
   line-height: 1.68;
   color: #384654;
 }
-.block-assessment-quiz #quizResult .result-main .areas-breakdown {
+.block-assessment-quiz #quizResult .result-main .areas-breakdown,
+.block-assessment-quiz #quizResult .result-main .abilities-breakdown {
   border: 1px solid var(--line);
   border-radius: 9px;
   padding: 6px 20px;
   background: #fff;
 }
-.block-assessment-quiz #quizResult .result-main .areas-breakdown .area-score-row:last-child {
+.block-assessment-quiz #quizResult .result-main .areas-breakdown .area-score-row:last-child,
+.block-assessment-quiz #quizResult .result-main .areas-breakdown .ability-score-row:last-child,
+.block-assessment-quiz #quizResult .result-main .abilities-breakdown .area-score-row:last-child,
+.block-assessment-quiz #quizResult .result-main .abilities-breakdown .ability-score-row:last-child {
   border-bottom: none !important;
+}
+.block-assessment-quiz #quizResult .result-main .quote-card {
+  border-radius: 8px;
 }
 .block-assessment-quiz #quizResult .result-sidebar .card {
   border: 1px solid var(--line);
@@ -2743,7 +2750,6 @@ nav.main a.on, nav.main a.current-menu-item, nav.main a.current_page_item {
   font-size: 11px;
   font-weight: 700;
 }
-
 .lang-switch .lang-btn {
   color: rgba(255, 255, 255, 0.65);
   padding: 3px 6px;
@@ -2752,11 +2758,9 @@ nav.main a.on, nav.main a.current-menu-item, nav.main a.current_page_item {
   transition: all 0.2s ease;
   line-height: 1;
 }
-
 .lang-switch .lang-btn:hover {
   color: #fff;
 }
-
 .lang-switch .lang-btn.active {
   color: #fff;
   background: rgba(255, 255, 255, 0.22);

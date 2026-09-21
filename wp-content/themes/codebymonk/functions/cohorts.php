@@ -80,12 +80,16 @@ add_action('wp_ajax_nopriv_zol_submit_cohort_lead', 'zol_handle_cohort_lead');
 function zol_handle_assessment_lead() {
     check_ajax_referer('zol_cohort_nonce', 'nonce');
 
-    $name           = sanitize_text_field($_POST['name'] ?? '');
-    $email          = sanitize_email($_POST['email'] ?? '');
-    $zone           = sanitize_text_field($_POST['zone'] ?? 'Amber');
-    $financial_zone = sanitize_text_field($_POST['financial_zone'] ?? '');
-    $life_zone      = sanitize_text_field($_POST['life_zone'] ?? '');
-    $body_zone      = sanitize_text_field($_POST['body_zone'] ?? '');
+    $name                 = sanitize_text_field($_POST['name'] ?? '');
+    $email                = sanitize_email($_POST['email'] ?? '');
+    $phone                = sanitize_text_field($_POST['phone'] ?? '');
+    $wa_optin             = sanitize_text_field($_POST['whatsapp_optin'] ?? '1');
+    $lowest_ability       = sanitize_text_field($_POST['lowest_ability'] ?? '');
+    $lowest_ability_quote = sanitize_text_field($_POST['lowest_ability_quote'] ?? '');
+    $zone                 = sanitize_text_field($_POST['zone'] ?? 'Amber');
+    $financial_zone       = sanitize_text_field($_POST['financial_zone'] ?? '');
+    $life_zone            = sanitize_text_field($_POST['life_zone'] ?? '');
+    $body_zone            = sanitize_text_field($_POST['body_zone'] ?? '');
 
     if (empty($email) || !is_email($email)) {
         wp_send_json_error(['message' => __('Please provide a valid email address.', 'codebymonk')]);
@@ -94,7 +98,7 @@ function zol_handle_assessment_lead() {
         $name = __('Participant', 'codebymonk');
     }
 
-    $post_title = sprintf('%s — %s Zone (%s)', $name, $zone, date_i18n('M j, Y'));
+    $post_title = sprintf('%s — %s (%s)', $name, $lowest_ability ?: ($zone . ' Zone'), date_i18n('M j, Y'));
 
     $post_id = wp_insert_post([
         'post_type'   => 'profile_lead',
@@ -108,26 +112,51 @@ function zol_handle_assessment_lead() {
 
     update_post_meta($post_id, 'lead_name', $name);
     update_post_meta($post_id, 'lead_email', $email);
+    update_post_meta($post_id, 'lead_phone', $phone);
+    update_post_meta($post_id, 'whatsapp_optin', $wa_optin);
+    update_post_meta($post_id, 'lowest_ability', $lowest_ability);
+    update_post_meta($post_id, 'lowest_ability_quote', $lowest_ability_quote);
+    update_post_meta($post_id, 'funnel_stage', 'R1_completed');
     update_post_meta($post_id, 'zone', $zone);
     update_post_meta($post_id, 'financial_zone', $financial_zone);
     update_post_meta($post_id, 'life_zone', $life_zone);
     update_post_meta($post_id, 'body_zone', $body_zone);
 
+    $lang = sanitize_text_field($_POST['lang'] ?? 'en');
+    if (!in_array($lang, ['es', 'en'])) {
+        $lang = 'en';
+    }
+    update_post_meta($post_id, 'lead_lang', $lang);
+
     // Notify admin via email
     $admin_email = get_option('admin_email');
-    $subject = sprintf('[New Assessment Lead] %s scored in the %s Zone', $name, $zone);
+    $subject = sprintf('[New Assessment Lead] %s — Lowest Ability: %s (%s Zone, Lang: %s)', $name, $lowest_ability ?: 'N/A', $zone, strtoupper($lang));
     $message = sprintf(
-        "A user completed the Personal Zones Profile Assessment:\n\nName: %s\nEmail: %s\nOverall Zone: %s\nFinancial: %s\nLife & Skills: %s\nBody: %s\nDate: %s\n\nView in admin: %s",
+        "A user completed the Personal Zones Profile Mini Assessment:\n\nName: %s\nEmail: %s\nWhatsApp/Phone: %s (Opt-in: %s)\nLanguage: %s\nLowest Ability: %s\nQuote: %s\nOverall Zone: %s\nDate: %s\n\nView in admin: %s",
         $name,
         $email,
+        $phone,
+        $wa_optin === '1' ? 'Yes' : 'No',
+        strtoupper($lang),
+        $lowest_ability,
+        $lowest_ability_quote,
         $zone,
-        $financial_zone,
-        $life_zone,
-        $body_zone,
         current_time('mysql'),
         admin_url('edit.php?post_type=profile_lead')
     );
     @wp_mail($admin_email, $subject, $message);
+
+    // Trigger Funnel Event (Slide 4 & 6 - Flujo B entry, B1 email & Mailchimp sync)
+    if (class_exists('ACLC_Funnel_Events')) {
+        ACLC_Funnel_Events::trigger('mini_profile_completed', $email, [
+            'name'                 => $name,
+            'phone'                => $phone,
+            'lowest_ability'       => $lowest_ability,
+            'lowest_ability_quote' => $lowest_ability_quote,
+            'zone'                 => $zone,
+            'lang'                 => $lang,
+        ]);
+    }
 
     wp_send_json_success([
         'message' => __('Assessment saved successfully!', 'codebymonk'),
@@ -137,4 +166,65 @@ function zol_handle_assessment_lead() {
 }
 add_action('wp_ajax_zol_submit_assessment_lead', 'zol_handle_assessment_lead');
 add_action('wp_ajax_nopriv_zol_submit_assessment_lead', 'zol_handle_assessment_lead');
+
+/**
+ * Send Mini Profile result via email to lead (Slide 4 CTA)
+ */
+function zol_handle_email_mini_profile() {
+    check_ajax_referer('zol_cohort_nonce', 'nonce');
+
+    $name                 = sanitize_text_field($_POST['name'] ?? '');
+    $email                = sanitize_email($_POST['email'] ?? '');
+    $lowest_ability       = sanitize_text_field($_POST['lowest_ability'] ?? '');
+    $lowest_ability_quote = sanitize_text_field($_POST['lowest_ability_quote'] ?? '');
+    $lang                 = sanitize_text_field($_POST['lang'] ?? 'en');
+    if (!in_array($lang, ['es', 'en'])) {
+        $lang = 'en';
+    }
+
+    if (empty($email) || !is_email($email)) {
+        wp_send_json_error(['message' => 'Invalid email']);
+    }
+
+    $finance_url = home_url('/finance/');
+
+    if (class_exists('ACLC_Funnel_Emails')) {
+        $email_data = ACLC_Funnel_Emails::get_email_b1($name, $lowest_ability, $lowest_ability_quote, $finance_url, $lang);
+        ACLC_Funnel_Emails::send($email, $email_data['subject'], $email_data['html']);
+    } else {
+        $is_es = ($lang === 'es');
+        $subject = $is_es 
+            ? sprintf('%s, tu resultado del Mini Perfil Financiero', $name)
+            : sprintf('%s, your lowest ability is %s', $name, $lowest_ability);
+
+        $body = $is_es ? sprintf(
+            "Hola %s,\n\n" .
+            "Completaste tu Mini Perfil Financiero en Zones of Life.\n\n" .
+            "Tu habilidad más baja identificada es: %s\n" .
+            "\"%s\"\n\n" .
+            "Lo que este resultado todavía no te dice: por qué %s está ahí, cuál de las otras cinco la arrastra y cuál es el primer movimiento con más impacto.\n\n" .
+            "Eso está en tu Perfil de Salud Financiera: 100 preguntas, tu gráfica completa, el reporte de las seis habilidades, el Cuaderno de Trabajo y la audio-lección de Alan C. Walter.\n\n" .
+            "Puedes acceder a tu Perfil de Salud Financiera aquí:\n%s\n\n" .
+            "Equipo Zones of Life",
+            $name, $lowest_ability, $lowest_ability_quote, $lowest_ability, $finance_url
+        ) : sprintf(
+            "Hi %s,\n\n" .
+            "You completed your Financial Mini Profile on Zones of Life.\n\n" .
+            "Your lowest ability identified is: %s\n" .
+            "\"%s\"\n\n" .
+            "What this result still doesn't tell you: why %s sits where it does, which of the other five is dragging it down, and which first move has the most impact.\n\n" .
+            "That's in your Financial Health Profile: 100 questions, your full chart, the report on all six abilities, the Financial Fitness Workbook and Alan C. Walter's audio lesson.\n\n" .
+            "Get your Financial Health Profile here:\n%s\n\n" .
+            "Zones of Life Team",
+            $name, $lowest_ability, $lowest_ability_quote, $lowest_ability, $finance_url
+        );
+
+        @wp_mail($email, $subject, $body);
+    }
+
+    wp_send_json_success(['message' => 'Email sent']);
+}
+add_action('wp_ajax_zol_email_mini_profile', 'zol_handle_email_mini_profile');
+add_action('wp_ajax_nopriv_zol_email_mini_profile', 'zol_handle_email_mini_profile');
+add_action('wp_ajax_nopriv_zol_email_mini_profile', 'zol_handle_email_mini_profile');
 

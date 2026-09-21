@@ -92,11 +92,15 @@
             <key name="card_1_title">card_1_title</key>
             <key name="card_1_desc">card_1_desc</key>
             <key name="card_1_btn_text">card_1_btn_text</key>
+            <key name="card_1_btn_link">card_1_btn_link</key>
             <key name="card_2_title">card_2_title</key>
             <key name="card_2_desc">card_2_desc</key>
+            <key name="card_2_btn_text">card_2_btn_text</key>
+            <key name="card_2_btn_link">card_2_btn_link</key>
             <key name="card_3_title">card_3_title</key>
             <key name="card_3_desc">card_3_desc</key>
             <key name="card_3_btn_text">card_3_btn_text</key>
+            <key name="card_3_btn_link">card_3_btn_link</key>
             <key name="guarantee_title">guarantee_title</key>
             <key name="guarantee_desc">guarantee_desc</key>
         </gutenberg-block>
@@ -106,6 +110,8 @@
             <key name="intro_title">intro_title</key>
             <key name="intro_desc">intro_desc</key>
             <key name="start_button_text">start_button_text</key>
+            <key name="report_btn_text">report_btn_text</key>
+            <key name="report_btn_link">report_btn_link</key>
         </gutenberg-block>
     </gutenberg-blocks>
 </wpml-config>
