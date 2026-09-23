@@ -7,9 +7,9 @@
 $blockClasses = ['block-cohorts', 'block'];
 
 // Handle block ID
-$id = !empty($block['id']) ? $block['id'] : uniqid('cohorts_');
+$id = !empty($block['id']) ? $block['id'] : uniqid('events_');
 $customID = get_field('block_id');
-$blockID = $customID ? $customID : 'block-' . $id;
+$blockID = $customID ? $customID : 'events';
 
 if (!empty($block['className'])) {
     $blockClasses[] = $block['className'];
@@ -25,11 +25,11 @@ if ($showSteps === null || $showSteps === '') {
 
 $step1Title = get_field('step_1_title') ?: __('Step one', 'codebymonk');
 $step1Strong = get_field('step_1_strong') ?: __('Take the profile.', 'codebymonk');
-$step1Desc = get_field('step_1_desc') ?: __('The cohort starts already knowing which Zone you are in.', 'codebymonk');
+$step1Desc = get_field('step_1_desc') ?: __('The event starts already knowing which Zone you are in.', 'codebymonk');
 
 $step2Title = get_field('step_2_title') ?: __('Step two', 'codebymonk');
 $step2Strong = get_field('step_2_strong') ?: __('Check fit in three steps.', 'codebymonk');
-$step2Desc = get_field('step_2_desc') ?: __('Two minutes, to see whether this cohort is the right one.', 'codebymonk');
+$step2Desc = get_field('step_2_desc') ?: __('Two minutes, to see whether this event is the right one.', 'codebymonk');
 
 $step3Title = get_field('step_3_title') ?: __('Step three', 'codebymonk');
 $step3Strong = get_field('step_3_strong') ?: __('A short call.', 'codebymonk');
@@ -112,7 +112,7 @@ if (empty($cohortsList)) {
     $cohortsList = [
         [
             'id'              => 0,
-            'title'           => 'Autumn cohort',
+            'title'           => 'Autumn event',
             'month'           => 'OCT',
             'day'             => '14',
             'start_date_full' => '14 October',
@@ -124,7 +124,7 @@ if (empty($cohortsList)) {
         ],
         [
             'id'              => 0,
-            'title'           => 'Winter cohort',
+            'title'           => 'Winter event',
             'month'           => 'JAN',
             'day'             => '20',
             'start_date_full' => '20 January',
@@ -138,10 +138,11 @@ if (empty($cohortsList)) {
 }
 ?>
 
-<section id="<?= esc_attr($blockID); ?>" data-block="cohorts" class="<?= esc_attr(implode(' ', $blockClasses)); ?>">
+<section id="<?= esc_attr($blockID); ?>" data-block="events" class="<?= esc_attr(implode(' ', $blockClasses)); ?>">
+  <div id="cohorts" style="position:relative; top:-90px; visibility:hidden;"></div>
   <div class="wrap">
     
-    <!-- Cohorts Schedule List -->
+    <!-- Events Schedule List -->
     <div class="rowbox mb32">
       <?php foreach ($cohortsList as $cohort): 
         $isOpen = ($cohort['status'] === 'open');

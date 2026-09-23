@@ -29,21 +29,31 @@
 
       <nav class="main">
         <?php
+        $currentLang = function_exists('apply_filters') ? apply_filters('wpml_current_language', null) : (defined('ICL_LANGUAGE_CODE') ? ICL_LANGUAGE_CODE : 'en');
+        $is_es = ($currentLang === 'es');
+
+        $nav_html = '';
         if (has_nav_menu('primary')) {
-          wp_nav_menu([
+          $nav_html = wp_nav_menu([
             'theme_location' => 'primary',
             'container'      => false,
             'items_wrap'     => '%3$s',
             'depth'          => 1,
+            'echo'           => false,
             'fallback_cb'    => false,
           ]);
+        }
+
+        if (!empty(trim($nav_html))) {
+          echo $nav_html;
         } else {
+          $prefix = $is_es ? '/es' : '';
         ?>
-          <a href="<?php echo esc_url(home_url('/#zones')); ?>"><?php esc_html_e('The Zones', 'codebymonk'); ?></a>
-          <a href="<?php echo esc_url(home_url('/#assessment')); ?>"><?php esc_html_e('The Assessment', 'codebymonk'); ?></a>
-          <a href="<?php echo esc_url(home_url('/#cohorts')); ?>"><?php esc_html_e('Cohorts', 'codebymonk'); ?></a>
-          <a href="<?php echo esc_url(home_url('/#stories')); ?>"><?php esc_html_e('Stories', 'codebymonk'); ?></a>
-          <a href="<?php echo esc_url(home_url('/#articles')); ?>"><?php esc_html_e('Articles', 'codebymonk'); ?></a>
+          <a href="<?php echo esc_url(home_url($prefix . '/#zones')); ?>"><?php echo $is_es ? 'Las Zonas' : 'The Zones'; ?></a>
+          <a href="<?php echo esc_url(home_url($prefix . '/#assessment')); ?>"><?php echo $is_es ? 'La Evaluación' : 'The Assessment'; ?></a>
+          <a href="<?php echo esc_url(home_url($prefix . '/#events')); ?>"><?php echo $is_es ? 'Eventos' : 'Events'; ?></a>
+          <a href="<?php echo esc_url(home_url($prefix . '/#stories')); ?>"><?php echo $is_es ? 'Historias' : 'Stories'; ?></a>
+          <a href="<?php echo esc_url(home_url($prefix . '/#articles')); ?>"><?php echo $is_es ? 'Artículos' : 'Articles'; ?></a>
         <?php } ?>
       </nav>
 

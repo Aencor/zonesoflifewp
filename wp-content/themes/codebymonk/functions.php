@@ -18,7 +18,8 @@ $monk_includes = [
 	"functions/shortcodes.php", // Custom Wordpress Shortcodes for WYSIWYGs
 	"functions/blocks.php", // Declare Custom Blocks
 	"functions/cpt.php", // Custom Post Types
-	"functions/cohorts.php" // Cohort Leads & Handling
+	"functions/cohorts.php", // Cohort Leads & Handling
+	"functions/smtp.php" // Mandrill SMTP Configuration
 ];
 
 function nylon_include($includes) {

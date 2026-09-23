@@ -44,31 +44,31 @@ function zol_register_post_types() {
 		'show_in_rest'       => true,
 	]);
 
-	// 2. Cohorts CPT
-	$cohort_labels = [
-		'name'                  => _x('Cohorts', 'Post type general name', 'codebymonk'),
-		'singular_name'         => _x('Cohort', 'Post type singular name', 'codebymonk'),
-		'menu_name'             => _x('Cohorts', 'Admin Menu text', 'codebymonk'),
-		'name_admin_bar'        => _x('Cohort', 'Add New on Toolbar', 'codebymonk'),
+	// 2. Events CPT (formerly Cohorts)
+	$event_labels = [
+		'name'                  => _x('Events', 'Post type general name', 'codebymonk'),
+		'singular_name'         => _x('Event', 'Post type singular name', 'codebymonk'),
+		'menu_name'             => _x('Events', 'Admin Menu text', 'codebymonk'),
+		'name_admin_bar'        => _x('Event', 'Add New on Toolbar', 'codebymonk'),
 		'add_new'               => __('Add New', 'codebymonk'),
-		'add_new_item'          => __('Add New Cohort', 'codebymonk'),
-		'new_item'              => __('New Cohort', 'codebymonk'),
-		'edit_item'             => __('Edit Cohort', 'codebymonk'),
-		'view_item'             => __('View Cohort', 'codebymonk'),
-		'all_items'             => __('All Cohorts', 'codebymonk'),
-		'search_items'          => __('Search Cohorts', 'codebymonk'),
-		'not_found'             => __('No cohorts found.', 'codebymonk'),
-		'not_found_in_trash'    => __('No cohorts found in Trash.', 'codebymonk'),
+		'add_new_item'          => __('Add New Event', 'codebymonk'),
+		'new_item'              => __('New Event', 'codebymonk'),
+		'edit_item'             => __('Edit Event', 'codebymonk'),
+		'view_item'             => __('View Event', 'codebymonk'),
+		'all_items'             => __('All Events', 'codebymonk'),
+		'search_items'          => __('Search Events', 'codebymonk'),
+		'not_found'             => __('No events found.', 'codebymonk'),
+		'not_found_in_trash'    => __('No events found in Trash.', 'codebymonk'),
 	];
 
 	register_post_type('cohort', [
-		'labels'             => $cohort_labels,
+		'labels'             => $event_labels,
 		'public'             => true,
 		'publicly_queryable' => true,
 		'show_ui'            => true,
 		'show_in_menu'       => true,
 		'query_var'          => true,
-		'rewrite'            => ['slug' => 'cohort', 'with_front' => false],
+		'rewrite'            => ['slug' => 'events', 'with_front' => false],
 		'capability_type'    => 'post',
 		'has_archive'        => false,
 		'hierarchical'       => false,
@@ -78,16 +78,16 @@ function zol_register_post_types() {
 		'show_in_rest'       => true,
 	]);
 
-	// 3. Cohort Applications / Leads CPT (Submenu of Cohorts)
+	// 3. Event Registrations / Leads CPT (Submenu of Events)
 	$lead_labels = [
-		'name'                  => _x('Cohort Leads', 'Post type general name', 'codebymonk'),
-		'singular_name'         => _x('Cohort Lead', 'Post type singular name', 'codebymonk'),
-		'menu_name'             => _x('Applications / Leads', 'Admin Menu text', 'codebymonk'),
-		'name_admin_bar'        => _x('Cohort Lead', 'Add New on Toolbar', 'codebymonk'),
-		'add_new'               => __('Add New Lead', 'codebymonk'),
-		'add_new_item'          => __('Add New Application', 'codebymonk'),
-		'edit_item'             => __('View Application', 'codebymonk'),
-		'all_items'             => __('Applications / Leads', 'codebymonk'),
+		'name'                  => _x('Event Registrations', 'Post type general name', 'codebymonk'),
+		'singular_name'         => _x('Event Registration', 'Post type singular name', 'codebymonk'),
+		'menu_name'             => _x('Registrations / Leads', 'Admin Menu text', 'codebymonk'),
+		'name_admin_bar'        => _x('Event Registration', 'Add New on Toolbar', 'codebymonk'),
+		'add_new'               => __('Add New Registration', 'codebymonk'),
+		'add_new_item'          => __('Add New Registration', 'codebymonk'),
+		'edit_item'             => __('View Registration', 'codebymonk'),
+		'all_items'             => __('Registrations / Leads', 'codebymonk'),
 	];
 
 	register_post_type('cohort_application', [
@@ -207,7 +207,7 @@ function zol_cohort_app_columns($columns) {
 		'cb'          => $columns['cb'],
 		'title'       => __('Applicant Name', 'codebymonk'),
 		'lead_email'  => __('Email', 'codebymonk'),
-		'cohort_name' => __('Cohort', 'codebymonk'),
+		'cohort_name' => __('Event', 'codebymonk'),
 		'step_area'   => __('Area to Move', 'codebymonk'),
 		'step_time'   => __('Time / Week', 'codebymonk'),
 		'step_exp'    => __('Experience', 'codebymonk'),

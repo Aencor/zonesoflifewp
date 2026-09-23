@@ -46,9 +46,13 @@ services:
       WORDPRESS_DB_NAME: '${MYSQL_DATABASE}'
       WORDPRESS_DB_USER: '${MYSQL_USER}'
       WORDPRESS_DB_PASSWORD: '${MYSQL_PASSWORD}'
+      MANDRILL_API_KEY: '${MANDRILL_API_KEY:-md-jTCpIYwidLsryN4MG03mNQ}'
       WORDPRESS_CONFIG_EXTRA: |
         if (isset($$_SERVER['HTTP_X_FORWARDED_PROTO']) && strpos($$_SERVER['HTTP_X_FORWARDED_PROTO'], 'https') !== false) {
             $$_SERVER['HTTPS'] = 'on';
+        }
+        if (!defined('MANDRILL_API_KEY') && getenv('MANDRILL_API_KEY')) {
+            define('MANDRILL_API_KEY', getenv('MANDRILL_API_KEY'));
         }
     volumes:
       - ./wp-content:/var/www/html/wp-content

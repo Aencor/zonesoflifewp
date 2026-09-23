@@ -1,6 +1,6 @@
 {
     "key": "group_cpt_cohort",
-    "title": "Cohort Details",
+    "title": "Event Details",
     "fields": [
         {
             "key": "field_cohort_month",
@@ -30,7 +30,7 @@
         },
         {
             "key": "field_cohort_details",
-            "label": "Cohort Details / Subtitle",
+            "label": "Event Details / Subtitle",
             "name": "details",
             "type": "text",
             "instructions": "Description of duration, format, capacity (e.g. Eight weeks · online · maximum 12 people)",
@@ -38,7 +38,7 @@
         },
         {
             "key": "field_cohort_status",
-            "label": "Cohort Status",
+            "label": "Event Status",
             "name": "status",
             "type": "select",
             "choices": {

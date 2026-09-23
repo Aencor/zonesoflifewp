@@ -27,7 +27,7 @@
             "type": "select",
             "choices": {
                 "": "None",
-                "calendar": "Calendar (Cohorts)",
+                "calendar": "Calendar (Events)",
                 "users": "Users (Stories)",
                 "mail": "Mail (Contact)",
                 "compass": "Compass (Method)",

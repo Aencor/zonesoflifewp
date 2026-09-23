@@ -23,7 +23,7 @@ function zol_handle_cohort_lead() {
         $cohort_name = get_the_title($cohort_id);
     }
     if (empty($cohort_name)) {
-        $cohort_name = __('General Cohort', 'codebymonk');
+        $cohort_name = __('General Event', 'codebymonk');
     }
 
     $post_title = sprintf('%s — %s (%s)', $name, $cohort_name, date_i18n('M j, Y'));
@@ -50,9 +50,9 @@ function zol_handle_cohort_lead() {
 
     // Notify admin via email
     $admin_email = get_option('admin_email');
-    $subject = sprintf('[New Cohort Lead] %s applied for %s', $name, $cohort_name);
+    $subject = sprintf('[New Event Registration] %s registered for %s', $name, $cohort_name);
     $message = sprintf(
-        "New application received:\n\nName: %s\nEmail: %s\nPhone: %s\nCohort: %s\nArea: %s\nTime commitment: %s\nExperience: %s\nDate: %s\n\nView in admin: %s",
+        "New event registration received:\n\nName: %s\nEmail: %s\nPhone: %s\nEvent: %s\nArea: %s\nTime commitment: %s\nExperience: %s\nDate: %s\n\nView in admin: %s",
         $name,
         $email,
         $phone,
@@ -64,6 +64,21 @@ function zol_handle_cohort_lead() {
         admin_url('edit.php?post_type=cohort_application')
     );
     @wp_mail($admin_email, $subject, $message);
+
+    // Trigger Funnel & Zapier Event
+    if (class_exists('ACLC_Funnel_Events')) {
+        $lead_lang = function_exists('apply_filters') ? apply_filters('wpml_current_language', null) : 'es';
+        ACLC_Funnel_Events::trigger('cohort_application', $email, [
+            'name'        => $name,
+            'phone'       => $phone,
+            'cohort_id'   => $cohort_id,
+            'cohort_name' => $cohort_name,
+            'area'        => $area,
+            'time'        => $time,
+            'experience'  => $exp,
+            'lang'        => in_array($lead_lang, ['es', 'en']) ? $lead_lang : 'es',
+        ]);
+    }
 
     wp_send_json_success([
         'message'     => __('Application received successfully!', 'codebymonk'),
@@ -225,6 +240,5 @@ function zol_handle_email_mini_profile() {
     wp_send_json_success(['message' => 'Email sent']);
 }
 add_action('wp_ajax_zol_email_mini_profile', 'zol_handle_email_mini_profile');
-add_action('wp_ajax_nopriv_zol_email_mini_profile', 'zol_handle_email_mini_profile');
 add_action('wp_ajax_nopriv_zol_email_mini_profile', 'zol_handle_email_mini_profile');
 

@@ -83,7 +83,7 @@
             "label": "Card 2 Price / Badge",
             "name": "card_2_price",
             "type": "text",
-            "default_value": "price TBD"
+            "default_value": "$25 USD"
         },
         {
             "key": "field_at_c2_btn_text",
@@ -111,7 +111,7 @@
             "label": "Card 3 Title",
             "name": "card_3_title",
             "type": "text",
-            "default_value": "Cohort or coaching"
+            "default_value": "Events or coaching"
         },
         {
             "key": "field_at_c3_desc",
@@ -119,7 +119,7 @@
             "name": "card_3_desc",
             "type": "textarea",
             "rows": 3,
-            "default_value": "A cohort with a start date and a group here, or continuous one-to-one coaching with an assigned coach at ACLC."
+            "default_value": "An event with a start date and a group here, or continuous one-to-one coaching with an assigned coach at ACLC."
         },
         {
             "key": "field_at_c3_btn_text",
@@ -133,7 +133,7 @@
             "label": "Card 3 Button Link",
             "name": "card_3_btn_link",
             "type": "text",
-            "default_value": "/cohorts/"
+            "default_value": "/events/"
         },
         {
             "key": "field_at_show_guarantee",

@@ -75,10 +75,11 @@
         },
         {
             "key": "field_contact_card_phone",
-            "label": "Phone Number",
+            "label": "Phone & WhatsApp Number",
             "name": "phone",
             "type": "text",
-            "default_value": "+1 940-995-2054",
+            "instructions": "Official contact & WhatsApp number (EN: +1 469-501-1161 / ES: +52 1 55 4063 5251).",
+            "default_value": "+1 469-501-1161",
             "conditional_logic": [
                 [
                     {
@@ -95,7 +96,7 @@
             "name": "dev_note",
             "type": "textarea",
             "rows": 3,
-            "default_value": "Dev note · Conflicting data: aclc.us publishes +1 940-995-3187 for this same address. Confirm which is correct before launch.",
+            "default_value": "",
             "conditional_logic": [
                 [
                     {

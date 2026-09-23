@@ -1,10 +1,10 @@
 {
     "key": "group_block_cohorts",
-    "title": "Block - Cohorts",
+    "title": "Block - Events",
     "fields": [
         {
             "key": "field_acc_cohorts",
-            "label": "Block - Cohorts",
+            "label": "Block - Events",
             "name": "",
             "aria-label": "",
             "type": "accordion",
@@ -22,18 +22,18 @@
         },
         {
             "key": "field_cb_source",
-            "label": "Cohorts Source",
+            "label": "Events Source",
             "name": "cohorts_source",
             "type": "button_group",
             "choices": {
-                "latest": "Auto Query (All Cohorts)",
-                "custom": "Select Specific Cohorts"
+                "latest": "Auto Query (All Events)",
+                "custom": "Select Specific Events"
             },
             "default_value": "latest"
         },
         {
             "key": "field_cb_selected",
-            "label": "Select Cohorts",
+            "label": "Select Events",
             "name": "selected_cohorts",
             "type": "post_object",
             "post_type": [

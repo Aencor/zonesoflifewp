@@ -69,7 +69,7 @@ $home_content = '<!-- wp:acf/home-hero {"name":"acf/home-hero","data":{"kicker":
 
 <!-- wp:acf/short-stories {"name":"acf/short-stories","data":{"kicker":"","_kicker":"field_ss_kicker","title":"PERSONAS REALES. AVANCES REALES","_title":"field_ss_title","button_text":"Todas las historias","_button_text":"field_ss_button_text","button_link":"/es/historias/","_button_link":"field_ss_button_link","stories_source":"latest","_stories_source":"field_ss_source"},"mode":"preview"} /-->
 
-<!-- wp:acf/newsletter {"name":"acf/newsletter","data":{"kicker":"Semanal gratis","_kicker":"field_nl_kicker","title":"Boletín En La Zona","_title":"field_nl_title","description":"Una idea por semana sobre cómo subir de Zona, además de fechas de nuevas cohortes antes de que se abran públicamente.","_description":"field_nl_description","form_type":"default","_form_type":"field_nl_form_type"},"mode":"preview"} /-->';
+<!-- wp:acf/newsletter {"name":"acf/newsletter","data":{"kicker":"Semanal gratis","_kicker":"field_nl_kicker","title":"Boletín En La Zona","_title":"field_nl_title","description":"Una idea por semana sobre cómo subir de Zona, además de fechas de nuevos eventos antes de que se abran públicamente.","_description":"field_nl_description","form_type":"default","_form_type":"field_nl_form_type"},"mode":"preview"} /-->';
 
 $es_home_id = create_or_update_translation(4, 'page', 'Inicio', 'inicio', $home_content);
 
@@ -83,16 +83,16 @@ $es_zones_id = create_or_update_translation(10, 'page', 'Las Zonas', 'zonas', $z
 // Page 45: The Assessment -> La Evaluación
 $assessment_content = '<!-- wp:acf/general-hero {"name":"acf/general-hero","data":{"kicker_icon":"check","_kicker_icon":"field_gh_kicker_icon","kicker":"La evaluación","_kicker":"field_gh_kicker","title":"Veinte preguntas para saber dónde estás parado","_title":"field_gh_title","description":"No hay respuestas correctas ni incorrectas. Nadie más verá esto. Te pediremos tu correo electrónico al final, no ahora.","_description":"field_gh_description","background_style":"tint","_background_style":"field_gh_bg_style","max_width":"62ch","_max_width":"field_gh_max_width"},"mode":"preview"} /-->
 
-<!-- wp:acf/assessment-tiers {"name":"acf/assessment-tiers","data":{"card_1_badge":"Paso 1 · gratis","_card_1_badge":"field_at_c1_badge","card_1_title":"Perfil corto","_card_1_title":"field_at_c1_title","card_1_desc":"Veinte preguntas, dos minutos. Obtienes tu Zona, por qué estás en ella y cuál de las tres áreas te está frenando.","_card_1_desc":"field_at_c1_desc","card_1_btn_text":"Comenzar","_card_1_btn_text":"field_at_c1_btn_text","card_1_btn_link":"/es/perfil-corto/","_card_1_btn_link":"field_at_c1_btn_link","card_2_badge":"Paso 2 · de pago","_card_2_badge":"field_at_c2_badge","card_2_title":"Reporte Completo Automatizado","_card_2_title":"field_at_c2_title","card_2_desc":"Desglose pregunta por pregunta de las tres áreas, qué mover primero y en qué orden, y cómo se ve la Zona Verde en tu caso específico.","_card_2_desc":"field_at_c2_desc","card_2_price":"precio por definir","_card_2_price":"field_at_c2_price","card_2_btn_text":"Obtener el reporte completo","_card_2_btn_text":"field_at_c2_btn_text","card_2_btn_link":"/finance/","_card_2_btn_link":"field_at_c2_btn_link","card_3_badge":"60 minutos de Coaching Personalizado","_card_3_badge":"field_at_c3_badge","card_3_title":"Reporte Completo Uno a Uno","_card_3_title":"field_at_c3_title","card_3_desc":"Una cohorte con fecha de inicio y un grupo aquí, o coaching continuo uno a uno con un coach asignado en ACLC.","_card_3_desc":"field_at_c3_desc","card_3_btn_text":"Ver opciones","_card_3_btn_text":"field_at_c3_btn_text","card_3_btn_link":"/es/cohortes/","_card_3_btn_link":"field_at_c3_btn_link","show_guarantee":"1","_show_guarantee":"field_at_show_guarantee"},"mode":"preview"} /-->';
+<!-- wp:acf/assessment-tiers {"name":"acf/assessment-tiers","data":{"card_1_badge":"Paso 1 · gratis","_card_1_badge":"field_at_c1_badge","card_1_title":"Perfil corto","_card_1_title":"field_at_c1_title","card_1_desc":"Veinte preguntas, dos minutos. Obtienes tu Zona, por qué estás en ella y cuál de las tres áreas te está frenando.","_card_1_desc":"field_at_c1_desc","card_1_btn_text":"Comenzar","_card_1_btn_text":"field_at_c1_btn_text","card_1_btn_link":"/es/perfil-corto/","_card_1_btn_link":"field_at_c1_btn_link","card_2_badge":"Paso 2 · de pago","_card_2_badge":"field_at_c2_badge","card_2_title":"Reporte Completo Automatizado","_card_2_title":"field_at_c2_title","card_2_desc":"Desglose pregunta por pregunta de las tres áreas, qué mover primero y en qué orden, y cómo se ve la Zona Verde en tu caso específico.","_card_2_desc":"field_at_c2_desc","card_2_price":"$500 MXN","_card_2_price":"field_at_c2_price","card_2_btn_text":"Obtener el reporte completo","_card_2_btn_text":"field_at_c2_btn_text","card_2_btn_link":"/es/perfil-financiero/","_card_2_btn_link":"field_at_c2_btn_link","card_3_badge":"60 minutos de Coaching Personalizado","_card_3_badge":"field_at_c3_badge","card_3_title":"Reporte Completo Uno a Uno","_card_3_title":"field_at_c3_title","card_3_desc":"Un evento con fecha de inicio y un grupo aquí, o coaching continuo uno a uno con un coach asignado en ACLC.","_card_3_desc":"field_at_c3_desc","card_3_btn_text":"Ver opciones","_card_3_btn_text":"field_at_c3_btn_text","card_3_btn_link":"/es/eventos/","_card_3_btn_link":"field_at_c3_btn_link","show_guarantee":"1","_show_guarantee":"field_at_show_guarantee"},"mode":"preview"} /-->';
 
 $es_assessment_id = create_or_update_translation(45, 'page', 'La Evaluación', 'evaluacion', $assessment_content);
 
-// Page 21: Cohorts -> Cohortes
-$cohorts_content = '<!-- wp:acf/general-hero {"name":"acf/general-hero","data":{"kicker_icon":"calendar","_kicker_icon":"field_gh_kicker_icon","kicker":"Cohortes","_kicker":"field_gh_kicker","title":"Una fecha, un grupo y nadie improvisando","_title":"field_gh_title","description":"El propósito del entrenamiento es aumentar tus habilidades de vida. Tener una habilidad significa que puedes hacer algo bien y de forma repetida — no solo cuando el día acompaña.","_description":"field_gh_description","background_style":"tint","_background_style":"field_gh_bg_style","max_width":"64ch","_max_width":"field_gh_max_width"},"mode":"preview"} /-->
+// Page 21: Events -> Eventos (formerly Cohorts)
+$events_content = '<!-- wp:acf/general-hero {"name":"acf/general-hero","data":{"kicker_icon":"calendar","_kicker_icon":"field_gh_kicker_icon","kicker":"Eventos","_kicker":"field_gh_kicker","title":"Una fecha, un grupo y nadie improvisando","_title":"field_gh_title","description":"El propósito del entrenamiento es aumentar tus habilidades de vida. Tener una habilidad significa que puedes hacer algo bien y de forma repetida — no solo cuando el día acompaña.","_description":"field_gh_description","background_style":"tint","_background_style":"field_gh_bg_style","max_width":"64ch","_max_width":"field_gh_max_width"},"mode":"preview"} /-->
 
-<!-- wp:acf/cohorts {"name":"acf/cohorts","data":{"cohorts_source":"latest","_cohorts_source":"field_cb_source","show_steps":"1","_show_steps":"field_cb_show_steps","step_1_title":"Paso uno","_step_1_title":"field_cb_s1_title","step_1_strong":"Haz el perfil.","_step_1_strong":"field_cb_s1_strong","step_1_desc":"La cohorte comienza sabiendo ya en qué Zona estás.","_step_1_desc":"field_cb_s1_desc","step_2_title":"Paso dos","_step_2_title":"field_cb_s2_title","step_2_strong":"Comprueba la afinidad en tres pasos.","_step_2_strong":"field_cb_s2_strong","step_2_desc":"Dos minutos, para ver si esta cohorte es la adecuada para ti.","_step_2_desc":"field_cb_s2_desc","step_3_title":"Paso tres","_step_3_title":"field_cb_s3_title","step_3_strong":"Una llamada breve.","_step_3_strong":"field_cb_s3_strong","step_3_desc":"Se confirma la afinidad y se asegura tu lugar.","_step_3_desc":"field_cb_s3_desc"},"mode":"preview"} /-->';
+<!-- wp:acf/cohorts {"name":"acf/cohorts","data":{"cohorts_source":"latest","_cohorts_source":"field_cb_source","show_steps":"1","_show_steps":"field_cb_show_steps","step_1_title":"Paso uno","_step_1_title":"field_cb_s1_title","step_1_strong":"Haz el perfil.","_step_1_strong":"field_cb_s1_strong","step_1_desc":"El evento comienza sabiendo ya en qué Zona estás.","_step_1_desc":"field_cb_s1_desc","step_2_title":"Paso dos","_step_2_title":"field_cb_s2_title","step_2_strong":"Comprueba la afinidad en tres pasos.","_step_2_strong":"field_cb_s2_strong","step_2_desc":"Dos minutos, para ver si este evento es el adecuado para ti.","_step_2_desc":"field_cb_s2_desc","step_3_title":"Paso tres","_step_3_title":"field_cb_s3_title","step_3_strong":"Una llamada breve.","_step_3_strong":"field_cb_s3_strong","step_3_desc":"Se confirma la afinidad y se asegura tu lugar.","_step_3_desc":"field_cb_s3_desc"},"mode":"preview"} /-->';
 
-$es_cohorts_id = create_or_update_translation(21, 'page', 'Cohortes', 'cohortes', $cohorts_content);
+$es_events_id = create_or_update_translation(21, 'page', 'Eventos', 'eventos', $events_content);
 
 // Page 13: Stories -> Historias
 $stories_content = '<!-- wp:acf/general-hero {"name":"acf/general-hero","data":{"kicker_icon":"users","_kicker_icon":"field_gh_kicker_icon","kicker":"Historias","_kicker":"field_gh_kicker","title":"Personas Reales. Avances Reales.","_title":"field_gh_title","description":"Cada historia incluye la gráfica de las Zonas de antes y después. Publicado siempre con consentimiento firmado.","_description":"field_gh_description","background_style":"tint","_background_style":"field_gh_bg_style","max_width":"62ch","_max_width":"field_gh_max_width","block_id":"","_block_id":"field_657b3d62e47ec","block_background":"light","_block_background":"field_66f3360a3ccdb","padding_options_padding_top":"md","_padding_options_padding_top":"field_68f7bcb53fc76","padding_options_padding_bottom":"md","_padding_options_padding_bottom":"field_68f7bced3fc77","padding_options":"","_padding_options":"field_68f7bc7d3fc75","margin_options_margin_top":"md","_margin_options_margin_top":"field_68f7bd063fc7a","margin_options_margin_bottom":"md","_margin_options_margin_bottom":"field_68f7bd063fc7b","margin_options":"","_margin_options":"field_68f7bd063fc79"},"mode":"edit"} /-->
@@ -116,9 +116,9 @@ $quiz_content = '<!-- wp:acf/assessment-quiz {"name":"acf/assessment-quiz","data
 $es_quiz_id = create_or_update_translation(48, 'page', 'Perfil Corto', 'perfil-corto', $quiz_content);
 
 // Page 58: Contact -> Contacto
-$contact_content = '<!-- wp:acf/general-hero {"name":"acf/general-hero","data":{"kicker_icon":"mail","_kicker_icon":"field_gh_kicker_icon","kicker":"Contacto","_kicker":"field_gh_kicker","title":"Habla con un coach","_title":"field_gh_title","description":"¿Tienes preguntas sobre las Zonas, las cohortes o el coaching personalizado? Envíanos un mensaje y nuestro equipo se comunicará contigo.","_description":"field_gh_description","background_style":"tint","_background_style":"field_gh_bg_style","max_width":"62ch","_max_width":"field_gh_max_width"},"mode":"preview"} /-->
+$contact_content = '<!-- wp:acf/general-hero {"name":"acf/general-hero","data":{"kicker_icon":"mail","_kicker_icon":"field_gh_kicker_icon","kicker":"Contacto","_kicker":"field_gh_kicker","title":"Habla con un coach","_title":"field_gh_title","description":"¿Tienes preguntas sobre las Zonas, los eventos o el coaching personalizado? Envíanos un mensaje y nuestro equipo se comunicará contigo.","_description":"field_gh_description","background_style":"tint","_background_style":"field_gh_bg_style","max_width":"62ch","_max_width":"field_gh_max_width"},"mode":"preview"} /-->
 
-<!-- wp:acf/contact {"name":"acf/contact","data":{"cf7_form_id":54,"_cf7_form_id":"field_contact_cf7_id","cf7_shortcode":"[contact-form-7 id=\u002254\u0022 title=\u0022Contact form 1\u0022]","_cf7_shortcode":"field_contact_cf7_shortcode","show_info_card":"1","_show_info_card":"field_contact_show_card","company_name":"Advanced Coaching \u0026 Leadership Center, Inc.","_company_name":"field_contact_card_title","address":"1400 Camp Letoli Road\nSaint Jo, Texas 76265\nEstados Unidos","_address":"field_contact_card_address","phone":"+1 940-995-2054","_phone":"field_contact_card_phone","dev_note":""},"mode":"preview"} /-->';
+<!-- wp:acf/contact {"name":"acf/contact","data":{"cf7_form_id":54,"_cf7_form_id":"field_contact_cf7_id","cf7_shortcode":"[contact-form-7 id=\u002254\u0022 title=\u0022Contact form 1\u0022]","_cf7_shortcode":"field_contact_cf7_shortcode","show_info_card":"1","_show_info_card":"field_contact_show_card","company_name":"Advanced Coaching \u0026 Leadership Center, Inc.","_company_name":"field_contact_card_title","address":"1400 Camp Letoli Road\nSaint Jo, Texas 76265\nEstados Unidos","_address":"field_contact_card_address","phone":"+52 1 55 4063 5251","_phone":"field_contact_card_phone","dev_note":""},"mode":"preview"} /-->';
 
 $es_contact_id = create_or_update_translation(58, 'page', 'Contacto', 'contacto', $contact_content);
 
@@ -130,11 +130,11 @@ $es_privacy_id = create_or_update_translation(3, 'page', 'Política de Privacida
 $cookie_content = '<p>Utilizamos cookies para ayudar a mejorar su experiencia en nuestro sitio web. Esta política de cookies explica qué son las cookies, cómo las utilizamos y sus opciones con respecto a su uso.</p>';
 $es_cookie_id = create_or_update_translation(57, 'page', 'Política de Cookies', 'politica-de-cookies', $cookie_content);
 
-// 2. COHORTS (CPT: cohort)
+// 2. EVENTS (CPT: cohort)
 $cohort_translations = [
     19 => [
-        'title' => 'Cohorte de Otoño',
-        'slug'  => 'cohorte-otono',
+        'title' => 'Evento de Otoño',
+        'slug'  => 'evento-otono',
         'meta'  => [
             'month'           => 'OCTUBRE',
             'day'             => '14',
@@ -144,8 +144,8 @@ $cohort_translations = [
         ]
     ],
     20 => [
-        'title' => 'Cohorte de Invierno',
-        'slug'  => 'cohorte-invierno',
+        'title' => 'Evento de Invierno',
+        'slug'  => 'evento-invierno',
         'meta'  => [
             'month'           => 'ENERO',
             'day'             => '15',
@@ -155,8 +155,8 @@ $cohort_translations = [
         ]
     ],
     26 => [
-        'title' => 'Cohorte de Primavera',
-        'slug'  => 'cohorte-primavera',
+        'title' => 'Evento de Primavera',
+        'slug'  => 'evento-primavera',
         'meta'  => [
             'month'           => 'ABRIL',
             'day'             => '08',
@@ -245,7 +245,7 @@ if ($es_menu_id && !is_wp_error($es_menu_id)) {
     $menu_items = [
         ['title' => 'Las Zonas',      'id' => $es_zones_id],
         ['title' => 'La Evaluación',  'id' => $es_assessment_id],
-        ['title' => 'Cohortes',       'id' => $es_cohorts_id],
+        ['title' => 'Eventos',        'id' => $es_events_id],
         ['title' => 'Historias',      'id' => $es_stories_id],
         ['title' => 'Artículos',      'id' => $es_articles_id],
     ];

@@ -44,7 +44,7 @@
       </div>
 
       <div>
-        <h4><?php esc_html_e('Programmes', 'codebymonk'); ?></h4>
+        <h4><?php esc_html_e('Programmes &amp; Events', 'codebymonk'); ?></h4>
         <?php
         if (has_nav_menu('footer_col2')) {
           wp_nav_menu([
@@ -56,9 +56,9 @@
           ]);
         } else {
           ?>
-          <a href="<?php echo esc_url(home_url('/cohorts/')); ?>">Cohorts</a>
-          <a href="<?php echo esc_url(home_url('/stories/')); ?>">Stories</a>
-          <a href="<?php echo esc_url(home_url('/articles/')); ?>">Articles</a>
+          <a href="<?php echo esc_url(home_url('/events/')); ?>"><?php esc_html_e('Events', 'codebymonk'); ?></a>
+          <a href="<?php echo esc_url(home_url('/stories/')); ?>"><?php esc_html_e('Stories', 'codebymonk'); ?></a>
+          <a href="<?php echo esc_url(home_url('/articles/')); ?>"><?php esc_html_e('Articles', 'codebymonk'); ?></a>
         <?php } ?>
       </div>
 
@@ -103,7 +103,12 @@
 
     <div class="legal">
       <span>© <?php echo date('Y'); ?> <?php esc_html_e('Advanced Coaching & Leadership Center, Inc.', 'codebymonk'); ?></span>
-      <span><?php esc_html_e('Letoli Ranch · Saint Jo, Texas ·', 'codebymonk'); ?> <span class="mono">+1 940-995-2054</span></span>
+      <?php
+      $currentLang = function_exists('apply_filters') ? apply_filters('wpml_current_language', null) : (defined('ICL_LANGUAGE_CODE') ? ICL_LANGUAGE_CODE : 'en');
+      $footPhone   = ($currentLang === 'es') ? '+52 1 55 4063 5251' : '+1 469-501-1161';
+      $footClean   = ($currentLang === 'es') ? '5215540635251' : '14695011161';
+      ?>
+      <span><?php esc_html_e('Letoli Ranch · Saint Jo, Texas ·', 'codebymonk'); ?> <a href="https://wa.me/<?php echo esc_attr($footClean); ?>" target="_blank" rel="noopener" class="mono" style="color:inherit;text-decoration:none;" title="WhatsApp"><?php echo esc_html($footPhone); ?></a></span>
     </div>
   </div>
 </footer>

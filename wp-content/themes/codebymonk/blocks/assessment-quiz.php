@@ -24,8 +24,8 @@ $introDesc = get_field('intro_desc') ?: ($isSpanish ? 'No hay respuestas correct
 $btnText = get_field('start_button_text') ?: ($isSpanish ? 'Comenzar' : 'Start');
 $reportBtnText = get_field('report_btn_text') ?: ($isSpanish ? 'Obtener mi Perfil de Salud Financiera' : 'Get my Financial Health Profile');
 $reportBtnLink = get_field('report_btn_link');
-if (empty($reportBtnLink)) {
-    $reportBtnLink = home_url('/finance/');
+if (empty($reportBtnLink) || $reportBtnLink === '/finance/' || $reportBtnLink === '/es/finance/') {
+    $reportBtnLink = $isSpanish ? home_url('/es/perfil-financiero/') : home_url('/finance/');
 }
 
 $spanishQuizData = [
@@ -138,7 +138,7 @@ window.zolQuizData = <?= json_encode($spanishQuizData); ?>;
         </div>
         <div class="field">
           <label for="gPhone"><?= $isSpanish ? 'WhatsApp / Teléfono' : 'WhatsApp / Phone'; ?></label>
-          <input class="input" type="tel" id="gPhone" placeholder="+1 555 123 4567" required>
+          <input class="input" type="tel" id="gPhone" placeholder="<?= $isSpanish ? '+52 55 1234 5678' : '+1 469 123 4567'; ?>" required>
         </div>
         <label class="xs" style="display:flex;gap:9px;align-items:flex-start;margin-top:16px;">
           <input type="checkbox" id="gOk" style="margin-top:3px" checked> 
@@ -221,7 +221,7 @@ window.zolQuizData = <?= json_encode($spanishQuizData); ?>;
 
             <div class="hgroup mt20" style="justify-content:space-between;align-items:center;">
               <span class="tiny" style="font-weight:700;color:var(--ink);"><?= $isSpanish ? 'Pago único:' : 'One-time payment:'; ?></span>
-              <span class="price-tag" style="font-size:19px;font-weight:700;color:var(--shgreen);">$500 USD</span>
+              <span class="price-tag" style="font-size:19px;font-weight:700;color:var(--shgreen);"><?= $isSpanish ? '$500 MXN' : '$25 USD'; ?></span>
             </div>
 
             <a class="btn btn-go btn-block mt16" id="rBtnBuy" href="<?= esc_url($reportBtnLink); ?>"><?= $isSpanish ? 'Obtener mi Perfil de Salud Financiera' : 'Get my Financial Health Profile'; ?></a>
@@ -230,9 +230,9 @@ window.zolQuizData = <?= json_encode($spanishQuizData); ?>;
             <div class="tiny center mt16 text-muted"><?= $isSpanish ? 'Garantía de satisfacción · ACLC' : 'Satisfaction guarantee · ACLC'; ?></div>
           </div>
 
-          <a class="card card-link mt20" href="<?= esc_url(home_url($isSpanish ? '/es/cohorts/' : '/cohorts/')); ?>" style="display:block">
+          <a class="card card-link mt20" href="<?= esc_url(home_url($isSpanish ? '/es/eventos/' : '/events/')); ?>" style="display:block">
             <div class="tiny text-muted"><?= $isSpanish ? 'O hazlo en grupo' : 'Or do it with a group'; ?></div>
-            <h4 class="mt8"><?= $isSpanish ? 'Cohorte de Otoño' : 'Autumn cohort'; ?></h4>
+            <h4 class="mt8"><?= $isSpanish ? 'Evento de Otoño' : 'Autumn event'; ?></h4>
             <div class="tiny mt8" style="color:var(--fuego)"><?= $isSpanish ? 'Inicia 14 de Octubre' : 'Starts 14 October'; ?></div>
           </a>
 
