@@ -36,9 +36,9 @@ $address = get_field('address') ?: "1400 Camp Letoli Road\nSaint Jo, Texas 76265
 $currentLang = function_exists('apply_filters') ? apply_filters('wpml_current_language', null) : (defined('ICL_LANGUAGE_CODE') ? ICL_LANGUAGE_CODE : 'en');
 $isSpanish   = ($currentLang === 'es');
 
-$defaultPhone = $isSpanish ? '+52 1 55 4063 5251' : '+1 469-501-1161';
+$defaultPhone = '+1 469-501-1161';
 $acfPhone     = get_field('phone');
-$phone        = (!empty($acfPhone) && $acfPhone !== '+1 940-995-2054') ? $acfPhone : $defaultPhone;
+$phone        = (!empty($acfPhone) && $acfPhone !== '+1 940-995-2054' && $acfPhone !== '+52 1 55 4063 5251') ? $acfPhone : $defaultPhone;
 $cleanPhone   = preg_replace('/[^0-9]/', '', $phone);
 $devNote      = get_field('dev_note');
 ?>

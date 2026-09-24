@@ -53,16 +53,37 @@ document.addEventListener('DOMContentLoaded', function () {
     "Create Wealth": "It can't be trained on its own: it's the average of the other five, showing you the result of all of them together."
   };
 
+  var HAVE_LEVELS = (i18n && i18n.have_levels) ? i18n.have_levels : {
+    low_yellow: {
+      name: "Working not to have",
+      title: "Level: Working not to have",
+      short: 'Your score sits below the Yellow Zone\'s centerline: today you are working "not to have". It\'s not a lack of effort. It\'s an active negative process steering you away from what you desire even as you chase it, and it can be changed.',
+      full: 'WORKING NOT TO HAVE. If your score sits below the dark centerline running horizontally across the Yellow Zone, you are working "not to have". Most people CANNOT HAVE. It doesn\'t matter if they hold it physically... they cannot truly have it. They don\'t feel worthy enough. They don\'t feel good enough. They feel they shouldn\'t obtain what they are reaching for and feel they don\'t deserve it. Typically, they have been programmed with messages like "you\'re worth nothing" or "you\'re useless". That is the result of heavy negative processing making a person feel that way. The fundamental negative process governing their lives is: "You can\'t be this, you can\'t do this, you can\'t have this. You can\'t have your dreams. You cannot be, you cannot do, and you cannot have." NEGATIVE PROCESS: a series of actions, changes, or functions that prevent or pull you away from achieving the result or purpose you desire. It is a continuous, downward motion deviating you from the path you truly intended to take. A negative process is composed of dishonest, dishonorable, out-purpose, or off-course actions generating cycles of behavior or decisions that produce a negative or sub-optimal outcome.'
+    },
+    high_yellow: {
+      name: "Struggling to have",
+      title: "Level: Struggling to have",
+      short: 'Your score sits in the upper half of the Yellow Zone: you are struggling "to have". You make progress, but every win costs you more than it should because you\'re carrying learned rules about what can\'t or shouldn\'t be done.',
+      full: 'STRUGGLING TO HAVE. If your score sits above the dark centerline running horizontally across the Yellow Zone, yet remains within the Yellow Zone, you are struggling "to have". Life, family, parents, or social groups have negatively processed you by dictating what cannot be done, why it cannot be done, and what must not be done. In environments like this, external power or force is exerted to dictate what is right and how one must act or behave. NEGATIVE PROCESS: a series of actions, changes, or functions that prevent or pull you away from achieving the result or purpose you desire. It is a continuous, downward motion deviating you from the path you truly intended to take. A negative process is composed of dishonest, dishonorable, out-purpose, or off-course actions generating cycles of behavior or decisions that produce a negative or sub-optimal outcome.'
+    },
+    green: {
+      name: "You have the ability to have",
+      title: "Level: You have the ability to have",
+      short: 'Your score is in the Green Zone: you have the capacity "to have". Your environment operates in harmony with you and you\'ve built positive processes. The next step is doubling down on what already works to expand your game.',
+      full: 'YOU HAVE THE ABILITY TO HAVE. Congratulations! If your score is in the Green Zone, you have the ability "to have"; the higher you are in the Green Zone, the greater your capacity to have everything you desire. Your environment operates in steady harmony with you, and you have received abundant positive processing. POSITIVE PROCESS: a series of positive actions, changes, or functions that lead you directly to achieving the positive result or purpose you set out for. It is a continuous, upward motion in the direction you decided to pursue. It is defined as a series of honest, high-integrity actions aligned with your goals and purpose, producing operating cycles that culminate in an optimal, positive final product or result. Remember that two things are vital to accumulating wealth: first is discipline, and second is duplication. If you have those two, you can succeed at any moment. If you are in the Green Zone, you have the ability to have! Execute more of the successful actions you are already taking to expand your game.'
+    }
+  };
+
   var LBL = (i18n && i18n.labels) ? i18n.labels : {
     area: 'Area: ',
     you_are_in: 'You are in the ',
     you_are_here: ' · you are here',
-    start_here: ' · lowest ability',
+    start_here: ' · evaluated ability',
     privacy_error: 'Please accept the Privacy Policy to view your result.',
     email_error: 'Please enter a valid email address.',
     phone_error: 'Please enter a valid phone or WhatsApp number.',
     email_sent: '✓ Sent to your email',
-    gap_template: "What this result still doesn't tell you: why {ability} sits where it does, which of the other five is dragging it down, and which first move has the most impact. That's in your Financial Health Profile: 100 questions, your full chart, the report on all six abilities, the Financial Fitness Workbook and Alan C. Walter's audio lesson.",
+    gap_template: "Having is one of the six abilities that form your financial health. The other five are Producing, Focusing, Investigating, Investing, and Creating Wealth. Your Financial Health Profile measures all six, shows you which one is holding you back the most, and gives you tools to elevate it.",
     area_names: {}
   };
 
@@ -200,6 +221,11 @@ document.addEventListener('DOMContentLoaded', function () {
     var allAbilities = baseAbilities.concat([{ key: createWealthKey, label: createWealthKey }]);
     var allScores = abilityScores.concat([createWealthScore]);
 
+    // Areas breakdown & scores
+    var areas = ["Financial", "Life & Skills", "Body"];
+    var areaScores = areas.map(scoreArea);
+    var worstAreaIdx = areaScores.indexOf(Math.min.apply(null, areaScores));
+
     // Overall zone score
     var overallScore = Math.max(1, Math.min(4, Math.round(allScores.reduce(function (a, b) { return a + b; }, 0) / allScores.length)));
     var z = ZONE[overallScore] || ZONE[2];
@@ -211,26 +237,87 @@ document.addEventListener('DOMContentLoaded', function () {
     var worstAbilityName = worstAbilityObj.label;
     var worstQuote = ABILITY_QUOTES[worstAbilityObj.key] || "";
 
+    // Calculate Have Ability Level (Question indices for Have: abilityScores[3])
+    var haveScore = abilityScores[3] || 2;
+    var haveLevelKey = (haveScore >= 3) ? 'green' : ((haveScore >= 2.5) ? 'high_yellow' : 'low_yellow');
+    var haveLevelObj = HAVE_LEVELS[haveLevelKey] || HAVE_LEVELS.low_yellow;
+
     // DOM Elements - R1 Layout
     var rUserName = document.getElementById('rUserName');
-    var rLowestAbility = document.getElementById('rLowestAbility');
-    var rAbilityQuote = document.getElementById('rAbilityQuote');
-    var rAbilitiesBreakdown = document.getElementById('rAbilitiesBreakdown');
-    var rZoneName = document.getElementById('rZoneName');
-    var rZoneScoreLabel = document.getElementById('rZoneScoreLabel');
+    var rZone = document.getElementById('rZone');
+    var rHere = document.getElementById('rHere');
     var rBar = document.getElementById('rBar');
     var rBody = document.getElementById('rBody');
+    var rAreas = document.getElementById('rAreas');
+    var rLevelBadge = document.getElementById('rLevelBadge');
+    var rLevelTitle = document.getElementById('rLevelTitle');
+    var rLevelText = document.getElementById('rLevelText');
+    var rAbilitiesBreakdown = document.getElementById('rAbilitiesBreakdown');
+    var rGapCopy = document.getElementById('rGapCopy');
 
-    if (rUserName) {
-      rUserName.textContent = nameVal;
-    }
-    if (rLowestAbility) {
-      rLowestAbility.textContent = worstAbilityName;
-    }
-    if (rAbilityQuote) {
-      rAbilityQuote.textContent = worstQuote ? '“' + worstQuote + '”' : '';
+    // 1. Prominent Zone Heading & Color
+    if (rZone) {
+      var zoneLabel = isEs ? ('Estás en la Zona ' + z.n) : ('You are in the ' + z.n + ' Zone');
+      rZone.textContent = zoneLabel;
+      rZone.style.color = z.col;
     }
 
+    // 2. Zone Bar (Signature 4-Color Indicator)
+    if (rBar) {
+      var barHtml = '<div class="zones dim">';
+      for (var b = 1; b <= 4; b++) {
+        barHtml += '<i class="z' + b + (b <= z.i ? ' on' : '') + '"></i>';
+      }
+      barHtml += '</div>';
+      rBar.innerHTML = barHtml;
+    }
+
+    // 3. Zone Position Label
+    if (rHere) {
+      rHere.textContent = z.n + (isEs ? ' · tú estás aquí' : ' · you are here');
+      rHere.style.color = z.col;
+      rHere.style.fontWeight = '700';
+    }
+
+    // 4. Detailed Zone Explanation Copy
+    if (rBody) {
+      rBody.textContent = COPY[z.n] || COPY["Yellow"] || COPY["Amarilla"];
+    }
+
+    // 5. Have Ability Level Card (Mini Perfil Diagnosis)
+    if (rLevelBadge) {
+      rLevelBadge.textContent = (haveLevelKey === 'green') ? (isEs ? 'Zona Verde' : 'Green Zone') : (isEs ? 'Zona Amarilla' : 'Yellow Zone');
+      if (haveLevelKey === 'green') {
+        rLevelBadge.style.background = 'rgba(0,125,25,0.12)';
+        rLevelBadge.style.color = 'var(--shgreen)';
+      } else {
+        rLevelBadge.style.background = '#FDE68A';
+        rLevelBadge.style.color = '#92400E';
+      }
+    }
+    if (rLevelTitle) {
+      rLevelTitle.textContent = haveLevelObj.name;
+    }
+    if (rLevelText) {
+      rLevelText.textContent = haveLevelObj.full;
+    }
+
+    // 6. By Area Breakdown (Financiero, Vida y Habilidades, Cuerpo)
+    if (rAreas) {
+      var areaHtml = '';
+      areas.forEach(function (a, i) {
+        var zz = ZONE[areaScores[i]] || ZONE[2];
+        var isLowest = (i === worstAreaIdx);
+        var aLabel = (LBL.area_names && LBL.area_names[a]) ? LBL.area_names[a] : a;
+        areaHtml += '<div class="row area-score-row" style="padding:12px 0;border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;">';
+        areaHtml += '  <div class="grow" style="font-weight:600;font-size:15px;color:var(--ink);">' + aLabel + '</div>';
+        areaHtml += '  <span class="tiny" style="color:' + zz.col + ';font-weight:700;letter-spacing:0.06em;">' + (isEs ? ('Zona ' + zz.n) : (zz.n + ' Zone')) + (isLowest ? LBL.start_here : '') + '</span>';
+        areaHtml += '</div>';
+      });
+      rAreas.innerHTML = areaHtml;
+    }
+
+    // 7. Six Financial Abilities Breakdown
     if (rAbilitiesBreakdown) {
       var abHtml = '';
       allAbilities.forEach(function (ab, i) {
@@ -244,33 +331,17 @@ document.addEventListener('DOMContentLoaded', function () {
           abHtml += '    <span class="tiny text-muted" style="font-size:11px;font-weight:400;">(' + (isEs ? 'promedio' : 'average') + ')</span>';
         }
         abHtml += '  </div>';
-        abHtml += '  <span class="tiny" style="color:' + zz.col + ';font-weight:700;letter-spacing:0.06em;">' + zz.n + (isLowest ? LBL.start_here : '') + '</span>';
+        abHtml += '  <span class="tiny" style="color:' + zz.col + ';font-weight:700;letter-spacing:0.06em;">' + (isEs ? ('Zona ' + zz.n) : (zz.n + ' Zone')) + (isLowest ? LBL.start_here : '') + '</span>';
         abHtml += '</div>';
       });
       rAbilitiesBreakdown.innerHTML = abHtml;
     }
 
-    var rGapCopy = document.getElementById('rGapCopy');
+    // 8. The Gap Copy
     if (rGapCopy && LBL.gap_template) {
-      rGapCopy.textContent = LBL.gap_template.replace('{ability}', worstAbilityName);
-    }
-
-    if (rZoneName) {
-      rZoneName.textContent = z.n;
-    }
-    if (rZoneScoreLabel) {
-      rZoneScoreLabel.textContent = (isEs ? 'Nivel ' : 'Level ') + overallScore + ' / 4';
-    }
-    if (rBar) {
-      var barHtml = '<div class="zones dim">';
-      for (var b = 1; b <= 4; b++) {
-        barHtml += '<i class="z' + b + (b <= z.i ? ' on' : '') + '"></i>';
-      }
-      barHtml += '</div>';
-      rBar.innerHTML = barHtml;
-    }
-    if (rBody) {
-      rBody.textContent = COPY[z.n] || COPY["Yellow"] || COPY["Amarilla"];
+      rGapCopy.innerHTML = (isEs 
+        ? '<strong>Lo que este resultado todavía no te muestra:</strong> Tener es una de las seis habilidades que forman tu salud financiera. Las otras cinco son Producir, Enfocar, Investigar, Invertir y Crear riqueza. Tu Perfil de Salud Financiera mide las seis, te muestra cuál te está frenando más y te da con qué trabajarla.' 
+        : '<strong>What this result still doesn\'t show you:</strong> Having is only one of the six abilities that define your financial health. The other five are Producing, Focusing, Investigating, Investing, and Creating Wealth. Your Financial Health Profile measures all six, shows you which one is holding you back the most, and gives you tools to elevate it.');
     }
 
     gate.hidden = true;
@@ -285,6 +356,9 @@ document.addEventListener('DOMContentLoaded', function () {
       zone: z.n,
       lowest_ability: worstAbilityName,
       lowest_ability_quote: worstQuote,
+      have_level: haveLevelKey,
+      have_level_name: haveLevelObj.name,
+      have_level_quote: haveLevelObj.short,
       lang: isEs ? 'es' : 'en'
     };
 
@@ -299,8 +373,14 @@ document.addEventListener('DOMContentLoaded', function () {
     formData.append('phone', phoneVal);
     formData.append('whatsapp_optin', waOptinVal ? '1' : '0');
     formData.append('zone', z.n);
+    formData.append('financial_zone', (ZONE[areaScores[0]] || z).n);
+    formData.append('life_zone', (ZONE[areaScores[1]] || z).n);
+    formData.append('body_zone', (ZONE[areaScores[2]] || z).n);
     formData.append('lowest_ability', worstAbilityName);
     formData.append('lowest_ability_quote', worstQuote);
+    formData.append('have_level', haveLevelKey);
+    formData.append('have_level_name', haveLevelObj.name);
+    formData.append('have_level_quote', haveLevelObj.short);
     formData.append('lang', isEs ? 'es' : 'en');
     allAbilities.forEach(function(ab, idx) {
       formData.append('ability_' + ab.key.toLowerCase().replace(/\s+/g, '_'), allScores[idx]);
@@ -371,6 +451,9 @@ document.addEventListener('DOMContentLoaded', function () {
       sendData.append('email', lastLeadData.email);
       sendData.append('lowest_ability', lastLeadData.lowest_ability);
       sendData.append('lowest_ability_quote', lastLeadData.lowest_ability_quote);
+      sendData.append('have_level_name', lastLeadData.have_level_name || '');
+      sendData.append('have_level_quote', lastLeadData.have_level_quote || '');
+      sendData.append('zone', lastLeadData.zone || 'Amber');
       sendData.append('lang', lastLeadData.lang || 'en');
 
       var ajaxUrl = (window.zolData && window.zolData.ajaxUrl) ? window.zolData.ajaxUrl : '/wp-admin/admin-ajax.php';

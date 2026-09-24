@@ -1,0 +1,677 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Financial Funnel: Copy & Sequences</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600&family=Newsreader:opsz,wght@6..72,400;6..72,500&display=swap" rel="stylesheet">
+<style>
+:root{--paper:#F6F7F9;--surface:#FFFFFF;--ink:#1B2230;--muted:#5B6475;--line:#DDE1E8;--stage:#3D4F86;--stage-bg:#E9ECF6;--buy:#2E7A57;--buy-bg:#E3F1EA;--rescue:#9A3D6A;--rescue-bg:#F5E6EE;--wa:#1F7A70;--wa-bg:#E1F2EF;--mail:#3D4F86;--mail-bg:#E9ECF6;--new:#8A5A12;--new-bg:#FBF0DC;
+--sans:"Instrument Sans",system-ui,-apple-system,"Segoe UI",sans-serif;--serif:"Newsreader",Georgia,"Times New Roman",serif}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){--paper:#12161E;--surface:#1A202B;--ink:#E6E9EF;--muted:#9AA3B3;--line:#2C3442;--stage:#A9B8EA;--stage-bg:#222B42;--buy:#7CC9A1;--buy-bg:#1C3328;--rescue:#E3A1C1;--rescue-bg:#3A2230;--wa:#72C9BE;--wa-bg:#173230;--mail:#A9B8EA;--mail-bg:#222B42;--new:#E8C27A;--new-bg:#3A2E18}}
+:root[data-theme="dark"]{--paper:#12161E;--surface:#1A202B;--ink:#E6E9EF;--muted:#9AA3B3;--line:#2C3442;--stage:#A9B8EA;--stage-bg:#222B42;--buy:#7CC9A1;--buy-bg:#1C3328;--rescue:#E3A1C1;--rescue-bg:#3A2230;--wa:#72C9BE;--wa-bg:#173230;--mail:#A9B8EA;--mail-bg:#222B42;--new:#E8C27A;--new-bg:#3A2E18}
+*{box-sizing:border-box}html{scroll-behavior:smooth}@media (prefers-reduced-motion: reduce){html{scroll-behavior:auto}}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--sans);font-size:16px;line-height:1.6}
+a{color:var(--stage)}a:focus-visible{outline:2px solid var(--stage);outline-offset:2px}
+.wrap{max-width:1180px;margin:0 auto;padding:0 16px;display:grid;grid-template-columns:1fr;gap:40px}
+@media (min-width:1000px){.wrap{grid-template-columns:220px minmax(0,1fr)}}
+nav.toc{position:sticky;top:0;z-index:5;background:var(--paper);border-bottom:1px solid var(--line);padding:10px 0;overflow-x:auto;white-space:nowrap}
+nav.toc a{display:inline-block;margin-right:14px;font-size:14px;color:var(--muted);text-decoration:none;padding:4px 0}nav.toc a:hover{color:var(--ink)}
+@media (min-width:1000px){nav.toc{top:24px;align-self:start;border:0;white-space:normal;padding:0;margin-top:56px}nav.toc a{display:block;margin:0 0 6px}}
+main{padding:40px 0 100px;max-width:780px;min-width:0}
+header.hero h1{font-family:var(--serif);font-weight:500;font-size:clamp(32px,5vw,50px);line-height:1.08;margin:0 0 16px;letter-spacing:-.01em}
+header.hero p{color:var(--muted);max-width:62ch;margin:0 0 12px}
+h2{font-family:var(--serif);font-weight:500;font-size:30px;line-height:1.2;margin:72px 0 8px;scroll-margin-top:70px}
+h3{font-size:17px;font-weight:600;margin:32px 0 8px}
+.lead{color:var(--muted);max-width:66ch;margin:0 0 20px}
+.rules{display:grid;gap:14px;margin:28px 0 0}@media (min-width:640px){.rules{grid-template-columns:1fr 1fr}}
+.rule{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:16px 18px}.rule strong{display:block;font-weight:600;margin-bottom:4px}.rule p{margin:0;color:var(--muted);font-size:15px}
+.changes .rule{border-left:3px solid var(--new)}
+.map{margin-top:24px;display:grid;gap:10px}
+.row{display:grid;grid-template-columns:1fr;gap:8px;align-items:stretch}@media (min-width:640px){.row{grid-template-columns:minmax(0,1.25fr) 28px minmax(0,1fr)}}
+.node{display:block;text-decoration:none;border-radius:10px;padding:12px 16px;border:1px solid var(--line);background:var(--surface);color:var(--ink)}
+.node b{display:block;font-weight:600}.node span{font-size:14px;color:var(--muted)}
+.node.stage{background:var(--stage-bg);border-color:transparent}.node.stage b{color:var(--stage)}
+.node.buy{background:var(--buy-bg);border-color:transparent}.node.buy b{color:var(--buy)}
+.node.rescue{background:var(--rescue-bg);border-color:transparent}.node.rescue b{color:var(--rescue)}
+.node:hover{outline:1px solid var(--ink)}
+.stack{display:grid;gap:8px}
+.link{display:none;align-self:center;height:1px;background:var(--line)}@media (min-width:640px){.link{display:block}}
+.down{height:14px;width:1px;background:var(--line);margin-left:28px}@media (min-width:640px){.down{margin-left:calc((100% - 28px) * 0.278)}}
+.human{margin:14px 0;padding:10px 16px;border-left:3px solid var(--buy);background:var(--surface);font-size:15px}
+.legend{display:flex;flex-wrap:wrap;gap:16px;margin-top:18px;font-size:14px;color:var(--muted)}.legend i{display:inline-block;width:12px;height:12px;border-radius:3px;margin-right:6px;vertical-align:-1px}
+.flowmeta{display:flex;flex-wrap:wrap;gap:8px 18px;font-size:14px;color:var(--muted);margin:0 0 18px}.flowmeta b{color:var(--ink);font-weight:600}
+.msg{background:var(--surface);border:1px solid var(--line);border-radius:12px;margin:14px 0;overflow:hidden}
+.msg-h{display:flex;flex-wrap:wrap;align-items:center;gap:8px 12px;padding:12px 18px;border-bottom:1px solid var(--line)}
+.code{font-weight:600;min-width:28px}.when{color:var(--muted);font-size:14px}
+.ch{margin-left:auto;font-size:13px;font-weight:500;padding:2px 10px;border-radius:999px}
+.ch.mail{background:var(--mail-bg);color:var(--mail)}.ch.wa{background:var(--wa-bg);color:var(--wa)}.ch.web{background:var(--buy-bg);color:var(--buy)}.ch.int{background:var(--paper);color:var(--muted);border:1px solid var(--line)}
+.msg-b{padding:16px 18px 18px}.subj{font-size:15px;margin:0 0 12px}.subj span{color:var(--muted)}
+.body{font-family:var(--serif);font-size:18px;line-height:1.65}.body p{margin:0 0 12px}.body ol{margin:0 0 12px;padding-left:1.3em}.body li{margin-bottom:4px}
+.btns{display:flex;flex-wrap:wrap;gap:8px;margin-top:14px;font-family:var(--sans)}
+.btns span{font-size:14px;padding:6px 12px;border-radius:999px;border:1px solid var(--line);color:var(--ink)}
+.btns span.primary{background:var(--ink);color:var(--paper);border-color:var(--ink)}
+.note{font-size:14px;color:var(--muted);margin-top:12px;font-family:var(--sans)}
+.var{font-family:var(--sans);font-size:.85em;background:var(--stage-bg);color:var(--stage);padding:0 5px;border-radius:4px}
+.reply{border-top:1px dashed var(--line);margin-top:14px;padding-top:12px;font-family:var(--serif);font-size:17px}
+.reply b{font-family:var(--sans);font-size:14px;font-weight:600;display:block;margin-bottom:4px}.reply p{margin:0}
+table{width:100%;border-collapse:collapse;font-size:15px}.tbl{overflow-x:auto;background:var(--surface);border:1px solid var(--line);border-radius:12px;margin:14px 0}
+th,td{text-align:left;padding:10px 14px;border-bottom:1px solid var(--line);vertical-align:top}th{font-weight:600}tr:last-child td{border-bottom:0}
+footer{margin-top:80px;color:var(--muted);font-size:14px}
+</style></head><body><div class="wrap">
+<nav class="toc" aria-label="Sections"><a href="#changes">What changed in this version</a><a href="#rules">System rules</a><a href="#map">Flow map</a><a href="#r">Free result screen</a><a href="#a">Flow A</a><a href="#b">Flow B</a><a href="#p">Purchase confirmation</a><a href="#c">Flow C</a><a href="#d">Flow D</a><a href="#ds">DS Branch</a><a href="#s">Booked session: confirmation and reminders</a><a href="#e">Flow E</a><a href="#f">Flow F</a><a href="#g">Clients</a><a href="#n">Monthly nurture</a><a href="#lib">Texts by level and variables</a></nav>
+<main><header class="hero"><h1>Zones of Life: financial funnel and follow-up copy</h1><p>Version 2.1 · September 24, 2026. From the Financial Mini Profile (free) to the private interpretation session and the core program. Everything is automated up to the session with the coach, which is the first human contact.</p>
+<p>Variables between brackets, like <span class="var">{{nombre}}</span>, are CRM fields (kept in Spanish so both language versions read the same database fields). The Have Ability result texts reflect Alan C. Walter's exact foundational teachings.</p></header>
+<section id="changes"><h2>What changed in this version</h2>
+<div class="rules changes">
+<div class="rule"><strong>v2.1 · Pricing</strong><p>The bundle with session and the session sold as an upgrade cost the same: $1,640 MXN / $85 USD. Automated profile: $500 MXN / $25 USD.</p></div>
+<div class="rule"><strong>v2.1 · The Six Abilities</strong><p>Produce, Focus, Investigate, Have, Invest, and Create Wealth. Named in R1, B5, and B10 reply, feeding <span class="var">{{habilidad_baja}}</span>.</p></div>
+<div class="rule"><strong>v2.1 · Rescheduling Window</strong><p>A lead who no-shows has 1 month to reschedule. E1, E2, E3, and E4 state this using <span class="var">{{fecha_limite_reagenda}}</span>.</p></div>
+<div class="rule"><strong>v2.1 · Workbook</strong><p>The English and Spanish files are processed separately; D1 and DS1 include the workbook as an attachment.</p></div>
+<div class="rule"><strong>v2 · Free Product</strong><p>The old "four zones map" is replaced by the Financial Mini Profile, which measures the Have Ability. Personalization shifts from <span class="var">{{zona_critica}}</span> to <span class="var">{{nivel_tener}}</span> (three levels) during the free stage and to <span class="var">{{habilidad_baja}}</span> (the lowest of the six) after purchase.</p></div>
+<div class="rule"><strong>v2 · Two Paid Products in Initial Offer</strong><p>Automated Financial Health Profile (<span class="var">{{precio_perfil}}</span>) and Profile + 60-minute Private Interpretation Session (<span class="var">{{precio_perfil_sesion}}</span>). The automated profile is always the primary CTA; the bundle with session is the secondary option.</p></div>
+<div class="rule"><strong>v2 · Coach Session Included Early</strong><p>The coach session appears in the initial offer within the <span class="var">{{precio_perfil_sesion}}</span> package. It is never sold alone or before the profile, but no longer waits until the report is generated.</p></div>
+<div class="rule"><strong>v2 · Session is Now Paid</strong><p>Flow D sells the session as an upgrade (<span class="var">{{precio_mejora_sesion}}</span>) to those who purchased the automated tier. Those who bought the bundle enter branch DS, which simply prompts them to schedule.</p></div>
+<div class="rule"><strong>v2 · Real Deliverables in All Copy</strong><p>6-abilities chart, Alan C. Walter audio lesson, and the "Taking Charge of Your Financial Future" workbook. Unfulfilled promises (subzone breakdown, cross-zone reading, 90-day plan) removed.</p></div>
+<div class="rule"><strong>v2 · No False Urgency or Artificial Bonuses</strong><p>B8 presents the session option instead of a bonus email; B9 is removed; D5 drops artificial seat limits.</p></div>
+<div class="rule"><strong>v2 · B6 Educational Focus</strong><p>Replaces hypothetical case studies with educational copy explaining Positive vs. Negative Processes using clear foundational principles.</p></div>
+<div class="rule"><strong>v2 · New Flow Codes</strong><p>R1 features three distinct level text variants; P1 splits into P1a and P1b; branch DS1–DS4 added.</p></div>
+</div>
+</section>
+<section id="rules"><h2>System rules</h2>
+<div class="rules">
+<div class="rule"><strong>No humans before the coach</strong><p>Every message prior to the session is automated and signed "Zones of Life Team", never with the coach's individual name.</p></div>
+<div class="rule"><strong>Questions answered by buttons or AI</strong><p>Predefined quick-reply buttons and an AI assistant clearly identified as such for open-ended queries.</p></div>
+<div class="rule"><strong>Scoring changes sequence, not channel</strong><p>Two or more clicks on the offer or checkout visit activates the accelerated follow-up version.</p></div>
+<div class="rule"><strong>Automated is the primary CTA</strong><p>In R1 and Flow B, the main button is always the Financial Health Profile. The bundle with session appears as a secondary choice, never alone.</p></div>
+<div class="rule"><strong>Meta-approved WhatsApp templates</strong><p>Outside the 24-hour customer service window, only Meta-approved templates with verified opt-in are used.</p></div>
+<div class="rule"><strong>Tags from minute one</strong><p><span class="var">{{nivel_tener}}</span>, profile, and stage are tagged on Mini Profile completion; <span class="var">{{paquete}}</span> and <span class="var">{{habilidad_baja}}</span> on payment and full profile completion.</p></div>
+</div>
+</section>
+<section id="map"><h2>Flow map</h2>
+<p class="lead">Left column: lead journey. Right column: automation triggered at each milestone.</p><div class="map">
+<div class="row"><a class="node" href="#rules"><b>Site Visit</b><span>Organic traffic, ads, and referrals</span></a></div><div class="down"></div>
+<div class="row"><a class="node stage" href="#a"><b>Starts Financial Mini Profile</b><span>Enters name, email, and WhatsApp</span></a><div class="link"></div><a class="node rescue" href="#a"><b>Flow A</b><span>Abandoned halfway</span></a></div><div class="down"></div>
+<div class="row"><a class="node stage" href="#r"><b>Views Have Ability Result</b><span>Chart, level, and offer for both packages</span></a><div class="link"></div><a class="node rescue" href="#b"><b>Flow B</b><span>Did not buy either package</span></a></div><div class="down"></div>
+<div class="row"><a class="node buy" href="#p"><b>Buys Financial Health Profile</b><span>Automated or bundle with private session · Initial sale</span></a><div class="link"></div><a class="node rescue" href="#c"><b>Flow C</b><span>Paid but hasn't completed 100 questions</span></a></div><div class="down"></div>
+<div class="row"><a class="node stage" href="#d"><b>Receives Full Profile</b><span>6 abilities chart, audio lesson, and workbook</span></a><div class="link"></div><div class="stack"><a class="node rescue" href="#d"><b>Flow D · Bought automated</b><span>Sell the private session upgrade</span></a><a class="node rescue" href="#ds"><b>DS Branch · Bought with session</b><span>Only needs to schedule</span></a></div></div><div class="down"></div>
+<div class="row"><a class="node stage" href="#s"><b>Schedules Private Session</b><span>Confirmation, reminders, and brief to coach</span></a><div class="link"></div><a class="node rescue" href="#e"><b>Flow E</b><span>No-show</span></a></div>
+<div class="human">First human contact: 60-minute Private Interpretation Session with an ACLC coach.</div>
+<div class="row"><a class="node stage" href="#f"><b>Attends Session</b><span>Receives customized program proposal</span></a><div class="link"></div><a class="node rescue" href="#f"><b>Flow F</b><span>Did not buy program</span></a></div><div class="down"></div>
+<div class="row"><a class="node buy" href="#g"><b>Buys Program</b><span>Onboarding and follow-up</span></a></div><div class="down"></div>
+<div class="row"><a class="node buy" href="#g"><b>90-Day Re-assessment</b><span>New profile, referrals, and step-up to ACLC</span></a></div>
+</div>
+<div class="legend"><span><i style="background:var(--stage)"></i>Lead stage</span><span><i style="background:var(--buy)"></i>Purchase or client</span><span><i style="background:var(--rescue)"></i>Follow-up flow</span></div>
+</section>
+<section id="r"><h2>Free result screen</h2>
+<p class="lead">The initial offer occurs right here on the results page. It displays the chart and level copy for the Have Ability, reserving the other five abilities for the full profile.</p>
+<div class="msg"><div class="msg-h"><span class="code">R1</span><span class="when">Upon finishing the Mini Profile</span><span class="ch web">Page</span></div><div class="msg-b">
+<div class="body">
+<p><strong><span class="var">{{nombre}}</span>, this is your Have Ability.</strong></p>
+<p>[Have Ability Chart]</p>
+<p><span class="var">{{texto_nivel_tener}}</span></p>
+<p><strong>What this result still doesn't show you:</strong> Having is only one of the six abilities that define your financial health. The other five are Producing, Focusing, Investigating, Investing, and Creating Wealth. Your Financial Health Profile measures all six, shows you which one is holding you back the most, and gives you tools to elevate it.</p>
+<p><strong>Financial Health Profile · <span class="var">{{precio_perfil}}</span> ($25 USD)</strong>: Complete chart of your 6 abilities, Alan C. Walter audio lesson on the Financial Health Profile, and the "Taking Charge of Your Financial Future" workbook.</p>
+<p><strong>Financial Health Profile + Private Session · <span class="var">{{precio_perfil_sesion}}</span> ($85 USD)</strong>: Everything above, plus a 60-minute one-on-one session with a certified coach to interpret and deeply examine your results.</p>
+<div class="reply"><b>Level "Working Not to Have" · Bottom half of the Yellow Zone</b><p>WORKING NOT TO HAVE. If your score sits below the dark centerline running horizontally across the Yellow Zone, you are working "not to have". Most people CANNOT HAVE. It doesn't matter if they hold it physically... they cannot truly have it. They don't feel worthy enough. They don't feel good enough. They feel they shouldn't obtain what they are reaching for and feel they don't deserve it. Typically, they have been programmed with messages like "you're worth nothing" or "you're useless". That is the result of heavy negative processing making a person feel that way. The fundamental negative process governing their lives is: "You can't be this, you can't do this, you can't have this. You can't have your dreams. You cannot be, you cannot do, and you cannot have." NEGATIVE PROCESS: a series of actions, changes, or functions that prevent or pull you away from achieving the result or purpose you desire. It is a continuous, downward motion deviating you from the path you truly intended to take. A negative process is composed of dishonest, dishonorable, out-purpose, or off-course actions generating cycles of behavior or decisions that produce a negative or sub-optimal outcome.</p></div>
+<div class="reply"><b>Level "Struggling to Have" · Top half of the Yellow Zone</b><p>STRUGGLING TO HAVE. If your score sits above the dark centerline running horizontally across the Yellow Zone, yet remains within the Yellow Zone, you are struggling "to have". Life, family, parents, or social groups have negatively processed you by dictating what cannot be done, why it cannot be done, and what must not be done. In environments like this, external power or force is exerted to dictate what is right and how one must act or behave. NEGATIVE PROCESS: a series of actions, changes, or functions that prevent or pull you away from achieving the result or purpose you desire. It is a continuous, downward motion deviating you from the path you truly intended to take. A negative process is composed of dishonest, dishonorable, out-purpose, or off-course actions generating cycles of behavior or decisions that produce a negative or sub-optimal outcome.</p></div>
+<div class="reply"><b>Level "You Have the Ability to Have" · Green Zone</b><p>YOU HAVE THE ABILITY TO HAVE. Congratulations! If your score is in the Green Zone, you have the ability "to have"; the higher you are in the Green Zone, the greater your capacity to have everything you desire. Your environment operates in steady harmony with you, and you have received abundant positive processing. POSITIVE PROCESS: a series of positive actions, changes, or functions that lead you directly to achieving the positive result or purpose you set out for. It is a continuous, upward motion in the direction you decided to pursue. It is defined as a series of honest, high-integrity actions aligned with your goals and purpose, producing operating cycles that culminate in an optimal, positive final product or result. Remember that two things are vital to accumulating wealth: first is discipline, and second is duplication. If you have those two, you can succeed at any moment. If you are in the Green Zone, you have the ability to have! Execute more of the successful actions you are already taking to expand your game.</p></div>
+</div>
+<div class="btns"><span class="primary">Get my Financial Health Profile</span><span>Get profile with private session</span><span>Email me my result</span></div>
+<p class="note">On the live page, only the text corresponding to the lead's calculated level is rendered in place of <span class="var">{{texto_nivel_tener}}</span>.</p>
+</div></div>
+</section>
+<section id="a"><h2>Flow A: Abandoned Mini Profile</h2>
+<div class="flowmeta"><span><b>Enters:</b> Left contact details, didn't finish questions</span><span><b>Exits:</b> Completes Mini Profile</span><span><b>If no reply:</b> Monthly nurture</span></div>
+<div class="msg"><div class="msg-h"><span class="code">A1</span><span class="when">1 hour later</span><span class="ch mail">Email</span></div><div class="msg-b">
+<p class="subj"><span>Subject:</span> Your Financial Mini Profile is incomplete</p>
+<div class="body">
+<p>Hi <span class="var">{{nombre}}</span>:</p>
+<p>You started your Financial Mini Profile and stopped at question <span class="var">{{pregunta_actual}}</span> of <span class="var">{{total_preguntas}}</span>. Your answers are saved, so you can pick up exactly where you left off.</p>
+<p>You only have about <span class="var">{{minutos_restantes}}</span> minutes remaining. Once finished, you will see your Have Ability chart and discover where you stand: working not to have, struggling to have, or having the capacity to have.</p>
+<p>Zones of Life Team</p>
+</div>
+<div class="btns"><span class="primary">Resume my Mini Profile</span></div>
+</div></div>
+<div class="msg"><div class="msg-h"><span class="code">A2</span><span class="when">24 hours later</span><span class="ch wa">WhatsApp</span></div><div class="msg-b">
+<div class="body">
+<p>Hi <span class="var">{{nombre}}</span>, this is the Zones of Life team. Your Financial Mini Profile is safely saved: you have <span class="var">{{preguntas_restantes}}</span> questions left to discover your Have Ability. Shall we finish it?</p>
+</div>
+<div class="btns"><span class="primary">Continue now</span><span>Remind me tomorrow</span></div>
+<p class="note">"Remind me tomorrow" reschedules this message for 24 hours later, once only.</p>
+</div></div>
+<div class="msg"><div class="msg-h"><span class="code">A3</span><span class="when">72 hours later</span><span class="ch mail">Email</span></div><div class="msg-b">
+<p class="subj"><span>Subject:</span> You can earn money and still be unable to have it</p>
+<div class="body">
+<p>Hi <span class="var">{{nombre}}</span>:</p>
+<p>Some people earn generous incomes yet feel money constantly slips through their fingers. Others achieve what they seek but cannot enjoy it, feeling as though it doesn't belong to them. Having is not the same as earning.</p>
+<p>Your Mini Profile measures precisely that: your Have Ability. You're already halfway through and your progress is saved for <span class="var">{{dias_guardado}}</span> more days.</p>
+<p>Zones of Life Team</p>
+</div>
+<div class="btns"><span class="primary">Complete my Mini Profile</span></div>
+</div></div>
+</section>
+<section id="b"><h2>Flow B: Selling the Financial Health Profile</h2>
+<div class="flowmeta"><span><b>Enters:</b> Saw Have Ability result, didn't buy</span><span><b>Exits:</b> Buys either package</span><span><b>If no reply:</b> Monthly nurture</span></div>
+<div class="msg"><div class="msg-h"><span class="code">B1</span><span class="when">Immediate</span><span class="ch mail">Email</span></div><div class="msg-b">
+<p class="subj"><span>Subject:</span> <span class="var">{{nombre}}</span>, here is your result: <span class="var">{{nombre_nivel_tener}}</span></p>
+<div class="body">
+<p>Hi <span class="var">{{nombre}}</span>:</p>
+<p>You completed your Financial Mini Profile. Here is your result:</p>
+<p><span class="var">{{frase_nivel}}</span></p>
+<p>Your Have Ability is only one of six foundational abilities that determine your financial health. Your Financial Health Profile evaluates all six and uncovers which one is slowing you down. It includes your full chart, an audio lesson by Alan C. Walter to understand it, and the "Taking Charge of Your Financial Future" workbook to begin moving it forward.</p>
+<p>Zones of Life Team</p>
+</div>
+<div class="btns"><span class="primary">Get my Financial Health Profile</span><span>View my result</span></div>
+</div></div>
+<div class="msg"><div class="msg-h"><span class="code">B2</span><span class="when">Immediate</span><span class="ch wa">WhatsApp</span></div><div class="msg-b">
+<div class="body">
+<p>Hi <span class="var">{{nombre}}</span>, your Financial Mini Profile result is ready: <span class="var">{{nombre_nivel_tener}}</span>. Having is just one of your six financial abilities. Your Financial Health Profile reveals all six.</p>
+</div>
+<div class="btns"><span class="primary">See my full Profile</span><span>View my result</span></div>
+</div></div>
+<div class="msg"><div class="msg-h"><span class="code">B3</span><span class="when">1 hour after checkout abandonment</span><span class="ch wa">WhatsApp</span></div><div class="msg-b">
+<div class="body">
+<p>Hi <span class="var">{{nombre}}</span>, your <span class="var">{{nombre_paquete}}</span> was paused at the payment step. If something went wrong, you can pick it up right here without starting over.</p>
+</div>
+<div class="btns"><span class="primary">Resume payment</span><span>I have a question</span></div>
+<p class="note"><span class="var">{{nombre_paquete}}</span> reflects the package chosen at checkout. "I have a question" opens the B10 menu or AI assistant.</p>
+</div></div>
+<div class="msg"><div class="msg-h"><span class="code">B4</span><span class="when">24 hours after checkout abandonment</span><span class="ch mail">Email</span></div><div class="msg-b">
+<p class="subj"><span>Subject:</span> Your Financial Health Profile is waiting for you</p>
+<div class="body">
+<p>Hi <span class="var">{{nombre}}</span>:</p>
+<p>Yesterday you started securing your <span class="var">{{nombre_paquete}}</span> and payment was left incomplete. We've saved your spot.</p>
+<p>If you experienced an issue with payment, you can try an alternative method via the same link.</p>
+<p>Zones of Life Team</p>
+</div>
+<div class="btns"><span class="primary">Complete my order</span></div>
+</div></div>
+<div class="msg"><div class="msg-h"><span class="code">B5</span><span class="when">Day 1</span><span class="ch mail">Email</span></div><div class="msg-b">
+<p class="subj"><span>Subject:</span> What your Mini Profile couldn't measure</p>
+<div class="body">
+<p>Hi <span class="var">{{nombre}}</span>:</p>
+<p>Your Mini Profile measured a single dimension: your Have Ability. While critical, financial health relies on six abilities: Producing, Focusing, Investigating, Having, Investing, and Creating Wealth. What happens in one directly impacts the rest.</p>
+<p>With your Financial Health Profile, you answer 100 questions and receive three assets:</p>
+<ol><li>Your complete 6-abilities chart to pinpoint exactly what sits lowest.</li><li>An audio lesson by Alan C. Walter explaining what each ability means and how to read your chart.</li><li>The "Taking Charge of Your Financial Future" workbook with exercises tailored to address what you uncover.</li></ol>
+<p>Without the full chart, it's very easy to put effort into the wrong ability.</p>
+<p>Zones of Life Team</p>
+</div>
+<div class="btns"><span class="primary">See what's included in my Profile</span></div>
+</div></div>
+<div class="msg"><div class="msg-h"><span class="code">B6</span><span class="when">Day 3</span><span class="ch mail">Email</span></div><div class="msg-b">
+<p class="subj"><span>Subject:</span> Negative processes: why holding onto what you earn feels hard</p>
+<div class="body">
+<p>Hi <span class="var">{{nombre}}</span>:</p>
+<p>Your result introduced the concept of a process. It is worth pausing to understand it.</p>
+<p>A negative process is a series of actions, shifts, or decisions that pull you away from what you want to achieve. It is a continuous downward motion: every cycle leaves you slightly further off-course. You rarely chose it consciously; you learned it from family, environments, or what you were told wasn't possible.</p>
+<p>A positive process is the exact opposite: honest, high-integrity actions aligned with your goals that repeat in cycles to culminate in an optimal outcome.</p>
+<p>Your Financial Health Profile pinpoints in which of your six abilities a negative process is operating, so you know exactly where to begin changing it.</p>
+<p>Zones of Life Team</p>
+</div>
+<div class="btns"><span class="primary">Get my Financial Health Profile</span></div>
+</div></div>
+<div class="msg"><div class="msg-h"><span class="code">B7</span><span class="when">Day 5</span><span class="ch mail">Email</span></div><div class="msg-b">
+<p class="subj"><span>Subject:</span> How much has guessing cost you?</p>
+<div class="body">
+<p>Hi <span class="var">{{nombre}}</span>:</p>
+<p>Your Financial Health Profile costs <span class="var">{{precio_perfil}}</span> ($25 USD).</p>
+<p>Consider what you have already invested trying to get your money in order: courses, books, apps, months of trying to figure it out alone. Every attempt without knowing which of your six abilities is lagging is essentially a gamble.</p>
+<p>The profile doesn't replace the work. It ensures the work you are already prepared to do moves in the right direction, and the workbook gives you the exact starting line.</p>
+<p>Zones of Life Team</p>
+</div>
+<div class="btns"><span class="primary">Stop guessing</span></div>
+</div></div>
+<div class="msg"><div class="msg-h"><span class="code">B8</span><span class="when">Day 7</span><span class="ch mail">Email</span></div><div class="msg-b">
+<p class="subj"><span>Subject:</span> Would you prefer someone help you interpret it?</p>
+<div class="body">
+<p>Hi <span class="var">{{nombre}}</span>:</p>
+<p>Some people prefer reading their chart, listening to the audio, and working through the workbook on their own. Others prefer reviewing their findings with someone skilled at reading them.</p>
+<p>For them, we offer the Financial Health Profile with private session: you receive your full chart, audio lesson, and workbook, plus a 60-minute video session with a coach to interpret your results and explore what they mean for your specific life. It costs <span class="var">{{precio_perfil_sesion}}</span> ($85 USD).</p>
+<p>If you prefer starting on your own, the automated profile remains available for <span class="var">{{precio_perfil}}</span> ($25 USD).</p>
+<p>Zones of Life Team</p>
+</div>
+<div class="btns"><span class="primary">Get profile with private session</span><span>I prefer the automated profile</span></div>
+<p class="note">B8 replaces any former bonus email. B9 is eliminated. This is the only email in Flow B where the session bundle is the primary CTA.</p>
+</div></div>
+<div class="msg"><div class="msg-h"><span class="code">B10</span><span class="when">Day 10</span><span class="ch wa">WhatsApp</span></div><div class="msg-b">
+<div class="body">
+<p>Hi <span class="var">{{nombre}}</span>, we'd love to know what's holding you back from getting your Financial Health Profile, so we only share what is truly helpful to you.</p>
+</div>
+<div class="btns"><span>The price</span><span>Not sure what's included</span><span>Not the right time</span></div>
+<div class="body">
+<div class="reply"><b>Reply to "The price"</b><p>Understood. The Financial Health Profile is <span class="var">{{precio_perfil}}</span> ($25 USD) as a one-time investment. <span class="var">{{opcion_pago}}</span>. If you prefer starting smaller, we send free personal finance insights every month.</p></div>
+<div class="reply"><b>Reply to "Not sure what's included"</b><p>You answer 100 questions and receive your full chart of all 6 abilities (Produce, Focus, Investigate, Have, Invest, and Create Wealth), an audio lesson by Alan C. Walter explaining it, and the "Taking Charge of Your Financial Future" workbook. If you'd like to review it with a coach, the bundle with a 60-minute private session is available for <span class="var">{{precio_perfil_sesion}}</span> ($85 USD).</p></div>
+<div class="reply"><b>Reply to "Not the right time"</b><p>Thank you for letting us know. Your Mini Profile result will stay saved and we'll check back in 30 days. If you'd like to resume before then, reply PROFILE.</p></div>
+</div>
+<p class="note">Each quick-reply ends with the button "Get my Financial Health Profile". "Not the right time" pauses the flow and resumes at B5 after 30 days.</p>
+</div></div>
+<div class="msg"><div class="msg-h"><span class="code">B11</span><span class="when">Day 14</span><span class="ch mail">Email</span></div><div class="msg-b">
+<p class="subj"><span>Subject:</span> Shall we leave it at your Mini Profile?</p>
+<div class="body">
+<p>Hi <span class="var">{{nombre}}</span>:</p>
+<p>This is our final email regarding your Financial Health Profile. We never want to crowd your inbox.</p>
+<p>Your Mini Profile result will stay available, and once a month we'll share insights on upgrading your relationship with money. If you ever decide to examine all six abilities, your profile will be here waiting.</p>
+<p>Zones of Life Team</p>
+</div>
+<div class="btns"><span class="primary">Get it now</span><span>Only send monthly insights</span></div>
+</div></div>
+<h3>Accelerated Flow B Version</h3>
+<p class="lead">For high-intent leads: two or more clicks on the offer or a visit to checkout. Identical copy delivered on a faster cadence.</p>
+<div class="tbl"><table><tr><th>Timing</th><th>Message</th></tr><tr><td>Immediate</td><td>B1 & B2</td></tr><tr><td>Day 1</td><td>B5</td></tr><tr><td>Day 2</td><td>B7</td></tr><tr><td>Day 3</td><td>B8</td></tr><tr><td>Day 4</td><td>B10</td></tr><tr><td>Day 7</td><td>B11</td></tr></table></div>
+</section>
+<section id="p"><h2>Purchase confirmation</h2>
+<p class="lead">Two email variations depending on the package purchased. WhatsApp message is identical.</p>
+<div class="msg"><div class="msg-h"><span class="code">P1a</span><span class="when">Immediate after payment (automated)</span><span class="ch mail">Email</span></div><div class="msg-b">
+<p class="subj"><span>Subject:</span> You're all set, <span class="var">{{nombre}}</span>. Let's start your Financial Health Profile</p>
+<div class="body">
+<p>Hi <span class="var">{{nombre}}</span>:</p>
+<p>Your payment is confirmed. Thank you for deciding to look honestly into your financial health.</p>
+<p>The next step is to answer your 100 questions. It takes about <span class="var">{{minutos_perfil}}</span> minutes. One recommendation: complete it during a calm moment and answer based on where you are today, not where you wish you were. The more candid you are, the more empowering your chart will be.</p>
+<p>Upon completion, you'll receive your 6-abilities chart, Alan C. Walter's audio lesson, and your workbook. You can pause and resume whenever you wish; your progress saves automatically.</p>
+<p>Zones of Life Team</p>
+</div>
+<div class="btns"><span class="primary">Start my Profile</span></div>
+<p class="note">Attach payment receipt/invoice.</p>
+</div></div>
+<div class="msg"><div class="msg-h"><span class="code">P1b</span><span class="when">Immediate after payment (bundle with private session)</span><span class="ch mail">Email</span></div><div class="msg-b">
+<p class="subj"><span>Subject:</span> You're all set, <span class="var">{{nombre}}</span>. Your profile and private session are active</p>
+<div class="body">
+<p>Hi <span class="var">{{nombre}}</span>:</p>
+<p>Your payment is confirmed. Thank you for deciding to look honestly into your financial health.</p>
+<p>Here is how it works:</p>
+<ol><li>You answer your 100 questions. It takes about <span class="var">{{minutos_perfil}}</span> minutes; answer based on where you are today, not where you wish you were.</li><li>You receive your 6-abilities chart, the Alan C. Walter audio lesson, and your workbook.</li><li>You schedule your 60-minute private session with a coach to interpret your findings.</li></ol>
+<p>The session is scheduled after you finish the profile so your coach has your chart in hand before you speak.</p>
+<p>Zones of Life Team</p>
+</div>
+<div class="btns"><span class="primary">Start my Profile</span></div>
+<p class="note">Attach payment receipt/invoice. Scheduling link arrives in DS1 when the chart generates.</p>
+</div></div>
+<div class="msg"><div class="msg-h"><span class="code">P2</span><span class="when">Immediate after payment</span><span class="ch wa">WhatsApp</span></div><div class="msg-b">
+<div class="body">
+<p>Payment confirmed, <span class="var">{{nombre}}</span>. Your Financial Health Profile is now live: 100 questions, about <span class="var">{{minutos_perfil}}</span> minutes, and you can pause anytime.</p>
+</div>
+<div class="btns"><span class="primary">Start now</span><span>I'll do it later</span></div>
+</div></div>
+</section>
+<section id="c"><h2>Flow C: Paid, hasn't finished profile</h2>
+<div class="flowmeta"><span><b>Enters:</b> Purchased, hasn't completed 100 questions</span><span><b>Exits:</b> Finishes profile</span><span><b>If no reply:</b> Monthly reminder until finished</span></div>
+<div class="msg"><div class="msg-h"><span class="code">C1</span><span class="when">24 hours after purchase</span><span class="ch mail">Email</span></div><div class="msg-b">
+<p class="subj"><span>Subject:</span> Your 6-abilities chart starts right here</p>
+<div class="body">
+<p>Hi <span class="var">{{nombre}}</span>:</p>
+<p>Yesterday you unlocked your Financial Health Profile. Your chart, audio lesson, and workbook unlock the moment you finish your 100 questions. <span class="var">{{estado_avance}}</span></p>
+<p>If you break it into two short sittings, you can finish it today.</p>
+<p>Zones of Life Team</p>
+</div>
+<div class="btns"><span class="primary">Continue my Profile</span></div>
+<p class="note"><span class="var">{{estado_avance}}</span>: "You haven't started yet." or "You are on question <span class="var">{{pregunta_actual}}</span> of 100."</p>
+</div></div>
+<div class="msg"><div class="msg-h"><span class="code">C2</span><span class="when">48 hours after purchase</span><span class="ch wa">WhatsApp</span></div><div class="msg-b">
+<div class="body">
+<p>Hi <span class="var">{{nombre}}</span>, your financial health chart is just <span class="var">{{preguntas_restantes}}</span> questions away. Ready to jump back in?</p>
+</div>
+<div class="btns"><span class="primary">Continue</span><span>I need help</span></div>
+<p class="note">"I need help" prompts the AI assistant with FAQs: login issues, pauses, question clarifications.</p>
+</div></div>
+<div class="msg"><div class="msg-h"><span class="code">C3</span><span class="when">Day 5</span><span class="ch wa">WhatsApp</span></div><div class="msg-b">
+<div class="body">
+<p>Hi <span class="var">{{nombre}}</span>, we put together a 1-minute video with practical tips to move through your Financial Health Profile smoothly. At the end, you'll find the direct link to where you left off.</p>
+</div>
+<div class="btns"><span class="primary">Watch video & continue</span></div>
+</div></div>
+<div class="msg"><div class="msg-h"><span class="code">C4</span><span class="when">Day 10</span><span class="ch mail">Email</span></div><div class="msg-b">
+<p class="subj"><span>Subject:</span> Your investment is waiting for you</p>
+<div class="body">
+<p>Hi <span class="var">{{nombre}}</span>:</p>
+<p>10 days ago you chose to invest in your Financial Health Profile. We haven't seen your responses yet, and they are what unlocks everything else: your chart, your audio lesson, your workbook <span class="var">{{extra_paquete}}</span>.</p>
+<p>Your access remains active for <span class="var">{{vigencia_acceso}}</span>. Jump back in during your next quiet moment.</p>
+<p>Zones of Life Team</p>
+</div>
+<div class="btns"><span class="primary">Finish my Profile</span></div>
+<p class="note"><span class="var">{{extra_paquete}}</span>: empty for automated tier; "and your private session with a coach" for the session bundle.</p>
+</div></div>
+</section>
+<section id="d"><h2>Flow D: Automated profile ready, selling the session</h2>
+<div class="flowmeta"><span><b>Enters:</b> Bought automated, received chart</span><span><b>Exits:</b> Buys private session and schedules</span><span><b>If no reply:</b> Monthly nurture & 90-day re-assessment</span></div>
+<div class="msg"><div class="msg-h"><span class="code">D1</span><span class="when">Immediate upon chart generation</span><span class="ch mail">Email</span></div><div class="msg-b">
+<p class="subj"><span>Subject:</span> <span class="var">{{nombre}}</span>, your Financial Health Profile is ready</p>
+<div class="body">
+<p>Hi <span class="var">{{nombre}}</span>:</p>
+<p>Your Financial Health Profile is now accessible. Here is what you have:</p>
+<ol><li>Your complete 6-abilities chart. Today, your lowest is <span class="var">{{habilidad_baja}}</span>.</li><li>Alan C. Walter's audio lesson on the Financial Health Profile: <span class="var">{{link_audio}}</span></li><li>Your "Taking Charge of Your Financial Future" workbook, attached to this email.</li></ol>
+<p>We recommend this order: review your chart, listen to the audio lesson, then open the workbook.</p>
+<p>Zones of Life Team</p>
+</div>
+<div class="btns"><span class="primary">View my chart</span></div>
+<p class="note"><span class="var">{{link_audio}}</span> = <a href="https://on.soundcloud.com/fTAdDNVbswFvZ21ePq.">https://on.soundcloud.com/fTAdDNVbswFvZ21ePq.</a> Workbook attached as PDF or download link if over 5 MB.</p>
+</div></div>
+<div class="msg"><div class="msg-h"><span class="code">D2</span><span class="when">Immediate upon chart generation</span><span class="ch wa">WhatsApp</span></div><div class="msg-b">
+<div class="body">
+<p><span class="var">{{nombre}}</span>, your Financial Health Profile is ready. We've emailed you your chart, the Alan C. Walter audio, and your workbook.</p>
+</div>
+<div class="btns"><span class="primary">View my chart</span><span>Listen to audio</span></div>
+</div></div>
+<div class="msg"><div class="msg-h"><span class="code">D3</span><span class="when">Day 2</span><span class="ch mail">Email</span></div><div class="msg-b">
+<p class="subj"><span>Subject:</span> Before opening your workbook, listen to this</p>
+<div class="body">
+<p>Hi <span class="var">{{nombre}}</span>:</p>
+<p>Your chart reveals where you stand. The audio lesson by Alan C. Walter explains what each ability represents and why <span class="var">{{habilidad_baja}}</span> might be pulling down the others.</p>
+<p>Listen to it before starting your workbook: you'll gain much deeper clarity on each exercise.</p>
+<p>Zones of Life Team</p>
+</div>
+<div class="btns"><span class="primary">Listen to the audio lesson</span></div>
+</div></div>
+<div class="msg"><div class="msg-h"><span class="code">D4</span><span class="when">Day 4</span><span class="ch mail">Email</span></div><div class="msg-b">
+<p class="subj"><span>Subject:</span> Getting the most from your workbook</p>
+<div class="body">
+<p>Hi <span class="var">{{nombre}}</span>:</p>
+<p>"Taking Charge of Your Financial Future" delivers the best results when worked step-by-step. Three suggestions:</p>
+<ol><li>Start with the section on <span class="var">{{habilidad_baja}}</span>, your lowest ability.</li><li>Write out your answers; don't just answer them in your head.</li><li>Return to your chart as you complete each section.</li></ol>
+<p>There is one thing a workbook cannot do: adapt what you discover to your unique life situation. That is done in a private interpretation session with an ACLC coach.</p>
+<p>Zones of Life Team</p>
+</div>
+<div class="btns"><span class="primary">Open my workbook</span></div>
+</div></div>
+<div class="msg"><div class="msg-h"><span class="code">D5</span><span class="when">Day 7</span><span class="ch mail">Email</span></div><div class="msg-b">
+<p class="subj"><span>Subject:</span> Review your chart with an ACLC coach</p>
+<div class="body">
+<p>Hi <span class="var">{{nombre}}</span>:</p>
+<p>You already have your chart, audio, and workbook. If you want to go deeper, you can add a private interpretation session: 60 minutes over video call with a certified coach who walks through your six abilities and helps you understand what lies beneath <span class="var">{{habilidad_baja}}</span>.</p>
+<p>The session is <span class="var">{{precio_mejora_sesion}}</span> ($85 USD).</p>
+<p>Zones of Life Team</p>
+</div>
+<div class="btns"><span class="primary">Add my private session</span></div>
+</div></div>
+<div class="msg"><div class="msg-h"><span class="code">D6</span><span class="when">Day 10</span><span class="ch wa">WhatsApp</span></div><div class="msg-b">
+<div class="body">
+<p>Hi <span class="var">{{nombre}}</span>, what would you like to do next with your Financial Health Profile?</p>
+</div>
+<div class="btns"><span class="primary">Add private session</span><span>Questions about session</span><span>I prefer to work alone</span></div>
+<div class="body">
+<div class="reply"><b>Reply to "Questions about session"</b><p>It is a 60-minute video call with a certified coach. You review your 6 abilities chart together, interpret your scores, and examine what they mean for your situation. If the coach believes a program can help you, they'll present it. The decision is entirely yours. It costs <span class="var">{{precio_mejora_sesion}}</span> ($85 USD).</p></div>
+<div class="reply"><b>Reply to "I prefer to work alone"</b><p>Wonderful. Your workbook is crafted so you can make progress independently. We will send you monthly insights, and in 90 days invite you to measure your growth. If you ever want the session, reply SESSION.</p></div>
+</div>
+<p class="note">"I prefer to work alone" exits the lead from this flow into monthly nurture and schedules the 90-day re-assessment.</p>
+</div></div>
+<div class="msg"><div class="msg-h"><span class="code">D7</span><span class="when">Day 14</span><span class="ch mail">Email</span></div><div class="msg-b">
+<p class="subj"><span>Subject:</span> Three reasons people skip the session (and what usually happens)</p>
+<div class="body">
+<p>Hi <span class="var">{{nombre}}</span>:</p>
+<p><strong>"I don't have time."</strong> It's 60 minutes. The real question is how much longer <span class="var">{{habilidad_baja}}</span> will stay where it is.</p>
+<p><strong>"I already have the workbook."</strong> And it's a solid starting ground. But knowing what to do versus doing it are two different challenges—the second is where a coach helps you bridge the gap.</p>
+<p><strong>"They're just going to sell me something."</strong> Let's be completely transparent: if the coach sees that a program fits your needs, they will propose it. If not, you walk away with your results interpreted and clarity on your next move. In either case, the choice is 100% yours.</p>
+<p>Zones of Life Team</p>
+</div>
+<div class="btns"><span class="primary">Add my private session</span></div>
+</div></div>
+<div class="msg"><div class="msg-h"><span class="code">D8</span><span class="when">Day 21</span><span class="ch mail">Email</span></div><div class="msg-b">
+<p class="subj"><span>Subject:</span> Your profile doesn't expire, but momentum does</p>
+<div class="body">
+<p>Hi <span class="var">{{nombre}}</span>:</p>
+<p>This is our final email regarding the private session. Your chart, audio, and workbook remain yours.</p>
+<p>In 90 days we will invite you to measure your six abilities again to see how much they've shifted. If before then you want to examine your results with a coach, the session is always open to you.</p>
+<p>Zones of Life Team</p>
+</div>
+<div class="btns"><span class="primary">Add my private session</span></div>
+</div></div>
+</section>
+<section id="ds"><h2>DS Branch: Bought with session, needs scheduling</h2>
+<div class="flowmeta"><span><b>Enters:</b> Bought session bundle, received chart</span><span><b>Exits:</b> Schedules session</span><span><b>If no reply:</b> Monthly reminder until booked</span></div>
+<div class="msg"><div class="msg-h"><span class="code">DS1</span><span class="when">Immediate upon chart generation</span><span class="ch mail">Email</span></div><div class="msg-b">
+<p class="subj"><span>Subject:</span> <span class="var">{{nombre}}</span>, your profile is ready: book your private session</p>
+<div class="body">
+<p>Hi <span class="var">{{nombre}}</span>:</p>
+<p>Your Financial Health Profile is ready:</p>
+<ol><li>Your complete 6-abilities chart. Today your lowest is <span class="var">{{habilidad_baja}}</span>.</li><li>Alan C. Walter's audio lesson: <span class="var">{{link_audio}}</span></li><li>Your "Taking Charge of Your Financial Future" workbook, attached.</li></ol>
+<p>Your private interpretation session is already paid. Pick your time: it's a 60-minute video call with an ACLC coach who will have your chart ready.</p>
+<p>Zones of Life Team</p>
+</div>
+<div class="btns"><span class="primary">Schedule my private session</span></div>
+</div></div>
+<div class="msg"><div class="msg-h"><span class="code">DS2</span><span class="when">Immediate upon chart generation</span><span class="ch wa">WhatsApp</span></div><div class="msg-b">
+<div class="body">
+<p><span class="var">{{nombre}}</span>, your Financial Health Profile is ready and your private session is already paid for. All that's left is selecting your time.</p>
+</div>
+<div class="btns"><span class="primary">Book my session</span><span>View my chart</span></div>
+</div></div>
+<div class="msg"><div class="msg-h"><span class="code">DS3</span><span class="when">Day 3</span><span class="ch mail">Email</span></div><div class="msg-b">
+<p class="subj"><span>Subject:</span> Your private session is waiting to be booked</p>
+<div class="body">
+<p>Hi <span class="var">{{nombre}}</span>:</p>
+<p>Your 60-minute session is still without a date. To make the most of it, we suggest listening to the audio lesson and glancing through your workbook beforehand: you'll arrive with sharper questions.</p>
+<p>Zones of Life Team</p>
+</div>
+<div class="btns"><span class="primary">Schedule my private session</span></div>
+</div></div>
+<div class="msg"><div class="msg-h"><span class="code">DS4</span><span class="when">Day 7</span><span class="ch wa">WhatsApp</span></div><div class="msg-b">
+<div class="body">
+<p>Hi <span class="var">{{nombre}}</span>, your private interpretation session is ready whenever you are. Shall we put it on the calendar?</p>
+</div>
+<div class="btns"><span class="primary">Book now</span><span>I have a question</span></div>
+<p class="note">"I have a question" opens the AI assistant. If they don't schedule, monthly nurture N1 reminds them: "Schedule your private session; it's already paid for."</p>
+</div></div>
+</section>
+<section id="s"><h2>Booked session: confirmation and reminders</h2>
+<div class="flowmeta"><span><b>Enters:</b> Schedules session (from DS or upgrade via D)</span><span><b>Exits:</b> Attends or no-shows</span></div>
+<div class="msg"><div class="msg-h"><span class="code">S1</span><span class="when">Immediate on booking</span><span class="ch mail">Email</span></div><div class="msg-b">
+<p class="subj"><span>Subject:</span> Your private session is confirmed: <span class="var">{{fecha_sesion}}</span>, <span class="var">{{hora_sesion}}</span></p>
+<div class="body">
+<p>Hi <span class="var">{{nombre}}</span>:</p>
+<p>Your private interpretation session with <span class="var">{{coach}}</span> is confirmed for <span class="var">{{fecha_sesion}}</span> at <span class="var">{{hora_sesion}}</span> (<span class="var">{{zona_horaria}}</span>).</p>
+<p>To get the highest value: keep your chart and workbook nearby, find a quiet space with a solid internet connection, and prepare one specific question you'd like clarity on regarding <span class="var">{{habilidad_baja}}</span>.</p>
+<p>Zones of Life Team</p>
+</div>
+<div class="btns"><span class="primary">Add to my calendar</span><span>View my chart</span><span>Reschedule</span></div>
+</div></div>
+<div class="msg"><div class="msg-h"><span class="code">S2</span><span class="when">Immediate on booking</span><span class="ch wa">WhatsApp</span></div><div class="msg-b">
+<div class="body">
+<p>All set, <span class="var">{{nombre}}</span>. Your private session with <span class="var">{{coach}}</span> is on <span class="var">{{fecha_sesion}}</span> at <span class="var">{{hora_sesion}}</span>. We'll send the video link before we start.</p>
+</div>
+<div class="btns"><span class="primary">Add to calendar</span></div>
+</div></div>
+<div class="msg"><div class="msg-h"><span class="code">S3</span><span class="when">24 hours before</span><span class="ch mail">Email</span></div><div class="msg-b">
+<p class="subj"><span>Subject:</span> Tomorrow you meet <span class="var">{{coach}}</span></p>
+<div class="body">
+<p>Hi <span class="var">{{nombre}}</span>:</p>
+<p>Tomorrow at <span class="var">{{hora_sesion}}</span> is your private session. Here's a brief video introduction to <span class="var">{{coach}}</span> so you know who you'll be speaking with.</p>
+<p><span class="var">{{bio_coach}}</span></p>
+<p>If you've written down your question about <span class="var">{{habilidad_baja}}</span>, bring it along.</p>
+<p>Zones of Life Team</p>
+</div>
+<div class="btns"><span class="primary">Watch <span class="var">{{coach}}</span>'s video</span><span>Reschedule</span></div>
+</div></div>
+<div class="msg"><div class="msg-h"><span class="code">S4</span><span class="when">2 hours before</span><span class="ch wa">WhatsApp</span></div><div class="msg-b">
+<div class="body">
+<p>Hi <span class="var">{{nombre}}</span>, your private session with <span class="var">{{coach}}</span> is today at <span class="var">{{hora_sesion}}</span>. Can you confirm you'll be there?</p>
+</div>
+<div class="btns"><span class="primary">I'll be there</span><span>I need to reschedule</span></div>
+</div></div>
+<div class="msg"><div class="msg-h"><span class="code">S5</span><span class="when">10 minutes before</span><span class="ch wa">WhatsApp</span></div><div class="msg-b">
+<div class="body">
+<p><span class="var">{{nombre}}</span>, your session starts in 10 minutes. Join here: <span class="var">{{link_sesion}}</span></p>
+</div>
+</div></div>
+<div class="msg"><div class="msg-h"><span class="code">S6</span><span class="when">Immediate on booking (internal)</span><span class="ch int">Coach brief</span></div><div class="msg-b">
+<p class="subj"><span>Subject:</span> New private session: <span class="var">{{nombre}}</span>, <span class="var">{{fecha_sesion}}</span> <span class="var">{{hora_sesion}}</span></p>
+<div class="body">
+<p>Profile: <span class="var">{{perfil}}</span>. Package: <span class="var">{{paquete}}</span> (bundled at checkout or upgraded via D).</p>
+<p>Mini Profile: <span class="var">{{nombre_nivel_tener}}</span>, score <span class="var">{{p_tener_mini}}</span>.</p>
+<p>Financial Health Profile: <span class="var">{{p_habilidades}}</span>. Lowest ability: <span class="var">{{habilidad_baja}}</span>.</p>
+<p>Journey: Completed Mini Profile on <span class="var">{{fecha_gratuito}}</span>, purchased on <span class="var">{{fecha_compra}}</span> (<span class="var">{{dias_a_compra}}</span> days later), scheduled <span class="var">{{dias_a_agenda}}</span> days after receiving chart.</p>
+<p>Engagement: Emails opened <span class="var">{{correos_abiertos}}</span>, audio listened <span class="var">{{abrio_audio}}</span>, quick-replies chosen <span class="var">{{botones_elegidos}}</span>, lead score <span class="var">{{puntaje_lead}}</span>.</p>
+<p>Full chart: <span class="var">{{link_reporte}}</span></p>
+</div>
+<p class="note">Internal only. Not seen by lead.</p>
+</div></div>
+</section>
+<section id="e"><h2>Flow E: No-show follow-up</h2>
+<div class="flowmeta"><span><b>Enters:</b> Missed session</span><span><b>Exits:</b> Reschedules within 1 month</span><span><b>If no reply:</b> Final notice upon window expiration</span></div>
+<div class="msg"><div class="msg-h"><span class="code">E1</span><span class="when">15 minutes past start time</span><span class="ch wa">WhatsApp</span></div><div class="msg-b">
+<div class="body">
+<p>Hi <span class="var">{{nombre}}</span>, your session with <span class="var">{{coach}}</span> was scheduled for <span class="var">{{hora_sesion}}</span>. If something came up, no worries: your session is already paid and you have until <span class="var">{{fecha_limite_reagenda}}</span> to choose another time.</p>
+</div>
+<div class="btns"><span class="primary">Reschedule</span><span>Message the team</span></div>
+</div></div>
+<div class="msg"><div class="msg-h"><span class="code">E2</span><span class="when">24 hours later</span><span class="ch mail">Email</span></div><div class="msg-b">
+<p class="subj"><span>Subject:</span> Your private session is still pending</p>
+<div class="body">
+<p>Hi <span class="var">{{nombre}}</span>:</p>
+<p>We missed connecting yesterday. Your private interpretation session is still paid for and your chart is ready to review.</p>
+<p>You have until <span class="var">{{fecha_limite_reagenda}}</span> to reschedule. Choose the time that fits your calendar best.</p>
+<p>Zones of Life Team</p>
+</div>
+<div class="btns"><span class="primary">Reschedule my session</span></div>
+<p class="note"><span class="var">{{fecha_limite_reagenda}}</span> = date of missed session + 1 month.</p>
+</div></div>
+<div class="msg"><div class="msg-h"><span class="code">E3</span><span class="when">72 hours later</span><span class="ch wa">WhatsApp</span></div><div class="msg-b">
+<div class="body">
+<p><span class="var">{{nombre}}</span>, your private session remains available through <span class="var">{{fecha_limite_reagenda}}</span>. After that date, we won't be able to reschedule it.</p>
+</div>
+<div class="btns"><span class="primary">Reschedule</span></div>
+</div></div>
+<div class="msg"><div class="msg-h"><span class="code">E4</span><span class="when">7 days before <span class="var">{{fecha_limite_reagenda}}</span></span><span class="ch mail">Email</span></div><div class="msg-b">
+<p class="subj"><span>Subject:</span> Your private session expires on <span class="var">{{fecha_limite_reagenda}}</span></p>
+<div class="body">
+<p>Hi <span class="var">{{nombre}}</span>:</p>
+<p>Your private interpretation session is still unscheduled. You have until <span class="var">{{fecha_limite_reagenda}}</span> to book it; after that day, we cannot reschedule it.</p>
+<p>Your chart, audio lesson, and workbook remain available to you.</p>
+<p>Zones of Life Team</p>
+</div>
+<div class="btns"><span class="primary">Reschedule my session</span></div>
+</div></div>
+</section>
+<section id="f"><h2>Flow F: Attended, didn't buy program</h2>
+<div class="flowmeta"><span><b>Enters:</b> Coach marks session as "no purchase"</span><span><b>Exits:</b> Buys program or entry product</span><span><b>If no reply:</b> Monthly nurture</span></div>
+<p class="lead">Following the session, the coach fills three CRM fields: one-line summary, proposal presented, and main objection.</p>
+<div class="msg"><div class="msg-h"><span class="code">F1</span><span class="when">Same day</span><span class="ch mail">Email</span></div><div class="msg-b">
+<p class="subj"><span>Subject:</span> Recap of what we covered in your session</p>
+<div class="body">
+<p>Hi <span class="var">{{nombre}}</span>:</p>
+<p>Thank you for your time today. In brief: <span class="var">{{resumen_sesion}}</span></p>
+<p>As we discussed, the proposal to address <span class="var">{{habilidad_baja}}</span> is <span class="var">{{propuesta_programa}}</span>. Here you can review the details, investment, and how to get started.</p>
+<p><span class="var">{{coach}}</span> and the Zones of Life Team</p>
+</div>
+<div class="btns"><span class="primary">View my proposal</span></div>
+<p class="note">Signed by the coach because direct human rapport exists. Coach approves summary prior to sending.</p>
+</div></div>
+<div class="msg"><div class="msg-h"><span class="code">F2</span><span class="when">Day 2</span><span class="ch wa">WhatsApp</span></div><div class="msg-b">
+<div class="body">
+<p>Hi <span class="var">{{nombre}}</span>, what do you need most to make a decision on your proposal?</p>
+</div>
+<div class="btns"><span>Time</span><span>Review investment</span><span>Try on my own</span><span>Discuss with someone</span></div>
+</div></div>
+<div class="msg"><div class="msg-h"><span class="code">F3</span><span class="when">Upon button click, or Day 3</span><span class="ch mail">Email</span></div><div class="msg-b">
+<div class="body">
+<div class="reply"><b>Variant "Time". Subject: How much time your program actually requires</b><p>Hi <span class="var">{{nombre}}</span>: <span class="var">{{propuesta_programa}}</span> takes <span class="var">{{tiempo_semanal}}</span> per week. If the issue is when to start, you can choose the start date that works best for you.</p></div>
+<div class="reply"><b>Variant "Review investment". Subject: Flexible ways to start your program</b><p>Hi <span class="var">{{nombre}}</span>: your program investment is <span class="var">{{precio_programa}}</span>. <span class="var">{{opciones_pago}}</span>. <span class="var">{{credito_perfil}}</span></p></div>
+<div class="reply"><b>Variant "Try on my own". Subject: If you decide to go solo, begin here</b><p>Hi <span class="var">{{nombre}}</span>: we completely respect that. Your workbook is your launchpad. Review your progress in 30 days: if <span class="var">{{habilidad_baja}}</span> hasn't moved, personalized guidance can make all the difference. Your proposal remains valid through <span class="var">{{vigencia_propuesta}}</span>.</p></div>
+<div class="reply"><b>Variant "Discuss with someone". Subject: Summary to share your proposal</b><p>Hi <span class="var">{{nombre}}</span>: we prepared a 1-page overview detailing what your program includes, how it works, and what to expect, so you can easily review it with anyone you wish.</p></div>
+</div>
+<div class="btns"><span class="primary">View my proposal</span></div>
+</div></div>
+<div class="msg"><div class="msg-h"><span class="code">F4</span><span class="when">Day 5</span><span class="ch mail">Email</span></div><div class="msg-b">
+<p class="subj"><span>Subject:</span> <span class="var">{{testimonio_nombre}}</span> was standing in the exact same spot</p>
+<div class="body">
+<p>Hi <span class="var">{{nombre}}</span>:</p>
+<p><span class="var">{{testimonio_nombre}}</span>, <span class="var">{{testimonio_perfil}}</span>, also hesitated before starting. <span class="var">{{testimonio_duda}}</span></p>
+<p>After 90 days, their new Financial Health Profile showed <span class="var">{{testimonio_resultado}}</span>.</p>
+<p>Zones of Life Team</p>
+</div>
+<div class="btns"><span class="primary">View my proposal</span></div>
+<p class="note">Only sent with verified real testimonial and written consent. Otherwise omitted.</p>
+</div></div>
+<div class="msg"><div class="msg-h"><span class="code">F5</span><span class="when">Day 7</span><span class="ch mail">Email</span></div><div class="msg-b">
+<p class="subj"><span>Subject:</span> Your proposal terms expire on <span class="var">{{vigencia_propuesta}}</span></p>
+<div class="body">
+<p>Hi <span class="var">{{nombre}}</span>:</p>
+<p>Your proposal for <span class="var">{{propuesta_programa}}</span> under the terms you discussed with <span class="var">{{coach}}</span> is valid through <span class="var">{{vigencia_propuesta}}</span>.</p>
+<p>After that date you can always request it again, though pricing and schedule availability may adjust.</p>
+<p>Zones of Life Team</p>
+</div>
+<div class="btns"><span class="primary">Start my program</span></div>
+</div></div>
+<div class="msg"><div class="msg-h"><span class="code">F6</span><span class="when">Day 14</span><span class="ch mail">Email</span></div><div class="msg-b">
+<p class="subj"><span>Subject:</span> A lighter way to keep elevating your financial health</p>
+<div class="body">
+<p>Hi <span class="var">{{nombre}}</span>:</p>
+<p>If a full coaching program isn't right for this season, there is another option: <span class="var">{{producto_entrada}}</span>. It's a focused resource targeting <span class="var">{{habilidad_baja}}</span>, completed at your own pace, for <span class="var">{{precio_producto_entrada}}</span>.</p>
+<p>While it doesn't replace 1-on-1 coaching, it lets you make tangible progress starting today.</p>
+<p>Zones of Life Team</p>
+</div>
+<div class="btns"><span class="primary">Learn about <span class="var">{{producto_entrada}}</span></span><span>I prefer to wait</span></div>
+</div></div>
+</section>
+<section id="g"><h2>Clients: Onboarding, re-assessment and referrals</h2>
+<div class="msg"><div class="msg-h"><span class="code">G1</span><span class="when">Immediate after purchase</span><span class="ch mail">Email + WhatsApp</span></div><div class="msg-b">
+<p class="subj"><span>Subject:</span> Welcome to your program, <span class="var">{{nombre}}</span></p>
+<div class="body">
+<p>Hi <span class="var">{{nombre}}</span>:</p>
+<p>Your program <span class="var">{{propuesta_programa}}</span> begins on <span class="var">{{fecha_inicio}}</span>. Here is what comes next: <span class="var">{{pasos_onboarding}}</span></p>
+<p>Your baseline is recorded in your Financial Health Profile. In 90 days, we'll re-measure and celebrate your progress.</p>
+<p><span class="var">{{coach}}</span> and the Zones of Life Team</p>
+</div>
+<div class="btns"><span class="primary">Enter my program portal</span></div>
+<p class="note">WhatsApp: "Welcome, <span class="var">{{nombre}}</span>. Your program starts on <span class="var">{{fecha_inicio}}</span>. Here is your access: <span class="var">{{link_programa}}</span>"</p>
+</div></div>
+<div class="msg"><div class="msg-h"><span class="code">G2</span><span class="when">Day 7</span><span class="ch wa">WhatsApp</span></div><div class="msg-b">
+<div class="body">
+<p>Hi <span class="var">{{nombre}}</span>, you've completed your first week in the program. How is it feeling so far?</p>
+</div>
+<div class="btns"><span>Very good</span><span>Finding it challenging</span><span>I have a question</span></div>
+<p class="note">"Finding it challenging" and "I have a question" automatically assign a follow-up task to the coach.</p>
+</div></div>
+<div class="msg"><div class="msg-h"><span class="code">G3</span><span class="when">Day 30</span><span class="ch mail">Email</span></div><div class="msg-b">
+<p class="subj"><span>Subject:</span> Your first 30 days working on <span class="var">{{habilidad_baja}}</span></p>
+<div class="body">
+<p>Hi <span class="var">{{nombre}}</span>:</p>
+<p>You hit the 30-day mark. This is when many people feel like progress has slowed. Open your workbook and check off what you've already achieved: it's almost always more than you realize.</p>
+<p>Zones of Life Team</p>
+</div>
+<div class="btns"><span class="primary">Review my progress</span></div>
+</div></div>
+<div class="msg"><div class="msg-h"><span class="code">G4</span><span class="when">Day 90</span><span class="ch mail">Email + WhatsApp</span></div><div class="msg-b">
+<p class="subj"><span>Subject:</span> It's been 90 days. How much have your abilities moved?</p>
+<div class="body">
+<p>Hi <span class="var">{{nombre}}</span>:</p>
+<p>90 days ago your lowest ability was <span class="var">{{habilidad_baja}}</span>, with a score of <span class="var">{{puntaje_inicial}}</span>. It's time to measure again.</p>
+<p>Your new Financial Health Profile features the same 100 questions, <span class="var">{{condicion_reevaluacion}}</span>. When finished, you'll see your before-and-after chart across all six abilities.</p>
+<p>Zones of Life Team</p>
+</div>
+<div class="btns"><span class="primary">Take my re-assessment</span></div>
+<p class="note">Also sent to anyone who bought the full profile without enrolling in a program.</p>
+</div></div>
+<div class="msg"><div class="msg-h"><span class="code">G5</span><span class="when">Upon finishing re-assessment showing growth</span><span class="ch mail">Email</span></div><div class="msg-b">
+<p class="subj"><span>Subject:</span> Your <span class="var">{{habilidad_baja}}</span> climbed <span class="var">{{mejora}}</span> points</p>
+<div class="body">
+<p>Hi <span class="var">{{nombre}}</span>:</p>
+<p>Your re-assessment proves it: <span class="var">{{habilidad_baja}}</span> moved from <span class="var">{{puntaje_inicial}}</span> to <span class="var">{{puntaje_actual}}</span>.</p>
+<p>If you know someone standing where you were 90 days ago, share your personal link. They'll receive their free Financial Mini Profile plus <span class="var">{{beneficio_referido}}</span>, and you'll receive <span class="var">{{beneficio_referente}}</span>.</p>
+<p>Zones of Life Team</p>
+</div>
+<div class="btns"><span class="primary">Copy my referral link</span><span>See next level</span></div>
+<p class="note">"See next level" leads to step-up advancement into advanced ACLC programs.</p>
+</div></div>
+</section>
+<section id="n"><h2>Monthly nurture</h2>
+<p class="lead">For anyone who exited a flow without progressing. One email per month with a single call to action aligned with their stage.</p>
+<div class="msg"><div class="msg-h"><span class="code">N1</span><span class="when">Monthly</span><span class="ch mail">Email</span></div><div class="msg-b">
+<p class="subj"><span>Subject:</span> <span class="var">{{titulo_contenido_mes}}</span></p>
+<div class="body">
+<p>Hi <span class="var">{{nombre}}</span>:</p>
+<p><span class="var">{{contenido_mes}}</span></p>
+<p><span class="var">{{cta_por_etapa}}</span></p>
+<p>Zones of Life Team</p>
+</div>
+<div class="tbl"><table><tr><th>Lead Stage</th><th><span class="var">{{cta_por_etapa}}</span></th></tr><tr><td>Didn't finish Mini Profile</td><td>Your Financial Mini Profile is still waiting for you.</td></tr><tr><td>Finished Mini Profile</td><td>Having is one of six abilities. Uncover the other five with your Financial Health Profile.</td></tr><tr><td>Purchased, didn't finish</td><td>Your 6-abilities chart is just a few questions away.</td></tr><tr><td>Has automated profile, no session</td><td>Review your chart with an ACLC coach in a private session.</td></tr><tr><td>Paid session, unscheduled</td><td>Schedule your private session; it's already paid for.</td></tr><tr><td>Attended session, no purchase</td><td>Discover <span class="var">{{producto_entrada}}</span>.</td></tr></table></div>
+</div></div>
+</section>
+<section id="lib"><h2>Texts by level and variables</h2>
+<h3><span class="var">{{frase_nivel}}</span> and <span class="var">{{nombre_nivel_tener}}</span></h3>
+<div class="tbl"><table><tr><th><span class="var">{{nombre_nivel_tener}}</span></th><th>Chart Range</th><th><span class="var">{{frase_nivel}}</span> (Short version for Email & WhatsApp)</th></tr><tr><td>Working not to have</td><td>Bottom half of the Yellow Zone</td><td>Your score sits below the Yellow Zone's centerline: today you are working "not to have". It's not a lack of effort. It's an active negative process steering you away from what you desire even as you chase it, and it can be changed.</td></tr><tr><td>Struggling to have</td><td>Top half of the Yellow Zone</td><td>Your score sits in the upper half of the Yellow Zone: you are struggling "to have". You make progress, but every win costs you more than it should because you're carrying learned rules about what can't or shouldn't be done.</td></tr><tr><td>You have the ability to have</td><td>Green Zone</td><td>Your score is in the Green Zone: you have the capacity "to have". Your environment operates in harmony with you and you've built positive processes. The next step is doubling down on what already works to expand your game.</td></tr></table></div>
+<p class="note">The full foundational text for each level appears on the R1 web screen. Emails utilize the condensed, constructive version.</p>
+<h3>The Six Financial Abilities</h3>
+<div class="tbl"><table><tr><th>Spanish (CRM & Copy)</th><th>English (Original)</th></tr><tr><td>Producir</td><td>Produce</td></tr><tr><td>Enfocar</td><td>Focus</td></tr><tr><td>Investigar</td><td>Investigate</td></tr><tr><td>Tener</td><td>Have</td></tr><tr><td>Invertir</td><td>Invest</td></tr><tr><td>Crear riqueza</td><td>Create Wealth</td></tr></table></div>
+<h3>Products and Pricing</h3>
+<div class="tbl"><table><tr><th>Product</th><th>Price</th><th>Includes</th></tr><tr><td>Financial Mini Profile</td><td>Free</td><td>Have Ability chart score and level diagnosis</td></tr><tr><td>Financial Health Profile (Automated)</td><td><span class="var">{{precio_perfil}}</span> = $500 MXN / $25 USD</td><td>Full 6-abilities chart, Alan C. Walter audio lesson, "Taking Charge of Your Financial Future" workbook</td></tr><tr><td>Profile + Private Interpretation Session</td><td><span class="var">{{precio_perfil_sesion}}</span> = $1,640 MXN / $85 USD</td><td>All above + 60-minute one-on-one session with certified coach</td></tr><tr><td>Session Upgrade (Past buyers of automated)</td><td><span class="var">{{precio_mejora_sesion}}</span> = $1,640 MXN / $85 USD</td><td>60-minute one-on-one session with certified coach</td></tr></table></div>
+</section>
+<footer>Zones of Life · Financial Funnel v2.1 (English). Variables preserved in Spanish to match unified CRM tags.</footer>
+</main></div></body></html>

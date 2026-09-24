@@ -32,7 +32,7 @@
             "label": "Card 1 Title",
             "name": "card_1_title",
             "type": "text",
-            "default_value": "Short profile"
+            "default_value": "Financial Mini Profile"
         },
         {
             "key": "field_at_c1_desc",
@@ -40,14 +40,14 @@
             "name": "card_1_desc",
             "type": "textarea",
             "rows": 3,
-            "default_value": "Fourteen questions, two minutes. You get your Zone, why you are in it, and which of the three areas is holding you back."
+            "default_value": "Twenty questions, three minutes. Precisely measures your Ability to Have money and keep it, your level on the 3-zone chart, and your next step."
         },
         {
             "key": "field_at_c1_btn_text",
             "label": "Card 1 Button Text",
             "name": "card_1_btn_text",
             "type": "text",
-            "default_value": "Start"
+            "default_value": "Start for free"
         },
         {
             "key": "field_at_c1_btn_link",
@@ -61,14 +61,14 @@
             "label": "Card 2 Badge",
             "name": "card_2_badge",
             "type": "text",
-            "default_value": "Step 2 · paid"
+            "default_value": "Step 2 · automated"
         },
         {
             "key": "field_at_c2_title",
             "label": "Card 2 Title",
             "name": "card_2_title",
             "type": "text",
-            "default_value": "Full report"
+            "default_value": "Financial Health Profile"
         },
         {
             "key": "field_at_c2_desc",
@@ -76,7 +76,7 @@
             "name": "card_2_desc",
             "type": "textarea",
             "rows": 3,
-            "default_value": "Question-by-question breakdown of all three areas, what to move first and in what order, and what the Green Zone looks like in your specific case."
+            "default_value": "All 6 key financial abilities (Produce, Focus, Investigate, Have, Invest, and Create Wealth), Alan C. Walter audio lesson, and downloadable digital workbook."
         },
         {
             "key": "field_at_c2_price",
@@ -90,7 +90,7 @@
             "label": "Card 2 Button Text",
             "name": "card_2_btn_text",
             "type": "text",
-            "default_value": "Get the full report"
+            "default_value": "Get Profile ($25 USD)"
         },
         {
             "key": "field_at_c2_btn_link",
@@ -104,14 +104,14 @@
             "label": "Card 3 Badge",
             "name": "card_3_badge",
             "type": "text",
-            "default_value": "Step 3 · with support"
+            "default_value": "Step 3 · with private session"
         },
         {
             "key": "field_at_c3_title",
             "label": "Card 3 Title",
             "name": "card_3_title",
             "type": "text",
-            "default_value": "Events or coaching"
+            "default_value": "Profile + Private Session (60 min)"
         },
         {
             "key": "field_at_c3_desc",
@@ -119,21 +119,28 @@
             "name": "card_3_desc",
             "type": "textarea",
             "rows": 3,
-            "default_value": "An event with a start date and a group here, or continuous one-to-one coaching with an assigned coach at ACLC."
+            "default_value": "Includes the complete Financial Health Profile, audio lesson, and workbook, plus a 60-minute private session with a certified ACLC coach to analyze your results and map out your plan."
+        },
+        {
+            "key": "field_at_c3_price",
+            "label": "Card 3 Price",
+            "name": "card_3_price",
+            "type": "text",
+            "default_value": "$85 USD"
         },
         {
             "key": "field_at_c3_btn_text",
             "label": "Card 3 Button Text",
             "name": "card_3_btn_text",
             "type": "text",
-            "default_value": "See options"
+            "default_value": "Choose with Session ($85 USD)"
         },
         {
             "key": "field_at_c3_btn_link",
             "label": "Card 3 Button Link",
             "name": "card_3_btn_link",
             "type": "text",
-            "default_value": "/events/"
+            "default_value": "/finance/?package=session"
         },
         {
             "key": "field_at_show_guarantee",

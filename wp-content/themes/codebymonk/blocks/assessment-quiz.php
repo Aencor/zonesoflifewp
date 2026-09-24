@@ -27,16 +27,20 @@ $reportBtnLink = get_field('report_btn_link');
 if (empty($reportBtnLink) || $reportBtnLink === '/finance/' || $reportBtnLink === '/es/finance/') {
     $reportBtnLink = $isSpanish ? home_url('/es/perfil-financiero/') : home_url('/finance/');
 }
+$sessionBtnLink = get_field('session_btn_link');
+if (empty($sessionBtnLink)) {
+    $sessionBtnLink = add_query_arg('package', 'session', $reportBtnLink);
+}
 
 $spanishQuizData = [
   'isSpanish' => $isSpanish,
   'lang'      => $isSpanish ? 'es' : 'en',
   'questions' => [
     ['a' => 'Life & Skills', 'ab' => 'Producir', 't' => '¿Completas tus actividades con rapidez?', 'o' => [['Sí', 4], ['Tal vez', 2], ['No', 1]]],
-    ['a' => 'Financial', 'ab' => 'Enfocarse', 't' => '¿Estás posicionado para el éxito?', 'o' => [['Sí', 4], ['Tal vez', 2], ['No', 1]]],
+    ['a' => 'Financial', 'ab' => 'Enfocar', 't' => '¿Estás posicionado para el éxito?', 'o' => [['Sí', 4], ['Tal vez', 2], ['No', 1]]],
     ['a' => 'Life & Skills', 'ab' => 'Investigar', 't' => '¿Percibes los juegos o intenciones de otras personas?', 'o' => [['Sí', 4], ['Tal vez', 2], ['No', 1]]],
     ['a' => 'Financial', 'ab' => 'Tener', 't' => '¿Conduces un automóvil de lujo?', 'o' => [['Sí', 4], ['Tal vez', 2], ['No', 1]]],
-    ['a' => 'Life & Skills', 'ab' => 'Enfocarse', 't' => '¿Tu futuro es incierto?', 'o' => [['Sí', 1], ['Tal vez', 2], ['No', 4]]],
+    ['a' => 'Life & Skills', 'ab' => 'Enfocar', 't' => '¿Tu futuro es incierto?', 'o' => [['Sí', 1], ['Tal vez', 2], ['No', 4]]],
     ['a' => 'Body', 'ab' => 'Producir', 't' => '¿Te gusta tener mucha acción y actividad?', 'o' => [['Sí', 4], ['Tal vez', 2], ['No', 1]]],
     ['a' => 'Financial', 'ab' => 'Tener', 't' => '¿Te endeudas al final del año?', 'o' => [['Sí', 1], ['Tal vez', 2], ['No', 4]]],
     ['a' => 'Life & Skills', 'ab' => 'Investigar', 't' => '¿Tiendes a percibir erróneamente a las personas?', 'o' => [['Sí', 1], ['Tal vez', 2], ['No', 4]]],
@@ -46,12 +50,12 @@ $spanishQuizData = [
     ['a' => 'Financial', 'ab' => 'Producir', 't' => '¿Tu carrera se ha convertido en menos de lo que deseabas?', 'o' => [['Sí', 1], ['Tal vez', 2], ['No', 4]]],
     ['a' => 'Life & Skills', 'ab' => 'Invertir', 't' => '¿Desearías haber actuado más rápido en el pasado?', 'o' => [['Sí', 1], ['Tal vez', 2], ['No', 4]]],
     ['a' => 'Financial', 'ab' => 'Invertir', 't' => '¿Tu carrera te brindará riqueza en el futuro?', 'o' => [['Sí', 4], ['Tal vez', 2], ['No', 1]]],
-    ['a' => 'Life & Skills', 'ab' => 'Enfocarse', 't' => '¿Siempre te esfuerzas por ser lo mejor que puedes ser?', 'o' => [['Sí', 4], ['Tal vez', 2], ['No', 1]]],
+    ['a' => 'Life & Skills', 'ab' => 'Enfocar', 't' => '¿Siempre te esfuerzas por ser lo mejor que puedes ser?', 'o' => [['Sí', 4], ['Tal vez', 2], ['No', 1]]],
     ['a' => 'Life & Skills', 'ab' => 'Investigar', 't' => '¿Te desagradan las personas?', 'o' => [['Sí', 1], ['Tal vez', 2], ['No', 4]]],
     ['a' => 'Life & Skills', 'ab' => 'Invertir', 't' => '¿Tomas acciones concretas para elevar tu nivel de juego?', 'o' => [['Sí', 4], ['Tal vez', 2], ['No', 1]]],
     ['a' => 'Life & Skills', 'ab' => 'Investigar', 't' => '¿Sientes que sabes más que otros, incluso que aquellos con más éxito que tú?', 'o' => [['Sí', 1], ['Tal vez', 2], ['No', 4]]],
-    ['a' => 'Body', 'ab' => 'Enfocarse', 't' => '¿Prefieres quedarte cerca de casa durante las vacaciones?', 'o' => [['Sí', 1], ['Tal vez', 2], ['No', 4]]],
-    ['a' => 'Body', 'ab' => 'Enfocarse', 't' => '¿Te distraes con facilidad?', 'o' => [['Sí', 1], ['Tal vez', 2], ['No', 4]]],
+    ['a' => 'Body', 'ab' => 'Enfocar', 't' => '¿Prefieres quedarte cerca de casa durante las vacaciones?', 'o' => [['Sí', 1], ['Tal vez', 2], ['No', 4]]],
+    ['a' => 'Body', 'ab' => 'Enfocar', 't' => '¿Te distraes con facilidad?', 'o' => [['Sí', 1], ['Tal vez', 2], ['No', 4]]],
   ],
   'zones' => [
     1 => ['n' => 'Roja', 'i' => 1, 'col' => 'var(--red)'],
@@ -68,21 +72,41 @@ $spanishQuizData = [
   'ability_quotes' => [
     'Tener'         => 'Puedes ganar más y seguir sin nada: si no te sientes con derecho a conservarlo, el dinero encuentra la salida solo.',
     'Investigar'    => 'Las decisiones caras casi nunca se toman por falta de dinero, sino por falta de preguntas antes de firmar.',
-    'Enfocarse'     => 'Tu atención está repartida en tantos frentes que ninguno alcanza el punto donde empieza a dar resultados.',
+    'Enfocar'       => 'Tu atención está repartida en tantos frentes que ninguno alcanza el punto donde empieza a dar resultados.',
     'Invertir'      => 'Tu tiempo, tu energía y tu dinero ya están invertidos en algo. La pregunta es si eso te está devolviendo algo.',
     'Producir'      => 'Estás ocupado casi todo el día y aun así cuesta trabajo señalar qué produjiste esta semana.',
     'Crear riqueza' => 'No se entrena sola: es el promedio de las otras cinco y te muestra el resultado de todas juntas.',
+  ],
+  'have_levels' => [
+    'low_yellow' => [
+      'name'  => 'Trabajando para no tener',
+      'title' => 'Nivel: Trabajando para no tener',
+      'short' => 'Tu resultado quedó por debajo de la línea central de la Zona Amarilla: hoy estás trabajando para no tener. No es falta de esfuerzo. Es un proceso negativo que te aleja de lo que quieres, aunque lo estés persiguiendo, y se puede cambiar.',
+      'full'  => 'TRABAJANDO PARA NO TENER. Si tu resultado está por debajo de la línea central oscura que recorre horizontalmente la Zona Amarilla, esto significa que estás trabajando "para no tener". La mayoría de las personas NO PUEDEN TENER. No importa si lo tienen físicamente... no pueden tenerlo de verdad. No se sienten lo suficientemente valiosos. No se sienten lo suficientemente buenos. Sienten que no deberían obtener lo que están intentando alcanzar y sienten que no lo merecen. Por lo general, han sido programados con mensajes como "no vales nada" o "no sirves para nada". Eso es el resultado de mucho procesamiento negativo que hace que la persona se sienta así. El proceso negativo básico que está gobernando sus vidas es: "No puedes ser esto, no puedes hacer esto, no puedes tener esto. No puedes tener tus sueños. No puedes ser, no puedes hacer y no puedes tener". PROCESO NEGATIVO: es una serie de acciones, cambios o funciones que te impiden o te alejan de alcanzar el resultado o propósito que deseas lograr. Es un movimiento continuo y descendente que te desvía del rumbo que realmente querías tomar. Un proceso negativo está compuesto por acciones deshonestas, sin honor, contrarias a tu propósito o fuera de rumbo, que generan ciclos de comportamiento o decisiones que terminan produciendo un resultado negativo o no óptimo.'
+    ],
+    'high_yellow' => [
+      'name'  => 'Batallando para tener',
+      'title' => 'Nivel: Batallando para tener',
+      'short' => 'Tu resultado quedó en la parte alta de la Zona Amarilla: estás batallando para tener. Avanzas, pero cada logro te cuesta más de lo que debería, porque sigues cargando reglas aprendidas sobre lo que no se puede o no se debe.',
+      'full'  => 'BATALLANDO PARA TENER. Si tu resultado está por encima de la línea central oscura que recorre horizontalmente la Zona Amarilla, pero aún dentro de la Zona Amarilla, significa que estás batallando "para tener". La vida, la familia, tus padres o los grupos te han procesado negativamente diciéndote lo que no se puede hacer, por qué no se puede hacer y lo que no debe hacerse. En este tipo de entornos, las personas utilizan el poder o las fuerzas externas para dictar lo que es correcto y cómo se debe actuar o comportar. PROCESO NEGATIVO: es una serie de acciones, cambios o funciones que te impiden o te alejan de alcanzar el resultado o propósito que deseas lograr. Es un movimiento continuo y descendente que te desvía del rumbo que realmente querías tomar. Un proceso negativo está compuesto por acciones deshonestas, sin honor, contrarias a tu propósito o fuera de rumbo, que generan ciclos de comportamiento o decisiones que terminan produciendo un resultado negativo o no óptimo.'
+    ],
+    'green' => [
+      'name'  => 'Tienes la capacidad para tener',
+      'title' => 'Nivel: Tienes la capacidad para tener',
+      'short' => 'Tu resultado quedó en la Zona Verde: tienes la capacidad para tener. Tu entorno trabaja a tu favor y has recibido procesos positivos. El siguiente paso es hacer más de lo que ya te funciona para expandir tu juego.',
+      'full'  => 'TIENES LA CAPACIDAD PARA TENER. ¡Felicidades! Si tu resultado está en la Zona Verde, tienes la capacidad para "tener"; cuanto más alto estés en la Zona Verde, mayor será tu capacidad para tener todo lo que deseas. Tu entorno trabaja contigo constantemente en armonía y has recibido muchos procesos positivos. PROCESO POSITIVO: es una serie de acciones positivas, cambios o funciones que te llevan a lograr el resultado o propósito positivo que te has propuesto. Es un movimiento continuo y ascendente en la dirección que tú decidiste seguir. También puede definirse como una serie de acciones honestas, con integridad, alineadas con tus metas y propósitos, que dan lugar a ciclos de operación que culminan en un producto o resultado final positivo y óptimo. Recuerda que hay dos cosas que debes tener para volverte rico: la primera es la disciplina y la segunda es la duplicación. Si tienes esas dos cosas, puedes tener éxito en cualquier momento. Si estás en la Zona Verde, ¡tienes la habilidad para tener! Haz más de las acciones exitosas que ya estás ejecutando para expandir tu juego.'
+    ]
   ],
   'labels' => [
     'area'          => 'Área: ',
     'you_are_in'    => 'Estás en la Zona ',
     'you_are_here'  => ' · tú estás aquí',
-    'start_here'    => ' · habilidad crítica',
+    'start_here'    => ' · comienza aquí',
     'privacy_error' => 'Por favor acepta la Política de Privacidad para ver tu resultado.',
     'email_error'   => 'Por favor ingresa un correo electrónico válido.',
     'phone_error'   => 'Por favor ingresa un número de teléfono o WhatsApp válido.',
     'email_sent'    => '✓ Tu resultado ha sido enviado a tu correo.',
-    'gap_template'  => 'Lo que este resultado todavía no te dice: por qué {ability} está ahí, cuál de las otras cinco la arrastra y cuál es el primer movimiento con más impacto. Todo eso está en tu Perfil de Salud Financiera: 100 preguntas, tu gráfica completa, el reporte de las seis habilidades, el Cuaderno de Trabajo y la audio-lección de Alan C. Walter.',
+    'gap_template'  => 'Tener es una de las seis habilidades que forman tu salud financiera. Las otras cinco son Producir, Enfocar, Investigar, Invertir y Crear riqueza. Tu Perfil de Salud Financiera mide las seis, te muestra cuál te está frenando más y te da con qué trabajarla.',
     'area_names'    => [
       'Financial'     => 'Financiero',
       'Life & Skills' => 'Vida y Habilidades',
@@ -153,95 +177,110 @@ window.zolQuizData = <?= json_encode($spanishQuizData); ?>;
       </div>
     </div>
 
-    <!-- Screen 4: Result (R1 Blueprint) -->
+    <!-- Screen 4: Result (Mini Perfil con Gráfica de Zonas) -->
     <div id="quizResult" class="quiz-screen" hidden>
       <div class="split top result-grid">
         <!-- Left Column: Result & Breakdown -->
         <div class="result-main">
-          <div class="kicker" style="color:var(--shgreen)"><?= $isSpanish ? 'Mini Perfil Financiero · Diagnóstico' : 'Financial Mini Profile · Diagnosis'; ?></div>
+          <div class="kicker" style="color:var(--shgreen)"><?= $isSpanish ? 'Tu resultado · Mini Perfil' : 'Your result · Mini Profile'; ?></div>
           
-          <h1 class="mt16" style="line-height:1.2;">
-            <span id="rUserName"></span><?= $isSpanish ? ', tu habilidad más baja es ' : ', your lowest ability is '; ?><span id="rLowestAbility" style="color:var(--fuego);font-weight:700;"></span>
-          </h1>
-
-          <!-- Quote Card (Slide 18) -->
-          <div class="card quote-card pad-md mt20" style="background:#FFFBF2;border:1px solid #F5E5C9;border-left:4px solid var(--fuego);border-radius:8px;">
-            <p class="quote-text" id="rAbilityQuote" style="font-size:15px;line-height:1.6;font-style:italic;color:var(--ink);margin:0;"></p>
+          <h1 class="mt16" id="rZone" style="line-height:1.2;"></h1>
+          
+          <div class="mt24" id="rBar"></div>
+          <div class="zlabels">
+            <span class="tiny"><?= $isSpanish ? 'Roja' : 'Red'; ?></span>
+            <span class="tiny" id="rHere"></span>
+            <span class="tiny"><?= $isSpanish ? 'Verde' : 'Green'; ?></span>
+            <span class="tiny"><?= $isSpanish ? 'Magia Dorada' : 'Golden'; ?></span>
           </div>
 
-          <!-- The Gap copy (Slide 4) -->
-          <div class="mt24">
-            <p class="lede" id="rGapCopy" style="color:#2C3742;line-height:1.6;">
-              <?= $isSpanish 
-                ? 'Lo que este resultado todavía no te dice: por qué tu habilidad más baja está ahí, cuál de las otras cinco la arrastra y cuál es el primer movimiento con más impacto. Todo eso está en tu Perfil de Salud Financiera: 100 preguntas, tu gráfica completa, el reporte de las seis habilidades, el Cuaderno de Trabajo y la audio-lección de Alan C. Walter.' 
-                : 'What this result still doesn\'t tell you: why your lowest ability sits where it does, which of the other five is dragging it down, and which first move has the most impact. That\'s in your Financial Health Profile: 100 questions, your full chart, the report on all six abilities, the Financial Fitness Workbook and Alan C. Walter\'s audio lesson.'; ?>
-            </p>
-          </div>
+          <p class="lede mt24" id="rBody"></p>
           
-          <hr class="rule mt28 mb28">
+          <hr class="rule mt32 mb32">
+
+          <!-- Have Ability Level Card (R1) -->
+          <div class="card pad-md mb28" id="rLevelCard" style="background:#FFFBF2;border:1px solid #F5E5C9;border-left:4px solid var(--fuego);border-radius:8px;">
+            <div class="hgroup" style="justify-content:space-between;align-items:center;margin-bottom:8px;">
+              <span class="tiny" style="font-weight:700;text-transform:uppercase;letter-spacing:0.06em;color:var(--muted);"><?= $isSpanish ? 'Diagnóstico de tu Nivel en Tener' : 'Your Have Level Diagnosis'; ?></span>
+              <span id="rLevelBadge" class="tiny" style="font-weight:700;padding:3px 10px;border-radius:4px;background:#FDE68A;color:#92400E;"></span>
+            </div>
+            <h3 id="rLevelTitle" style="font-size:18px;margin:0 0 10px;color:var(--ink);"></h3>
+            <p id="rLevelText" style="font-size:14px;line-height:1.68;color:#2C3742;margin:0;"></p>
+          </div>
+
+          <!-- Por áreas evaluadas -->
+          <div class="tiny mb16" style="font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:var(--ink);"><?= $isSpanish ? 'Resultados por área evaluada' : 'Results by evaluated area'; ?></div>
+          <div id="rAreas" class="areas-breakdown mb28"></div>
 
           <!-- 6 Financial Abilities Breakdown -->
           <div class="tiny mb16" style="font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:var(--ink);"><?= $isSpanish ? 'Tus seis habilidades financieras' : 'Your six financial abilities'; ?></div>
           <div id="rAbilitiesBreakdown" class="abilities-breakdown mb28"></div>
 
-          <!-- Overall Zone Summary -->
-          <div class="card tint pad-md mb28" style="background:rgba(0,125,25,0.03);border:1px solid #D6EDE0;border-radius:8px;">
-            <div class="hgroup" style="justify-content:space-between;align-items:center;">
-              <span class="tiny" style="font-weight:600;color:var(--ink);"><?= $isSpanish ? 'Zona general:' : 'Overall Zone:'; ?> <strong id="rZoneName" style="color:var(--shgreen);"></strong></span>
-              <span class="tiny" id="rZoneScoreLabel"></span>
-            </div>
-            <div class="mt12" id="rBar"></div>
-            <p class="xs mt12 text-muted" id="rBody" style="margin-bottom:0;"></p>
+          <!-- The Gap copy (R1 v2.1) -->
+          <div class="card pad-md mb28" style="background:#F8FAFC;border:1px solid #E2E8F0;border-radius:8px;">
+            <p class="lede" id="rGapCopy" style="color:#2C3742;line-height:1.6;font-size:14px;margin:0;">
+              <?= $isSpanish 
+                ? '<strong>Lo que este resultado todavía no te muestra:</strong> Tener es una de las seis habilidades que forman tu salud financiera. Las otras cinco son Producir, Enfocar, Investigar, Invertir y Crear riqueza. Tu Perfil de Salud Financiera mide las seis, te muestra cuál te está frenando más y te da con qué trabajarla.' 
+                : '<strong>What this result still doesn\'t show you:</strong> Having is only one of the six abilities that define your financial health. The other five are Producing, Focusing, Investigating, Investing, and Creating Wealth. Your Financial Health Profile measures all six, shows you which one is holding you back the most, and gives you tools to elevate it.'; ?>
+            </p>
           </div>
 
           <button type="button" class="btn btn-ghost btn-sm" id="retake"><?= $isSpanish ? 'Repetir el perfil' : 'Retake the profile'; ?></button>
         </div>
 
-        <!-- Right Column: Offer Card (Slide 4) -->
+        <!-- Right Column: Offer Card (Two Products v2.1) -->
         <div class="result-sidebar">
+          <!-- Primary Offer: Automated Profile -->
           <div class="card pad-lg tint" style="border-color:#C2E4D2;background:#F6FAF8;">
-            <div class="kicker" style="color:var(--shgreen)"><?= $isSpanish ? 'Oferta exclusiva' : 'Exclusive offer'; ?></div>
+            <div class="tiny" style="color:var(--shgreen);font-weight:700;text-transform:uppercase;letter-spacing:0.05em;"><?= $isSpanish ? 'Opción Principal · Automático' : 'Primary Option · Automated'; ?></div>
             <h3 class="mt8"><?= $isSpanish ? 'Perfil de Salud Financiera' : 'Financial Health Profile'; ?></h3>
-            <p class="sm mt12" style="color:#4A5764;line-height:1.55;">
+            <p class="sm mt8" style="color:#4A5764;line-height:1.55;">
               <?= $isSpanish 
-                ? 'Medición a fondo de tus seis habilidades, el porqué de tu punto bajo y el plan de 90 días para resolverlo.' 
-                : 'Deep measurement of your six abilities, the reason behind your low point, and the 90-day plan to resolve it.'; ?>
+                ? 'Gráfica completa de tus 6 habilidades, audio-lección de Alan C. Walter y el cuaderno de trabajo "Tomando las riendas de tu futuro financiero".' 
+                : 'Complete chart of your 6 abilities, Alan C. Walter audio lesson, and the "Taking Charge of Your Financial Future" workbook.'; ?>
             </p>
 
-            <div class="card pad-sm mt16" style="background:#fff;border:1px solid rgba(0,0,0,0.06);border-radius:8px;">
-              <div class="tiny mb8" style="font-weight:700;color:var(--ink);"><?= $isSpanish ? 'Qué incluye exactamente:' : 'What\'s included:'; ?></div>
-              <ul class="xs" style="margin:0;padding-left:18px;color:#4A5764;line-height:1.7;">
+            <div class="card pad-sm mt12" style="background:#fff;border:1px solid rgba(0,0,0,0.06);border-radius:8px;">
+              <div class="tiny mb6" style="font-weight:700;color:var(--ink);"><?= $isSpanish ? 'Incluye exactamente:' : 'What\'s included:'; ?></div>
+              <ul class="xs" style="margin:0;padding-left:18px;color:#4A5764;line-height:1.65;">
                 <li><?= $isSpanish ? '100 preguntas y diagnóstico preciso' : '100 questions and precise diagnosis'; ?></li>
                 <li><?= $isSpanish ? 'Tu gráfica completa de las seis habilidades' : 'Your full chart of all six abilities'; ?></li>
-                <li><?= $isSpanish ? 'Reporte detallado de fugas y bloqueos' : 'Detailed leaks and bottlenecks report'; ?></li>
-                <li><?= $isSpanish ? 'Cuaderno de Trabajo con plan de 90 días' : 'Financial Fitness Workbook with 90-day plan'; ?></li>
                 <li><?= $isSpanish ? 'Audio-lección exclusiva de Alan C. Walter' : 'Alan C. Walter\'s exclusive audio lesson'; ?></li>
+                <li><?= $isSpanish ? 'Cuaderno "Tomando las riendas de tu futuro financiero"' : 'Workbook "Taking Charge of Your Financial Future"'; ?></li>
               </ul>
             </div>
 
-            <div class="hgroup mt20" style="justify-content:space-between;align-items:center;">
+            <div class="hgroup mt16" style="justify-content:space-between;align-items:center;">
               <span class="tiny" style="font-weight:700;color:var(--ink);"><?= $isSpanish ? 'Pago único:' : 'One-time payment:'; ?></span>
               <span class="price-tag" style="font-size:19px;font-weight:700;color:var(--shgreen);"><?= $isSpanish ? '$500 MXN' : '$25 USD'; ?></span>
             </div>
 
-            <a class="btn btn-go btn-block mt16" id="rBtnBuy" href="<?= esc_url($reportBtnLink); ?>"><?= $isSpanish ? 'Obtener mi Perfil de Salud Financiera' : 'Get my Financial Health Profile'; ?></a>
-            <button type="button" class="btn btn-ghost btn-sm btn-block mt12" id="rBtnEmailMe"><?= $isSpanish ? 'Enviarme mi mini perfil por correo' : 'Email me my mini profile'; ?></button>
-            <div id="rEmailSentMsg" class="tiny center mt8" style="color:var(--shgreen);display:none;font-weight:600;"><?= $isSpanish ? '✓ Enviado a tu correo' : '✓ Sent to your email'; ?></div>
-            <div class="tiny center mt16 text-muted"><?= $isSpanish ? 'Garantía de satisfacción · ACLC' : 'Satisfaction guarantee · ACLC'; ?></div>
+            <a class="btn btn-go btn-block mt14" id="rBtnBuy" href="<?= esc_url($reportBtnLink); ?>"><?= $isSpanish ? 'Obtener mi Perfil de Salud Financiera' : 'Get my Financial Health Profile'; ?></a>
           </div>
 
-          <a class="card card-link mt20" href="<?= esc_url(home_url($isSpanish ? '/es/eventos/' : '/events/')); ?>" style="display:block">
-            <div class="tiny text-muted"><?= $isSpanish ? 'O hazlo en grupo' : 'Or do it with a group'; ?></div>
-            <h4 class="mt8"><?= $isSpanish ? 'Evento de Otoño' : 'Autumn event'; ?></h4>
-            <div class="tiny mt8" style="color:var(--fuego)"><?= $isSpanish ? 'Inicia 14 de Octubre' : 'Starts 14 October'; ?></div>
-          </a>
-
-          <div class="card mt20">
-            <div class="tiny mb8"><?= $isSpanish ? 'O con un coach, a tu propio ritmo' : 'Or with a coach, at your own pace'; ?></div>
-            <p class="xs text-muted"><?= $isSpanish ? 'Fundamentos Vitales y coaching uno a uno son impartidos por ACLC en Letoli Ranch.' : 'Vital Fundamentals and one-to-one coaching are delivered by ACLC at Letoli Ranch.'; ?></p>
-            <a class="btn btn-ghost btn-sm btn-block mt16" href="<?= esc_url(home_url($isSpanish ? '/es/#contact' : '/#contact')); ?>">
-              <?= $isSpanish ? 'Hablar con un coach' : 'Talk to a coach'; ?>
+          <!-- Secondary Offer: Profile + Private Session -->
+          <div class="card pad-md mt16" style="background:#fff;border:1px solid var(--line);border-radius:10px;">
+            <div class="tiny" style="color:var(--stage);font-weight:700;text-transform:uppercase;letter-spacing:0.05em;"><?= $isSpanish ? 'Opción Secundaria · Con Coach' : 'Secondary Option · With Coach'; ?></div>
+            <h4 class="mt6" style="font-size:16px;"><?= $isSpanish ? 'Perfil + Sesión Privada (60 min)' : 'Profile + Private Session (60 min)'; ?></h4>
+            <p class="xs mt6" style="color:#5B6475;line-height:1.5;">
+              <?= $isSpanish 
+                ? 'Todo lo anterior, más una sesión de 60 minutos con un coach certificado para interpretar y profundizar en tus resultados.' 
+                : 'All the above, plus a 60-minute one-on-one session with a certified coach to interpret and deepen into your results.'; ?>
+            </p>
+            <div class="hgroup mt10 mb10" style="justify-content:space-between;align-items:center;">
+              <span class="tiny" style="font-weight:700;color:var(--ink);"><?= $isSpanish ? 'Inversión:' : 'Investment:'; ?></span>
+              <span style="font-size:16px;font-weight:700;color:var(--ink);"><?= $isSpanish ? '$1,640 MXN' : '$85 USD'; ?></span>
+            </div>
+            <a class="btn btn-sm btn-block" id="rBtnBuySession" href="<?= esc_url($sessionBtnLink); ?>" style="background:var(--stage-bg);color:var(--stage);border:1px solid var(--stage);font-weight:600;text-align:center;text-decoration:none;display:block;">
+              <?= $isSpanish ? 'Quiero el perfil con sesión privada' : 'Get profile with private session'; ?>
             </a>
+          </div>
+
+          <!-- Tertiary Option: Email result -->
+          <div class="mt16">
+            <button type="button" class="btn btn-ghost btn-sm btn-block" id="rBtnEmailMe"><?= $isSpanish ? 'Enviarme mi resultado por correo' : 'Email me my result'; ?></button>
+            <div id="rEmailSentMsg" class="tiny center mt8" style="color:var(--shgreen);display:none;font-weight:600;"><?= $isSpanish ? '✓ Enviado a tu correo' : '✓ Sent to your email'; ?></div>
+            <div class="tiny center mt12 text-muted"><?= $isSpanish ? 'Garantía de satisfacción · ACLC' : 'Satisfaction guarantee · ACLC'; ?></div>
           </div>
         </div>
       </div>

@@ -1,0 +1,687 @@
+<!DOCTYPE html>
+<html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Funnel financiero: copys</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600&family=Newsreader:opsz,wght@6..72,400;6..72,500&display=swap" rel="stylesheet">
+<style>
+:root{--paper:#F6F7F9;--surface:#FFFFFF;--ink:#1B2230;--muted:#5B6475;--line:#DDE1E8;--stage:#3D4F86;--stage-bg:#E9ECF6;--buy:#2E7A57;--buy-bg:#E3F1EA;--rescue:#9A3D6A;--rescue-bg:#F5E6EE;--wa:#1F7A70;--wa-bg:#E1F2EF;--mail:#3D4F86;--mail-bg:#E9ECF6;--new:#8A5A12;--new-bg:#FBF0DC;
+--sans:"Instrument Sans",system-ui,-apple-system,"Segoe UI",sans-serif;--serif:"Newsreader",Georgia,"Times New Roman",serif}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){--paper:#12161E;--surface:#1A202B;--ink:#E6E9EF;--muted:#9AA3B3;--line:#2C3442;--stage:#A9B8EA;--stage-bg:#222B42;--buy:#7CC9A1;--buy-bg:#1C3328;--rescue:#E3A1C1;--rescue-bg:#3A2230;--wa:#72C9BE;--wa-bg:#173230;--mail:#A9B8EA;--mail-bg:#222B42;--new:#E8C27A;--new-bg:#3A2E18}}
+:root[data-theme="dark"]{--paper:#12161E;--surface:#1A202B;--ink:#E6E9EF;--muted:#9AA3B3;--line:#2C3442;--stage:#A9B8EA;--stage-bg:#222B42;--buy:#7CC9A1;--buy-bg:#1C3328;--rescue:#E3A1C1;--rescue-bg:#3A2230;--wa:#72C9BE;--wa-bg:#173230;--mail:#A9B8EA;--mail-bg:#222B42;--new:#E8C27A;--new-bg:#3A2E18}
+*{box-sizing:border-box}html{scroll-behavior:smooth}@media (prefers-reduced-motion: reduce){html{scroll-behavior:auto}}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--sans);font-size:16px;line-height:1.6}
+a{color:var(--stage)}a:focus-visible{outline:2px solid var(--stage);outline-offset:2px}
+.wrap{max-width:1180px;margin:0 auto;padding:0 16px;display:grid;grid-template-columns:1fr;gap:40px}
+@media (min-width:1000px){.wrap{grid-template-columns:220px minmax(0,1fr)}}
+nav.toc{position:sticky;top:0;z-index:5;background:var(--paper);border-bottom:1px solid var(--line);padding:10px 0;overflow-x:auto;white-space:nowrap}
+nav.toc a{display:inline-block;margin-right:14px;font-size:14px;color:var(--muted);text-decoration:none;padding:4px 0}nav.toc a:hover{color:var(--ink)}
+@media (min-width:1000px){nav.toc{top:24px;align-self:start;border:0;white-space:normal;padding:0;margin-top:56px}nav.toc a{display:block;margin:0 0 6px}}
+main{padding:40px 0 100px;max-width:780px;min-width:0}
+header.hero h1{font-family:var(--serif);font-weight:500;font-size:clamp(32px,5vw,50px);line-height:1.08;margin:0 0 16px;letter-spacing:-.01em}
+header.hero p{color:var(--muted);max-width:62ch;margin:0 0 12px}
+h2{font-family:var(--serif);font-weight:500;font-size:30px;line-height:1.2;margin:72px 0 8px;scroll-margin-top:70px}
+h3{font-size:17px;font-weight:600;margin:32px 0 8px}
+.lead{color:var(--muted);max-width:66ch;margin:0 0 20px}
+.rules{display:grid;gap:14px;margin:28px 0 0}@media (min-width:640px){.rules{grid-template-columns:1fr 1fr}}
+.rule{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:16px 18px}.rule strong{display:block;font-weight:600;margin-bottom:4px}.rule p{margin:0;color:var(--muted);font-size:15px}
+.changes .rule{border-left:3px solid var(--new)}
+.map{margin-top:24px;display:grid;gap:10px}
+.row{display:grid;grid-template-columns:1fr;gap:8px;align-items:stretch}@media (min-width:640px){.row{grid-template-columns:minmax(0,1.25fr) 28px minmax(0,1fr)}}
+.node{display:block;text-decoration:none;border-radius:10px;padding:12px 16px;border:1px solid var(--line);background:var(--surface);color:var(--ink)}
+.node b{display:block;font-weight:600}.node span{font-size:14px;color:var(--muted)}
+.node.stage{background:var(--stage-bg);border-color:transparent}.node.stage b{color:var(--stage)}
+.node.buy{background:var(--buy-bg);border-color:transparent}.node.buy b{color:var(--buy)}
+.node.rescue{background:var(--rescue-bg);border-color:transparent}.node.rescue b{color:var(--rescue)}
+.node:hover{outline:1px solid var(--ink)}
+.stack{display:grid;gap:8px}
+.link{display:none;align-self:center;height:1px;background:var(--line)}@media (min-width:640px){.link{display:block}}
+.down{height:14px;width:1px;background:var(--line);margin-left:28px}@media (min-width:640px){.down{margin-left:calc((100% - 28px) * 0.278)}}
+.human{margin:14px 0;padding:10px 16px;border-left:3px solid var(--buy);background:var(--surface);font-size:15px}
+.legend{display:flex;flex-wrap:wrap;gap:16px;margin-top:18px;font-size:14px;color:var(--muted)}.legend i{display:inline-block;width:12px;height:12px;border-radius:3px;margin-right:6px;vertical-align:-1px}
+.flowmeta{display:flex;flex-wrap:wrap;gap:8px 18px;font-size:14px;color:var(--muted);margin:0 0 18px}.flowmeta b{color:var(--ink);font-weight:600}
+.msg{background:var(--surface);border:1px solid var(--line);border-radius:12px;margin:14px 0;overflow:hidden}
+.msg-h{display:flex;flex-wrap:wrap;align-items:center;gap:8px 12px;padding:12px 18px;border-bottom:1px solid var(--line)}
+.code{font-weight:600;min-width:28px}.when{color:var(--muted);font-size:14px}
+.ch{margin-left:auto;font-size:13px;font-weight:500;padding:2px 10px;border-radius:999px}
+.ch.mail{background:var(--mail-bg);color:var(--mail)}.ch.wa{background:var(--wa-bg);color:var(--wa)}.ch.web{background:var(--buy-bg);color:var(--buy)}.ch.int{background:var(--paper);color:var(--muted);border:1px solid var(--line)}
+.msg-b{padding:16px 18px 18px}.subj{font-size:15px;margin:0 0 12px}.subj span{color:var(--muted)}
+.body{font-family:var(--serif);font-size:18px;line-height:1.65}.body p{margin:0 0 12px}.body ol{margin:0 0 12px;padding-left:1.3em}.body li{margin-bottom:4px}
+.btns{display:flex;flex-wrap:wrap;gap:8px;margin-top:14px;font-family:var(--sans)}
+.btns span{font-size:14px;padding:6px 12px;border-radius:999px;border:1px solid var(--line);color:var(--ink)}
+.btns span.primary{background:var(--ink);color:var(--paper);border-color:var(--ink)}
+.note{font-size:14px;color:var(--muted);margin-top:12px;font-family:var(--sans)}
+.var{font-family:var(--sans);font-size:.85em;background:var(--stage-bg);color:var(--stage);padding:0 5px;border-radius:4px}
+.reply{border-top:1px dashed var(--line);margin-top:14px;padding-top:12px;font-family:var(--serif);font-size:17px}
+.reply b{font-family:var(--sans);font-size:14px;font-weight:600;display:block;margin-bottom:4px}.reply p{margin:0}
+table{width:100%;border-collapse:collapse;font-size:15px}.tbl{overflow-x:auto;background:var(--surface);border:1px solid var(--line);border-radius:12px;margin:14px 0}
+th,td{text-align:left;padding:10px 14px;border-bottom:1px solid var(--line);vertical-align:top}th{font-weight:600}tr:last-child td{border-bottom:0}
+footer{margin-top:80px;color:var(--muted);font-size:14px}
+</style></head><body><div class="wrap">
+<nav class="toc" aria-label="Secciones"><a href="#cambios">Qué cambió en esta versión</a><a href="#reglas">Reglas del sistema</a><a href="#mapa">Mapa de flujos</a><a href="#r">Pantalla de resultado gratuito</a><a href="#a">Flujo A</a><a href="#b">Flujo B</a><a href="#p">Confirmación de compra</a><a href="#c">Flujo C</a><a href="#d">Flujo D</a><a href="#ds">Rama DS</a><a href="#s">Sesión agendada: confirmación y recordatorios</a><a href="#e">Flujo E</a><a href="#f">Flujo F</a><a href="#g">Clientes</a><a href="#n">Nutrición mensual</a><a href="#lib">Textos por nivel y variables</a></nav>
+<main><header class="hero"><h1>Zones of Life: funnel financiero y copys de seguimiento</h1><p>Versión 2.1 · 24 de septiembre de 2026. Del Mini Perfil Financiero (gratuito) a la sesión privada de interpretación y el programa. Todo está automatizado hasta la sesión con el coach, que es el primer contacto humano.</p>
+<p>Los textos entre llaves, como <span class="var">{{nombre}}</span>, son variables del CRM. Los textos de resultado de la Habilidad para Tener son los que entregó el cliente, con ajustes mínimos de ortografía.</p></header>
+<section id="cambios"><h2>Qué cambió en esta versión</h2>
+<div class="rules changes">
+<div class="rule"><strong>v2.1 · Precios</strong><p>el paquete con sesión y la sesión como mejora cuestan lo mismo: $1,640 MXN. Todo queda en pesos.</p></div>
+<div class="rule"><strong>v2.1 · Las seis habilidades</strong><p>Producir, Enfocar, Investigar, Tener, Invertir y Crear riqueza (Produce, Focus, Investigate, Have, Invest, Create Wealth). Se nombran en R1, B5 y en la respuesta de B10, y alimentan <span class="var">{{habilidad_baja}}</span>.</p></div>
+<div class="rule"><strong>v2.1 · Reagenda</strong><p>quien no se presenta tiene 1 mes para reagendar. E1, E2 y E3 lo dicen con <span class="var">{{fecha_limite_reagenda}}</span>.</p></div>
+<div class="rule"><strong>v2.1 · Cuaderno</strong><p>los archivos en español e inglés se trabajan aparte; D1 y DS1 siguen con el cuaderno como adjunto.</p></div>
+<div class="rule"><strong>v2 · Producto gratuito</strong><p>el "mapa de cuatro zonas" se sustituye por el Mini Perfil Financiero, que mide solo la Habilidad para Tener. La personalización deja de ser por <span class="var">{{zona_critica}}</span> y pasa a ser por <span class="var">{{nivel_tener}}</span> (tres niveles) en la etapa gratuita y por <span class="var">{{habilidad_baja}}</span> (la más baja de las seis) después de la compra.</p></div>
+<div class="rule"><strong>v2 · Dos productos de pago en la primera venta</strong><p>Perfil de Salud Financiera automático (<span class="var">{{precio_perfil}}</span>) y Perfil + sesión privada de interpretación de 60 minutos (<span class="var">{{precio_perfil_sesion}}</span>). El automático es siempre el CTA principal; el paquete con sesión va como opción secundaria.</p></div>
+<div class="rule"><strong>v2 · Cambio de regla (confirmar con Erika)</strong><p>la sesión con coach ya aparece en la primera oferta, dentro del paquete de <span class="var">{{precio_perfil_sesion}}</span>. Nunca se vende sola ni antes del perfil, pero ya no espera al reporte. El mapa se actualizó.</p></div>
+<div class="rule"><strong>v2 · La sesión ahora es de pago</strong><p>el Flujo D vende la sesión como mejora (<span class="var">{{precio_mejora_sesion}}</span>) a quien compró el automático. Quien compró el paquete entra a la rama DS, que solo lo lleva a agendar.</p></div>
+<div class="rule"><strong>v2 · Entregables reales en todos los copys</strong><p>gráfica de las 6 habilidades, audio-lección de Alan C. Walter y cuaderno "Tomando las riendas de tu futuro financiero". Se eliminaron las promesas que no existen en este producto: análisis por subzona, lectura cruzada entre zonas y plan de 90 días.</p></div>
+<div class="rule"><strong>v2 · Sin bonos ni urgencia inventada</strong><p>B8 deja de ser el correo del bono y presenta la opción con sesión; B9 se elimina; D5 deja de hablar de cupos.</p></div>
+<div class="rule"><strong>v2 · B6 sin caso</strong><p>se cambia el caso de éxito (no hay casos reales todavía) por un correo educativo sobre proceso negativo y proceso positivo, con el lenguaje del cliente.</p></div>
+<div class="rule"><strong>v2 · Nuevos códigos</strong><p>R1 lleva tres variantes de texto; P1 se divide en P1a y P1b; se agrega la rama DS1–DS4.</p></div>
+</div>
+</section>
+<section id="reglas"><h2>Reglas del sistema</h2>
+<div class="rules">
+<div class="rule"><strong>Sin humanos antes del coach</strong><p>Todos los mensajes previos a la sesión son automáticos y se firman "Equipo Zones of Life", nunca con el nombre del coach.</p></div>
+<div class="rule"><strong>Dudas resueltas por botones o IA</strong><p>Botones de respuesta rápida y un asistente de IA identificado como tal para preguntas abiertas.</p></div>
+<div class="rule"><strong>El puntaje cambia la secuencia, no el canal</strong><p>Dos o más clics en la oferta o visita al checkout activan la versión acelerada.</p></div>
+<div class="rule"><strong>El automático es el CTA principal</strong><p>En R1 y el Flujo B el botón principal siempre es el Perfil de Salud Financiera. El paquete con sesión aparece como segunda opción, nunca solo.</p></div>
+<div class="rule"><strong>WhatsApp con plantillas aprobadas</strong><p>Fuera de la ventana de 24 horas, solo plantillas aprobadas por Meta y con opt-in.</p></div>
+<div class="rule"><strong>Etiquetas desde el primer minuto</strong><p><span class="var">{{nivel_tener}}</span>, perfil y etapa se escriben al terminar el Mini Perfil; <span class="var">{{paquete}}</span> y <span class="var">{{habilidad_baja}}</span> al pagar y al terminar el perfil completo.</p></div>
+</div>
+</section>
+<section id="mapa"><h2>Mapa de flujos</h2>
+<p class="lead">La columna izquierda es el camino del lead. A la derecha, el flujo que se activa en cada punto.</p><div class="map">
+<div class="row"><a class="node" href="#reglas"><b>Visita al sitio</b><span>Tráfico orgánico, pauta y referidos</span></a></div><div class="down"></div>
+<div class="row"><a class="node stage" href="#a"><b>Inicia el Mini Perfil Financiero</b><span>Deja nombre, email y WhatsApp</span></a><div class="link"></div><a class="node rescue" href="#a"><b>Flujo A</b><span>Abandonó a medias</span></a></div><div class="down"></div>
+<div class="row"><a class="node stage" href="#r"><b>Ve su Habilidad para Tener</b><span>Gráfica, nivel y oferta de los dos paquetes</span></a><div class="link"></div><a class="node rescue" href="#b"><b>Flujo B</b><span>No compra ningún paquete</span></a></div><div class="down"></div>
+<div class="row"><a class="node buy" href="#p"><b>Compra el Perfil de Salud Financiera</b><span>Automático o con sesión privada · primera venta</span></a><div class="link"></div><a class="node rescue" href="#c"><b>Flujo C</b><span>Pagó y no termina las 100 preguntas</span></a></div><div class="down"></div>
+<div class="row"><a class="node stage" href="#d"><b>Recibe su perfil completo</b><span>Gráfica de 6 habilidades, audio y cuaderno</span></a><div class="link"></div><div class="stack"><a class="node rescue" href="#d"><b>Flujo D · compró automático</b><span>Vender la sesión privada</span></a><a class="node rescue" href="#ds"><b>Rama DS · compró con sesión</b><span>Solo falta agendar</span></a></div></div><div class="down"></div>
+<div class="row"><a class="node stage" href="#s"><b>Agenda sesión privada</b><span>Confirmación, recordatorios y brief al coach</span></a><div class="link"></div><a class="node rescue" href="#e"><b>Flujo E</b><span>No se presentó</span></a></div>
+<div class="human">Primer contacto humano: la sesión privada de interpretación (60 min).</div>
+<div class="row"><a class="node stage" href="#f"><b>Asiste a la sesión</b><span>Recibe propuesta</span></a><div class="link"></div><a class="node rescue" href="#f"><b>Flujo F</b><span>No compró programa</span></a></div><div class="down"></div>
+<div class="row"><a class="node buy" href="#g"><b>Compra programa</b><span>Onboarding y seguimiento</span></a></div><div class="down"></div>
+<div class="row"><a class="node buy" href="#g"><b>Reevaluación a 90 días</b><span>Nuevo perfil, referidos y ascenso a ACLC</span></a></div>
+</div>
+<div class="legend"><span><i style="background:var(--stage)"></i>Etapa del lead</span><span><i style="background:var(--buy)"></i>Compra o cliente</span><span><i style="background:var(--rescue)"></i>Flujo de seguimiento</span></div>
+</section>
+<section id="r"><h2>Pantalla de resultado gratuito</h2>
+<p class="lead">La primera oferta se hace aquí, en la misma página. Muestra la gráfica y el texto del nivel que corresponde; guarda las otras cinco habilidades para el perfil completo.</p>
+<div class="msg"><div class="msg-h"><span class="code">R1</span><span class="when">Al terminar el Mini Perfil</span><span class="ch web">Página</span></div><div class="msg-b">
+<div class="body">
+<p><strong><span class="var">{{nombre}}</span>, esta es tu Habilidad para Tener.</strong></p>
+<p>[Gráfica de la Habilidad para Tener]</p>
+<p><span class="var">{{texto_nivel_tener}}</span></p>
+<p><strong>Lo que este resultado todavía no te muestra:</strong> Tener es una de las seis habilidades que forman tu salud financiera. Las otras cinco son Producir, Enfocar, Investigar, Invertir y Crear riqueza. Tu Perfil de Salud Financiera mide las seis, te muestra cuál te está frenando más y te da con qué trabajarla.</p>
+<p><strong>Perfil de Salud Financiera · <span class="var">{{precio_perfil}}</span></strong>: gráfica completa de tus 6 habilidades, audio-lección de Alan C. Walter sobre el Perfil de Salud Financiera y el cuaderno de trabajo "Tomando las riendas de tu futuro financiero".</p>
+<p><strong>Perfil de Salud Financiera + sesión privada · <span class="var">{{precio_perfil_sesion}}</span></strong>: todo lo anterior, más una sesión de 60 minutos con un coach para interpretar y profundizar en tus resultados.</p>
+<div class="reply"><b>Nivel "Trabajando para no tener" · mitad de la Zona Amarilla hacia abajo</b><p>TRABAJANDO PARA NO TENER. Si tu resultado está por debajo de la línea central oscura que recorre horizontalmente la Zona Amarilla, esto significa que estás trabajando "para no tener". La mayoría de las personas NO PUEDEN TENER. No importa si lo tienen físicamente... no pueden tenerlo de verdad. No se sienten lo suficientemente valiosos. No se sienten lo suficientemente buenos. Sienten que no deberían obtener lo que están intentando alcanzar y sienten que no lo merecen. Por lo general, han sido programados con mensajes como "no vales nada" o "no sirves para nada". Eso es el resultado de mucho procesamiento negativo que hace que la persona se sienta así. El proceso negativo básico que está gobernando sus vidas es: "No puedes ser esto, no puedes hacer esto, no puedes tener esto. No puedes tener tus sueños. No puedes ser, no puedes hacer y no puedes tener". PROCESO NEGATIVO: es una serie de acciones, cambios o funciones que te impiden o te alejan de alcanzar el resultado o propósito que deseas lograr. Es un movimiento continuo y descendente que te desvía del rumbo que realmente querías tomar. Un proceso negativo está compuesto por acciones deshonestas, sin honor, contrarias a tu propósito o fuera de rumbo, que generan ciclos de comportamiento o decisiones que terminan produciendo un resultado negativo o no óptimo.</p></div>
+<div class="reply"><b>Nivel "Batallando para tener" · mitad de la Zona Amarilla hacia arriba</b><p>BATALLANDO PARA TENER. Si tu resultado está por encima de la línea central oscura que recorre horizontalmente la Zona Amarilla, pero aún dentro de la Zona Amarilla, significa que estás batallando "para tener". La vida, la familia, tus padres o los grupos te han procesado negativamente diciéndote lo que no se puede hacer, por qué no se puede hacer y lo que no debe hacerse. En este tipo de entornos, las personas utilizan el poder o las fuerzas externas para dictar lo que es correcto y cómo se debe actuar o comportar. PROCESO NEGATIVO: es una serie de acciones, cambios o funciones que te impiden o te alejan de alcanzar el resultado o propósito que deseas lograr. Es un movimiento continuo y descendente que te desvía del rumbo que realmente querías tomar. Un proceso negativo está compuesto por acciones deshonestas, sin honor, contrarias a tu propósito o fuera de rumbo, que generan ciclos de comportamiento o decisiones que terminan produciendo un resultado negativo o no óptimo.</p></div>
+<div class="reply"><b>Nivel "Tienes la capacidad para tener" · Zona Verde</b><p>TIENES LA CAPACIDAD PARA TENER. ¡Felicidades! Si tu resultado está en la Zona Verde, tienes la capacidad para "tener"; cuanto más alto estés en la Zona Verde, mayor será tu capacidad para tener todo lo que deseas. Tu entorno trabaja contigo constantemente en armonía y has recibido muchos procesos positivos. PROCESO POSITIVO: es una serie de acciones positivas, cambios o funciones que te llevan a lograr el resultado o propósito positivo que te has propuesto. Es un movimiento continuo y ascendente en la dirección que tú decidiste seguir. También puede definirse como una serie de acciones honestas, con integridad, alineadas con tus metas y propósitos, que dan lugar a ciclos de operación que culminan en un producto o resultado final positivo y óptimo. Recuerda que hay dos cosas que debes tener para volverte rico: la primera es la disciplina y la segunda es la duplicación. Si tienes esas dos cosas, puedes tener éxito en cualquier momento. Si estás en la Zona Verde, ¡tienes la habilidad para tener! Haz más de las acciones exitosas que ya estás ejecutando para expandir tu juego.</p></div>
+</div>
+<div class="btns"><span class="primary">Obtener mi Perfil de Salud Financiera</span><span>Quiero el perfil con sesión privada</span><span>Enviarme mi resultado por email</span></div>
+<p class="note">En la página se muestra solo el texto del nivel que corresponde, en lugar de <span class="var">{{texto_nivel_tener}}</span>. Texto del cliente con ajustes mínimos: minúscula tras coma en "esto significa", comillas y puntuación. Pendiente: confirmar qué texto ve quien queda fuera de las tres franjas descritas (ver pregunta abierta en Variables).</p>
+</div></div>
+</section>
+<section id="a"><h2>Flujo A: Mini Perfil abandonado</h2>
+<div class="flowmeta"><span><b>Entra:</b> dejó datos y no terminó</span><span><b>Sale:</b> completa el Mini Perfil</span><span><b>Si no responde:</b> nutrición mensual</span></div>
+<div class="msg"><div class="msg-h"><span class="code">A1</span><span class="when">1 hora después</span><span class="ch mail">Email</span></div><div class="msg-b">
+<p class="subj"><span>Asunto:</span> Tu Mini Perfil Financiero quedó a medias</p>
+<div class="body">
+<p>Hola <span class="var">{{nombre}}</span>:</p>
+<p>Empezaste tu Mini Perfil Financiero y te detuviste en la pregunta <span class="var">{{pregunta_actual}}</span> de <span class="var">{{total_preguntas}}</span>. Tus respuestas están guardadas, así que puedes seguir justo donde lo dejaste.</p>
+<p>Te faltan unos <span class="var">{{minutos_restantes}}</span> minutos. Al terminar verás tu gráfica de la Habilidad para Tener y en qué punto estás: trabajando para no tener, batallando para tener o con la capacidad para tener.</p>
+<p>Equipo Zones of Life</p>
+</div>
+<div class="btns"><span class="primary">Continuar mi Mini Perfil</span></div>
+</div></div>
+<div class="msg"><div class="msg-h"><span class="code">A2</span><span class="when">24 horas después</span><span class="ch wa">WhatsApp</span></div><div class="msg-b">
+<div class="body">
+<p>Hola <span class="var">{{nombre}}</span>, te escribe el equipo de Zones of Life. Tu Mini Perfil Financiero sigue guardado: te faltan <span class="var">{{preguntas_restantes}}</span> preguntas para ver tu Habilidad para Tener. ¿Lo terminamos?</p>
+</div>
+<div class="btns"><span class="primary">Continuar ahora</span><span>Recordármelo mañana</span></div>
+<p class="note">"Recordármelo mañana" reprograma este mismo mensaje a 24 horas, una sola vez.</p>
+</div></div>
+<div class="msg"><div class="msg-h"><span class="code">A3</span><span class="when">72 horas después</span><span class="ch mail">Email</span></div><div class="msg-b">
+<p class="subj"><span>Asunto:</span> Puedes ganar dinero y aun así no poder tenerlo</p>
+<div class="body">
+<p>Hola <span class="var">{{nombre}}</span>:</p>
+<p>Hay personas que ganan bien y aun así sienten que el dinero se les escapa. Otras consiguen lo que buscan y no lo disfrutan, como si no les perteneciera. Tener no es lo mismo que ganar.</p>
+<p>Tu Mini Perfil mide justo eso: tu Habilidad para Tener. Ya hiciste la mitad del camino y tu avance se guarda <span class="var">{{dias_guardado}}</span> días más.</p>
+<p>Equipo Zones of Life</p>
+</div>
+<div class="btns"><span class="primary">Terminar mi Mini Perfil</span></div>
+</div></div>
+</section>
+<section id="b"><h2>Flujo B: vender el Perfil de Salud Financiera</h2>
+<div class="flowmeta"><span><b>Entra:</b> vio su Habilidad para Tener y no compró</span><span><b>Sale:</b> compra cualquiera de los dos paquetes</span><span><b>Si no responde:</b> nutrición mensual</span></div>
+<div class="msg"><div class="msg-h"><span class="code">B1</span><span class="when">Inmediato</span><span class="ch mail">Email</span></div><div class="msg-b">
+<p class="subj"><span>Asunto:</span> <span class="var">{{nombre}}</span>, este es tu resultado: <span class="var">{{nombre_nivel_tener}}</span></p>
+<div class="body">
+<p>Hola <span class="var">{{nombre}}</span>:</p>
+<p>Terminaste tu Mini Perfil Financiero. Aquí está tu resultado:</p>
+<p><span class="var">{{frase_nivel}}</span></p>
+<p>Tu Habilidad para Tener es una de las seis habilidades que forman tu salud financiera. Tu Perfil de Salud Financiera mide las seis y te muestra cuál te está frenando más. Incluye tu gráfica completa, una audio-lección de Alan C. Walter para entenderla y el cuaderno de trabajo "Tomando las riendas de tu futuro financiero" para empezar a moverla.</p>
+<p>Equipo Zones of Life</p>
+</div>
+<div class="btns"><span class="primary">Obtener mi Perfil de Salud Financiera</span><span>Ver mi resultado</span></div>
+</div></div>
+<div class="msg"><div class="msg-h"><span class="code">B2</span><span class="when">Inmediato</span><span class="ch wa">WhatsApp</span></div><div class="msg-b">
+<div class="body">
+<p>Hola <span class="var">{{nombre}}</span>, tu resultado del Mini Perfil Financiero está listo: <span class="var">{{nombre_nivel_tener}}</span>. Tener es solo una de tus seis habilidades financieras. Tu Perfil de Salud Financiera te muestra las seis.</p>
+</div>
+<div class="btns"><span class="primary">Ver mi Perfil completo</span><span>Ver mi resultado</span></div>
+</div></div>
+<div class="msg"><div class="msg-h"><span class="code">B3</span><span class="when">1 hora después de abandonar el checkout</span><span class="ch wa">WhatsApp</span></div><div class="msg-b">
+<div class="body">
+<p>Hola <span class="var">{{nombre}}</span>, tu <span class="var">{{nombre_paquete}}</span> quedó en el paso de pago. Si algo falló, puedes retomarlo desde aquí sin volver a empezar.</p>
+</div>
+<div class="btns"><span class="primary">Retomar pago</span><span>Tengo una duda</span></div>
+<p class="note"><span class="var">{{nombre_paquete}}</span> es el paquete que eligió en el checkout. "Tengo una duda" abre el menú de B10 o el asistente de IA.</p>
+</div></div>
+<div class="msg"><div class="msg-h"><span class="code">B4</span><span class="when">24 horas después de abandonar el checkout</span><span class="ch mail">Email</span></div><div class="msg-b">
+<p class="subj"><span>Asunto:</span> Tu Perfil de Salud Financiera te está esperando</p>
+<div class="body">
+<p>Hola <span class="var">{{nombre}}</span>:</p>
+<p>Ayer empezaste a obtener tu <span class="var">{{nombre_paquete}}</span> y el pago quedó sin terminar. Guardamos tu lugar.</p>
+<p>Si tuviste un problema con el pago, puedes intentarlo con otro método desde el mismo enlace.</p>
+<p>Equipo Zones of Life</p>
+</div>
+<div class="btns"><span class="primary">Terminar mi compra</span></div>
+</div></div>
+<div class="msg"><div class="msg-h"><span class="code">B5</span><span class="when">Día 1</span><span class="ch mail">Email</span></div><div class="msg-b">
+<p class="subj"><span>Asunto:</span> Lo que tu Mini Perfil no alcanza a medir</p>
+<div class="body">
+<p>Hola <span class="var">{{nombre}}</span>:</p>
+<p>Tu Mini Perfil midió una sola cosa: tu Habilidad para Tener. Es importante, pero tu salud financiera depende de seis habilidades: Producir, Enfocar, Investigar, Tener, Invertir y Crear riqueza. Lo que pasa en una afecta a las demás.</p>
+<p>Con tu Perfil de Salud Financiera respondes 100 preguntas y recibes tres cosas:</p>
+<ol><li>Tu gráfica completa de las 6 habilidades, para ver cuál está más baja.</li><li>Una audio-lección de Alan C. Walter que explica qué significa cada habilidad y cómo leer tu gráfica.</li><li>El cuaderno de trabajo "Tomando las riendas de tu futuro financiero", con ejercicios para trabajar lo que encontraste.</li></ol>
+<p>Sin la gráfica completa, lo más fácil es trabajar en la habilidad equivocada.</p>
+<p>Equipo Zones of Life</p>
+</div>
+<div class="btns"><span class="primary">Ver qué incluye mi Perfil</span></div>
+</div></div>
+<div class="msg"><div class="msg-h"><span class="code">B6</span><span class="when">Día 3</span><span class="ch mail">Email</span></div><div class="msg-b">
+<p class="subj"><span>Asunto:</span> Proceso negativo: por qué te cuesta tener lo que ya ganaste</p>
+<div class="body">
+<p>Hola <span class="var">{{nombre}}</span>:</p>
+<p>En tu resultado apareció la idea de proceso. Vale la pena detenerse en ella.</p>
+<p>Un proceso negativo es una serie de acciones, cambios o decisiones que te alejan de lo que quieres lograr. Es un movimiento continuo y descendente: cada ciclo te deja un poco más lejos del rumbo que querías tomar. Casi nunca lo elegiste; lo aprendiste de tu familia, de tu entorno o de lo que te dijeron que no se podía.</p>
+<p>Un proceso positivo es lo contrario: acciones honestas, alineadas con tus metas, que se repiten en ciclos y terminan en un resultado óptimo.</p>
+<p>Tu Perfil de Salud Financiera te muestra en cuál de tus seis habilidades está operando un proceso negativo, para que sepas por dónde empezar a cambiarlo.</p>
+<p>Equipo Zones of Life</p>
+</div>
+<div class="btns"><span class="primary">Obtener mi Perfil de Salud Financiera</span></div>
+</div></div>
+<div class="msg"><div class="msg-h"><span class="code">B7</span><span class="when">Día 5</span><span class="ch mail">Email</span></div><div class="msg-b">
+<p class="subj"><span>Asunto:</span> ¿Cuánto te ha costado adivinar?</p>
+<div class="body">
+<p>Hola <span class="var">{{nombre}}</span>:</p>
+<p>Tu Perfil de Salud Financiera cuesta <span class="var">{{precio_perfil}}</span>.</p>
+<p>Piensa en lo que ya has invertido tratando de ordenar tu dinero: cursos, libros, aplicaciones, meses de intentarlo por tu cuenta. Cada intento sin saber cuál de tus seis habilidades está fallando es una apuesta.</p>
+<p>El perfil no reemplaza el trabajo. Hace que el trabajo que ya estás dispuesto a hacer vaya en la dirección correcta, y el cuaderno te da por dónde empezar.</p>
+<p>Equipo Zones of Life</p>
+</div>
+<div class="btns"><span class="primary">Dejar de adivinar</span></div>
+</div></div>
+<div class="msg"><div class="msg-h"><span class="code">B8</span><span class="when">Día 7</span><span class="ch mail">Email</span></div><div class="msg-b">
+<p class="subj"><span>Asunto:</span> ¿Prefieres que alguien te ayude a interpretarlo?</p>
+<div class="body">
+<p>Hola <span class="var">{{nombre}}</span>:</p>
+<p>Hay personas que prefieren leer su gráfica, escuchar el audio y trabajar su cuaderno por su cuenta. Otras quieren revisar sus resultados con alguien que sepa leerlos.</p>
+<p>Para ellas existe el Perfil de Salud Financiera con sesión privada: recibes tu gráfica completa, la audio-lección y el cuaderno, y además una sesión de 60 minutos con un coach para interpretar tus resultados y profundizar en lo que significan para tu situación. Cuesta <span class="var">{{precio_perfil_sesion}}</span>.</p>
+<p>Si prefieres empezar por tu cuenta, el perfil automático sigue disponible por <span class="var">{{precio_perfil}}</span>.</p>
+<p>Equipo Zones of Life</p>
+</div>
+<div class="btns"><span class="primary">Quiero el perfil con sesión privada</span><span>Prefiero el perfil automático</span></div>
+<p class="note">B8 reemplaza el correo del bono (no hay bonos en este funnel). B9 se elimina. Es el único correo del Flujo B donde el paquete con sesión es el CTA principal.</p>
+</div></div>
+<div class="msg"><div class="msg-h"><span class="code">B10</span><span class="when">Día 10</span><span class="ch wa">WhatsApp</span></div><div class="msg-b">
+<div class="body">
+<p>Hola <span class="var">{{nombre}}</span>, queremos saber qué te detiene para obtener tu Perfil de Salud Financiera, así te enviamos solo lo que te sirve.</p>
+</div>
+<div class="btns"><span>El precio</span><span>No sé bien qué incluye</span><span>Ahora no es momento</span></div>
+<div class="body">
+<div class="reply"><b>Respuesta a "El precio"</b><p>Entendido. El Perfil de Salud Financiera cuesta <span class="var">{{precio_perfil}}</span> y es un pago único. <span class="var">{{opcion_pago}}</span>. Si prefieres empezar por algo más pequeño, cada mes enviamos contenido gratuito sobre finanzas personales.</p></div>
+<div class="reply"><b>Respuesta a "No sé bien qué incluye"</b><p>Respondes 100 preguntas y recibes tu gráfica completa de las 6 habilidades (Producir, Enfocar, Investigar, Tener, Invertir y Crear riqueza), una audio-lección de Alan C. Walter para entenderla y el cuaderno de trabajo "Tomando las riendas de tu futuro financiero". Si quieres revisarlo con un coach, existe la versión con sesión privada de 60 minutos por <span class="var">{{precio_perfil_sesion}}</span>.</p></div>
+<div class="reply"><b>Respuesta a "Ahora no es momento"</b><p>Gracias por decirnos. Tu resultado del Mini Perfil queda guardado y te escribiremos en 30 días. Si antes quieres retomarlo, escribe PERFIL.</p></div>
+</div>
+<p class="note">Cada respuesta termina con el botón "Obtener mi Perfil de Salud Financiera". "Ahora no es momento" pausa el flujo y lo reinicia en B5 a los 30 días.</p>
+</div></div>
+<div class="msg"><div class="msg-h"><span class="code">B11</span><span class="when">Día 14</span><span class="ch mail">Email</span></div><div class="msg-b">
+<p class="subj"><span>Asunto:</span> ¿Lo dejamos en tu Mini Perfil?</p>
+<div class="body">
+<p>Hola <span class="var">{{nombre}}</span>:</p>
+<p>Este es el último correo sobre tu Perfil de Salud Financiera. No queremos llenar tu bandeja.</p>
+<p>Tu resultado del Mini Perfil seguirá disponible y una vez al mes te enviaremos contenido sobre cómo mejorar tu relación con el dinero. Si en algún momento quieres ver tus seis habilidades, el perfil estará aquí.</p>
+<p>Equipo Zones of Life</p>
+</div>
+<div class="btns"><span class="primary">Obtenerlo ahora</span><span>Solo quiero el contenido mensual</span></div>
+</div></div>
+<h3>Versión acelerada del Flujo B</h3>
+<p class="lead">Para leads con intención alta: dos o más clics en la oferta o visita al checkout. Mismos copys, en menos tiempo.</p>
+<div class="tbl"><table><tr><th>Momento</th><th>Mensaje</th></tr><tr><td>Inmediato</td><td>B1 y B2</td></tr><tr><td>Día 1</td><td>B5</td></tr><tr><td>Día 2</td><td>B7</td></tr><tr><td>Día 3</td><td>B8</td></tr><tr><td>Día 4</td><td>B10</td></tr><tr><td>Día 7</td><td>B11</td></tr></table></div>
+</section>
+<section id="p"><h2>Confirmación de compra</h2>
+<p class="lead">Hay dos versiones del correo según el paquete. El WhatsApp es el mismo.</p>
+<div class="msg"><div class="msg-h"><span class="code">P1a</span><span class="when">Inmediato tras el pago (automático)</span><span class="ch mail">Email</span></div><div class="msg-b">
+<p class="subj"><span>Asunto:</span> Listo, <span class="var">{{nombre}}</span>. Empecemos tu Perfil de Salud Financiera</p>
+<div class="body">
+<p>Hola <span class="var">{{nombre}}</span>:</p>
+<p>Tu pago quedó confirmado. Gracias por decidir conocer a fondo tu salud financiera.</p>
+<p>El siguiente paso es responder tus 100 preguntas. Toma unos <span class="var">{{minutos_perfil}}</span> minutos. Un consejo: hazlo en un momento tranquilo y responde pensando en cómo estás hoy, no en cómo te gustaría estar. Mientras más honesto seas, más útil será tu gráfica.</p>
+<p>Al terminar recibirás tu gráfica de las 6 habilidades, la audio-lección de Alan C. Walter y tu cuaderno de trabajo. Puedes pausar y continuar cuando quieras; tu avance se guarda solo.</p>
+<p>Equipo Zones of Life</p>
+</div>
+<div class="btns"><span class="primary">Empezar mi Perfil</span></div>
+<p class="note">Adjuntar comprobante o factura.</p>
+</div></div>
+<div class="msg"><div class="msg-h"><span class="code">P1b</span><span class="when">Inmediato tras el pago (con sesión privada)</span><span class="ch mail">Email</span></div><div class="msg-b">
+<p class="subj"><span>Asunto:</span> Listo, <span class="var">{{nombre}}</span>. Tu perfil y tu sesión privada están activos</p>
+<div class="body">
+<p>Hola <span class="var">{{nombre}}</span>:</p>
+<p>Tu pago quedó confirmado. Gracias por decidir conocer a fondo tu salud financiera.</p>
+<p>Así funciona:</p>
+<ol><li>Respondes tus 100 preguntas. Toma unos <span class="var">{{minutos_perfil}}</span> minutos; responde pensando en cómo estás hoy, no en cómo te gustaría estar.</li><li>Recibes tu gráfica de las 6 habilidades, la audio-lección de Alan C. Walter y tu cuaderno de trabajo.</li><li>Agendas tu sesión privada de 60 minutos con un coach para interpretar tus resultados.</li></ol>
+<p>La sesión se agenda después de terminar el perfil, para que el coach tenga tu gráfica antes de hablar contigo.</p>
+<p>Equipo Zones of Life</p>
+</div>
+<div class="btns"><span class="primary">Empezar mi Perfil</span></div>
+<p class="note">Adjuntar comprobante o factura. El enlace para agendar llega en DS1, al generarse la gráfica.</p>
+</div></div>
+<div class="msg"><div class="msg-h"><span class="code">P2</span><span class="when">Inmediato tras el pago</span><span class="ch wa">WhatsApp</span></div><div class="msg-b">
+<div class="body">
+<p>Pago confirmado, <span class="var">{{nombre}}</span>. Tu Perfil de Salud Financiera ya está activo: son 100 preguntas, unos <span class="var">{{minutos_perfil}}</span> minutos, y puedes pausar cuando quieras.</p>
+</div>
+<div class="btns"><span class="primary">Empezar ahora</span><span>Lo hago más tarde</span></div>
+</div></div>
+</section>
+<section id="c"><h2>Flujo C: pagó y no termina el perfil</h2>
+<div class="flowmeta"><span><b>Entra:</b> compró y no ha terminado las 100 preguntas</span><span><b>Sale:</b> termina el perfil</span><span><b>Si no responde:</b> recordatorio mensual hasta que termine</span></div>
+<div class="msg"><div class="msg-h"><span class="code">C1</span><span class="when">24 horas después de la compra</span><span class="ch mail">Email</span></div><div class="msg-b">
+<p class="subj"><span>Asunto:</span> Tu gráfica de 6 habilidades empieza aquí</p>
+<div class="body">
+<p>Hola <span class="var">{{nombre}}</span>:</p>
+<p>Ayer obtuviste tu Perfil de Salud Financiera. Tu gráfica, tu audio-lección y tu cuaderno se liberan en cuanto termines las 100 preguntas. <span class="var">{{estado_avance}}</span></p>
+<p>Si lo divides en dos momentos cortos, lo terminas hoy.</p>
+<p>Equipo Zones of Life</p>
+</div>
+<div class="btns"><span class="primary">Continuar mi Perfil</span></div>
+<p class="note"><span class="var">{{estado_avance}}</span>: "Todavía no has empezado." o "Vas en la pregunta <span class="var">{{pregunta_actual}}</span> de 100."</p>
+</div></div>
+<div class="msg"><div class="msg-h"><span class="code">C2</span><span class="when">48 horas después de la compra</span><span class="ch wa">WhatsApp</span></div><div class="msg-b">
+<div class="body">
+<p>Hola <span class="var">{{nombre}}</span>, tu gráfica de salud financiera está a <span class="var">{{preguntas_restantes}}</span> preguntas de distancia. ¿Seguimos?</p>
+</div>
+<div class="btns"><span class="primary">Continuar</span><span>Necesito ayuda</span></div>
+<p class="note">"Necesito ayuda" abre el asistente de IA con preguntas frecuentes: acceso, pausas, dudas sobre alguna pregunta.</p>
+</div></div>
+<div class="msg"><div class="msg-h"><span class="code">C3</span><span class="when">Día 5</span><span class="ch wa">WhatsApp</span></div><div class="msg-b">
+<div class="body">
+<p>Hola <span class="var">{{nombre}}</span>, preparamos un video de un minuto con tips para responder tu Perfil de Salud Financiera sin atorarte. Al final encontrarás el enlace directo a la pregunta donde te quedaste.</p>
+</div>
+<div class="btns"><span class="primary">Ver video y continuar</span></div>
+</div></div>
+<div class="msg"><div class="msg-h"><span class="code">C4</span><span class="when">Día 10</span><span class="ch mail">Email</span></div><div class="msg-b">
+<p class="subj"><span>Asunto:</span> Tu inversión sigue esperándote</p>
+<div class="body">
+<p>Hola <span class="var">{{nombre}}</span>:</p>
+<p>Hace 10 días decidiste invertir en tu Perfil de Salud Financiera. Todavía no vemos tus respuestas, y son lo que abre todo lo demás: tu gráfica, tu audio-lección, tu cuaderno <span class="var">{{extra_paquete}}</span>.</p>
+<p>Tu acceso sigue activo <span class="var">{{vigencia_acceso}}</span>. Retómalo cuando tengas un momento tranquilo.</p>
+<p>Equipo Zones of Life</p>
+</div>
+<div class="btns"><span class="primary">Terminar mi Perfil</span></div>
+<p class="note"><span class="var">{{extra_paquete}}</span>: vacío para el automático; "y tu sesión privada con un coach" para el paquete con sesión.</p>
+</div></div>
+</section>
+<section id="d"><h2>Flujo D: perfil automático listo, vender la sesión</h2>
+<div class="flowmeta"><span><b>Entra:</b> compró el automático y recibió su gráfica</span><span><b>Sale:</b> compra la sesión privada y agenda</span><span><b>Si no responde:</b> nutrición mensual y reevaluación a 90 días</span></div>
+<div class="msg"><div class="msg-h"><span class="code">D1</span><span class="when">Inmediato al generarse la gráfica</span><span class="ch mail">Email</span></div><div class="msg-b">
+<p class="subj"><span>Asunto:</span> <span class="var">{{nombre}}</span>, tu Perfil de Salud Financiera está listo</p>
+<div class="body">
+<p>Hola <span class="var">{{nombre}}</span>:</p>
+<p>Tu Perfil de Salud Financiera ya está disponible. Esto es lo que tienes:</p>
+<ol><li>Tu gráfica completa de las 6 habilidades. La más baja hoy es <span class="var">{{habilidad_baja}}</span>.</li><li>La audio-lección de Alan C. Walter sobre el Perfil de Salud Financiera: <span class="var">{{link_audio}}</span></li><li>Tu cuaderno de trabajo "Tomando las riendas de tu futuro financiero", adjunto a este correo.</li></ol>
+<p>Te sugerimos este orden: mira tu gráfica, escucha el audio y después abre el cuaderno.</p>
+<p>Equipo Zones of Life</p>
+</div>
+<div class="btns"><span class="primary">Ver mi gráfica</span></div>
+<p class="note"><span class="var">{{link_audio}}</span> = <a href="https://on.soundcloud.com/fTAdDNVbswFvZ21ePq.">https://on.soundcloud.com/fTAdDNVbswFvZ21ePq.</a> El cuaderno va como PDF adjunto o como enlace de descarga si pesa más de 5 MB.</p>
+</div></div>
+<div class="msg"><div class="msg-h"><span class="code">D2</span><span class="when">Inmediato al generarse la gráfica</span><span class="ch wa">WhatsApp</span></div><div class="msg-b">
+<div class="body">
+<p><span class="var">{{nombre}}</span>, tu Perfil de Salud Financiera está listo. Te enviamos a tu correo la gráfica, el audio de Alan C. Walter y tu cuaderno de trabajo.</p>
+</div>
+<div class="btns"><span class="primary">Ver mi gráfica</span><span>Escuchar el audio</span></div>
+</div></div>
+<div class="msg"><div class="msg-h"><span class="code">D3</span><span class="when">Día 2</span><span class="ch mail">Email</span></div><div class="msg-b">
+<p class="subj"><span>Asunto:</span> Antes de abrir tu cuaderno, escucha esto</p>
+<div class="body">
+<p>Hola <span class="var">{{nombre}}</span>:</p>
+<p>Tu gráfica te dice dónde estás. La audio-lección de Alan C. Walter te explica qué significa cada habilidad y por qué <span class="var">{{habilidad_baja}}</span> puede estar frenando a las demás.</p>
+<p>Escúchala antes de empezar tu cuaderno: vas a entender mejor cada ejercicio.</p>
+<p>Equipo Zones of Life</p>
+</div>
+<div class="btns"><span class="primary">Escuchar la audio-lección</span></div>
+</div></div>
+<div class="msg"><div class="msg-h"><span class="code">D4</span><span class="when">Día 4</span><span class="ch mail">Email</span></div><div class="msg-b">
+<p class="subj"><span>Asunto:</span> Cómo sacarle provecho a tu cuaderno de trabajo</p>
+<div class="body">
+<p>Hola <span class="var">{{nombre}}</span>:</p>
+<p>"Tomando las riendas de tu futuro financiero" funciona mejor si lo trabajas poco a poco. Tres sugerencias:</p>
+<ol><li>Empieza por la sección de <span class="var">{{habilidad_baja}}</span>, tu habilidad más baja.</li><li>Escribe tus respuestas; no las contestes solo en tu cabeza.</li><li>Vuelve a tu gráfica cuando termines cada sección.</li></ol>
+<p>Hay algo que el cuaderno no puede hacer: aplicar lo que encuentras a tu situación específica. Eso se hace en una sesión privada de interpretación con un coach.</p>
+<p>Equipo Zones of Life</p>
+</div>
+<div class="btns"><span class="primary">Abrir mi cuaderno</span></div>
+</div></div>
+<div class="msg"><div class="msg-h"><span class="code">D5</span><span class="when">Día 7</span><span class="ch mail">Email</span></div><div class="msg-b">
+<p class="subj"><span>Asunto:</span> Revisa tu gráfica con un coach</p>
+<div class="body">
+<p>Hola <span class="var">{{nombre}}</span>:</p>
+<p>Ya tienes tu gráfica, tu audio y tu cuaderno. Si quieres ir más a fondo, puedes agregar una sesión privada de interpretación: 60 minutos por videollamada con un coach que revisa tus seis habilidades contigo y te ayuda a entender qué hay detrás de <span class="var">{{habilidad_baja}}</span>.</p>
+<p>La sesión cuesta <span class="var">{{precio_mejora_sesion}}</span>.</p>
+<p>Equipo Zones of Life</p>
+</div>
+<div class="btns"><span class="primary">Agregar mi sesión privada</span></div>
+<p class="note">Sin cupos ni fechas límite salvo que sean reales. Si se confirma que la mejora cuesta la diferencia entre paquetes, decirlo así: "Como ya tienes tu perfil, solo pagas la diferencia".</p>
+</div></div>
+<div class="msg"><div class="msg-h"><span class="code">D6</span><span class="when">Día 10</span><span class="ch wa">WhatsApp</span></div><div class="msg-b">
+<div class="body">
+<p>Hola <span class="var">{{nombre}}</span>, ¿qué te gustaría hacer con tu Perfil de Salud Financiera?</p>
+</div>
+<div class="btns"><span class="primary">Agregar sesión privada</span><span>Tengo dudas de la sesión</span><span>Prefiero trabajarlo solo</span></div>
+<div class="body">
+<div class="reply"><b>Respuesta a "Tengo dudas de la sesión"</b><p>Es una videollamada de 60 minutos con un coach certificado. Revisan juntos tu gráfica de las 6 habilidades, interpretan tus resultados y profundizan en lo que significan para tu situación. Si el coach considera que un programa te puede ayudar, te lo propone. Decidir es tuyo. Cuesta <span class="var">{{precio_mejora_sesion}}</span>.</p></div>
+<div class="reply"><b>Respuesta a "Prefiero trabajarlo solo"</b><p>Perfecto. Tu cuaderno de trabajo está diseñado para que puedas avanzar por tu cuenta. Te enviaremos contenido mensual y en 90 días te invitaremos a medir tu avance. Si en algún momento quieres la sesión, escribe SESIÓN.</p></div>
+</div>
+<p class="note">"Prefiero trabajarlo solo" saca al lead del flujo, lo pasa a nutrición mensual y programa la reevaluación a 90 días.</p>
+</div></div>
+<div class="msg"><div class="msg-h"><span class="code">D7</span><span class="when">Día 14</span><span class="ch mail">Email</span></div><div class="msg-b">
+<p class="subj"><span>Asunto:</span> Tres razones para no tomar la sesión (y qué suele pasar después)</p>
+<div class="body">
+<p>Hola <span class="var">{{nombre}}</span>:</p>
+<p><strong>"No tengo tiempo."</strong> Son 60 minutos. La pregunta real es cuánto tiempo más va a seguir <span class="var">{{habilidad_baja}}</span> como está.</p>
+<p><strong>"Ya tengo el cuaderno."</strong> Y es un buen punto de partida. Pero saber qué hacer y hacerlo son dos problemas distintos, y el segundo es donde trabaja un coach.</p>
+<p><strong>"Me van a querer vender algo."</strong> Es justo decirlo claro: si el coach cree que un programa te sirve, te lo va a proponer. Si no, te irás con tus resultados interpretados y claridad sobre tu siguiente paso. En ambos casos, tú decides.</p>
+<p>Equipo Zones of Life</p>
+</div>
+<div class="btns"><span class="primary">Agregar mi sesión privada</span></div>
+</div></div>
+<div class="msg"><div class="msg-h"><span class="code">D8</span><span class="when">Día 21</span><span class="ch mail">Email</span></div><div class="msg-b">
+<p class="subj"><span>Asunto:</span> Tu perfil no caduca, pero tu momento sí</p>
+<div class="body">
+<p>Hola <span class="var">{{nombre}}</span>:</p>
+<p>Este es nuestro último correo sobre la sesión privada. Tu gráfica, tu audio y tu cuaderno siguen disponibles.</p>
+<p>Dentro de 90 días te invitaremos a medir de nuevo tus seis habilidades para ver cuánto se movieron. Si antes de eso quieres revisar tus resultados con un coach, la sesión sigue disponible.</p>
+<p>Equipo Zones of Life</p>
+</div>
+<div class="btns"><span class="primary">Agregar mi sesión privada</span></div>
+</div></div>
+</section>
+<section id="ds"><h2>Rama DS: compró con sesión, falta agendar</h2>
+<div class="flowmeta"><span><b>Entra:</b> compró el paquete con sesión y recibió su gráfica</span><span><b>Sale:</b> agenda su sesión</span><span><b>Si no responde:</b> recordatorio mensual hasta que agende</span></div>
+<div class="msg"><div class="msg-h"><span class="code">DS1</span><span class="when">Inmediato al generarse la gráfica</span><span class="ch mail">Email</span></div><div class="msg-b">
+<p class="subj"><span>Asunto:</span> <span class="var">{{nombre}}</span>, tu perfil está listo: agenda tu sesión privada</p>
+<div class="body">
+<p>Hola <span class="var">{{nombre}}</span>:</p>
+<p>Tu Perfil de Salud Financiera ya está disponible:</p>
+<ol><li>Tu gráfica completa de las 6 habilidades. La más baja hoy es <span class="var">{{habilidad_baja}}</span>.</li><li>La audio-lección de Alan C. Walter: <span class="var">{{link_audio}}</span></li><li>Tu cuaderno de trabajo "Tomando las riendas de tu futuro financiero", adjunto.</li></ol>
+<p>Tu sesión privada de interpretación ya está pagada. Elige tu horario: son 60 minutos por videollamada con un coach que ya tendrá tu gráfica.</p>
+<p>Equipo Zones of Life</p>
+</div>
+<div class="btns"><span class="primary">Agendar mi sesión privada</span></div>
+<p class="note">Adjuntar el cuaderno igual que en D1.</p>
+</div></div>
+<div class="msg"><div class="msg-h"><span class="code">DS2</span><span class="when">Inmediato al generarse la gráfica</span><span class="ch wa">WhatsApp</span></div><div class="msg-b">
+<div class="body">
+<p><span class="var">{{nombre}}</span>, tu Perfil de Salud Financiera está listo y tu sesión privada ya está pagada. Solo falta elegir tu horario.</p>
+</div>
+<div class="btns"><span class="primary">Agendar mi sesión</span><span>Ver mi gráfica</span></div>
+</div></div>
+<div class="msg"><div class="msg-h"><span class="code">DS3</span><span class="when">Día 3</span><span class="ch mail">Email</span></div><div class="msg-b">
+<p class="subj"><span>Asunto:</span> Tu sesión privada está pendiente de agendar</p>
+<div class="body">
+<p>Hola <span class="var">{{nombre}}</span>:</p>
+<p>Tu sesión de 60 minutos sigue sin fecha. Para aprovecharla, te sugerimos escuchar antes la audio-lección de Alan C. Walter y hojear tu cuaderno: llegarás con mejores preguntas.</p>
+<p>Equipo Zones of Life</p>
+</div>
+<div class="btns"><span class="primary">Agendar mi sesión privada</span></div>
+</div></div>
+<div class="msg"><div class="msg-h"><span class="code">DS4</span><span class="when">Día 7</span><span class="ch wa">WhatsApp</span></div><div class="msg-b">
+<div class="body">
+<p>Hola <span class="var">{{nombre}}</span>, tu sesión privada de interpretación sigue disponible. ¿La agendamos?</p>
+</div>
+<div class="btns"><span class="primary">Agendar ahora</span><span>Tengo una duda</span></div>
+<p class="note">"Tengo una duda" abre el asistente de IA. Si no agenda, recordatorio mensual (N1 con CTA "Agenda tu sesión privada, ya está pagada").</p>
+</div></div>
+</section>
+<section id="s"><h2>Sesión agendada: confirmación y recordatorios</h2>
+<div class="flowmeta"><span><b>Entra:</b> agenda su sesión (DS o mejora desde D)</span><span><b>Sale:</b> asiste o no se presenta</span></div>
+<div class="msg"><div class="msg-h"><span class="code">S1</span><span class="when">Inmediato al agendar</span><span class="ch mail">Email</span></div><div class="msg-b">
+<p class="subj"><span>Asunto:</span> Tu sesión privada está confirmada: <span class="var">{{fecha_sesion}}</span>, <span class="var">{{hora_sesion}}</span></p>
+<div class="body">
+<p>Hola <span class="var">{{nombre}}</span>:</p>
+<p>Tu sesión privada de interpretación con <span class="var">{{coach}}</span> quedó confirmada para el <span class="var">{{fecha_sesion}}</span> a las <span class="var">{{hora_sesion}}</span> (<span class="var">{{zona_horaria}}</span>).</p>
+<p>Para aprovecharla al máximo: ten tu gráfica y tu cuaderno a la mano, busca un lugar tranquilo con buena conexión y piensa en una pregunta que quieras resolver sobre <span class="var">{{habilidad_baja}}</span>.</p>
+<p>Equipo Zones of Life</p>
+</div>
+<div class="btns"><span class="primary">Agregar a mi calendario</span><span>Ver mi gráfica</span><span>Reagendar</span></div>
+</div></div>
+<div class="msg"><div class="msg-h"><span class="code">S2</span><span class="when">Inmediato al agendar</span><span class="ch wa">WhatsApp</span></div><div class="msg-b">
+<div class="body">
+<p>Listo, <span class="var">{{nombre}}</span>. Tu sesión privada con <span class="var">{{coach}}</span> es el <span class="var">{{fecha_sesion}}</span> a las <span class="var">{{hora_sesion}}</span>. Te enviaremos el enlace antes de empezar.</p>
+</div>
+<div class="btns"><span class="primary">Agregar al calendario</span></div>
+</div></div>
+<div class="msg"><div class="msg-h"><span class="code">S3</span><span class="when">24 horas antes</span><span class="ch mail">Email</span></div><div class="msg-b">
+<p class="subj"><span>Asunto:</span> Mañana conoces a <span class="var">{{coach}}</span></p>
+<div class="body">
+<p>Hola <span class="var">{{nombre}}</span>:</p>
+<p>Mañana a las <span class="var">{{hora_sesion}}</span> es tu sesión privada. Te dejamos un video corto de <span class="var">{{coach}}</span> para que sepas con quién vas a hablar.</p>
+<p><span class="var">{{bio_coach}}</span></p>
+<p>Si ya pensaste tu pregunta sobre <span class="var">{{habilidad_baja}}</span>, tráela escrita.</p>
+<p>Equipo Zones of Life</p>
+</div>
+<div class="btns"><span class="primary">Ver video de <span class="var">{{coach}}</span></span><span>Reagendar</span></div>
+</div></div>
+<div class="msg"><div class="msg-h"><span class="code">S4</span><span class="when">2 horas antes</span><span class="ch wa">WhatsApp</span></div><div class="msg-b">
+<div class="body">
+<p>Hola <span class="var">{{nombre}}</span>, tu sesión privada con <span class="var">{{coach}}</span> es hoy a las <span class="var">{{hora_sesion}}</span>. ¿Confirmas?</p>
+</div>
+<div class="btns"><span class="primary">Ahí estaré</span><span>Necesito reagendar</span></div>
+</div></div>
+<div class="msg"><div class="msg-h"><span class="code">S5</span><span class="when">10 minutos antes</span><span class="ch wa">WhatsApp</span></div><div class="msg-b">
+<div class="body">
+<p><span class="var">{{nombre}}</span>, tu sesión empieza en 10 minutos. Entra desde aquí: <span class="var">{{link_sesion}}</span></p>
+</div>
+</div></div>
+<div class="msg"><div class="msg-h"><span class="code">S6</span><span class="when">Inmediato al agendar (interno)</span><span class="ch int">Brief al coach</span></div><div class="msg-b">
+<p class="subj"><span>Asunto:</span> Nueva sesión privada: <span class="var">{{nombre}}</span>, <span class="var">{{fecha_sesion}}</span> <span class="var">{{hora_sesion}}</span></p>
+<div class="body">
+<p>Perfil: <span class="var">{{perfil}}</span>. Paquete: <span class="var">{{paquete}}</span> (con sesión desde la compra o mejora desde D).</p>
+<p>Mini Perfil: <span class="var">{{nombre_nivel_tener}}</span>, puntaje <span class="var">{{p_tener_mini}}</span>.</p>
+<p>Perfil de Salud Financiera: <span class="var">{{p_habilidades}}</span>. Habilidad más baja: <span class="var">{{habilidad_baja}}</span>.</p>
+<p>Recorrido: hizo el Mini Perfil el <span class="var">{{fecha_gratuito}}</span>, compró el <span class="var">{{fecha_compra}}</span> (<span class="var">{{dias_a_compra}}</span> días después), agendó <span class="var">{{dias_a_agenda}}</span> días después de recibir su gráfica.</p>
+<p>Señales: correos abiertos <span class="var">{{correos_abiertos}}</span>, escuchó el audio <span class="var">{{abrio_audio}}</span>, botones elegidos <span class="var">{{botones_elegidos}}</span>, lead scoring <span class="var">{{puntaje_lead}}</span>.</p>
+<p>Gráfica completa: <span class="var">{{link_reporte}}</span></p>
+</div>
+<p class="note">Este correo no lo ve el lead. <span class="var">{{p_habilidades}}</span> lista los seis puntajes con su nombre.</p>
+</div></div>
+</section>
+<section id="e"><h2>Flujo E: no se presentó a la sesión</h2>
+<div class="flowmeta"><span><b>Entra:</b> no asistió</span><span><b>Sale:</b> reagenda dentro de 1 mes</span><span><b>Si no responde:</b> aviso final al vencer el plazo</span></div>
+<div class="msg"><div class="msg-h"><span class="code">E1</span><span class="when">15 minutos después de la hora</span><span class="ch wa">WhatsApp</span></div><div class="msg-b">
+<div class="body">
+<p>Hola <span class="var">{{nombre}}</span>, tu sesión con <span class="var">{{coach}}</span> era a las <span class="var">{{hora_sesion}}</span>. Si algo se atravesó, no pasa nada: tu sesión sigue pagada y tienes hasta el <span class="var">{{fecha_limite_reagenda}}</span> para elegir otro horario.</p>
+</div>
+<div class="btns"><span class="primary">Reagendar</span><span>Escribir al equipo</span></div>
+</div></div>
+<div class="msg"><div class="msg-h"><span class="code">E2</span><span class="when">24 horas después</span><span class="ch mail">Email</span></div><div class="msg-b">
+<p class="subj"><span>Asunto:</span> Tu sesión privada sigue pendiente</p>
+<div class="body">
+<p>Hola <span class="var">{{nombre}}</span>:</p>
+<p>Ayer no pudimos coincidir. Tu sesión privada de interpretación sigue pagada y tu gráfica está lista para revisarse.</p>
+<p>Tienes hasta el <span class="var">{{fecha_limite_reagenda}}</span> para reagendar. Elige el horario que mejor te acomode.</p>
+<p>Equipo Zones of Life</p>
+</div>
+<div class="btns"><span class="primary">Reagendar mi sesión</span></div>
+<p class="note"><span class="var">{{fecha_limite_reagenda}}</span> = fecha de la sesión perdida + 1 mes.</p>
+</div></div>
+<div class="msg"><div class="msg-h"><span class="code">E3</span><span class="when">72 horas después</span><span class="ch wa">WhatsApp</span></div><div class="msg-b">
+<div class="body">
+<p><span class="var">{{nombre}}</span>, tu sesión privada sigue disponible hasta el <span class="var">{{fecha_limite_reagenda}}</span>. Después de esa fecha ya no podremos reagendarla.</p>
+</div>
+<div class="btns"><span class="primary">Reagendar</span></div>
+<p class="note">Ya no regresa a D6, porque la sesión está pagada. Se quitó el botón "Más adelante" porque el plazo es de 1 mes.</p>
+</div></div>
+<div class="msg"><div class="msg-h"><span class="code">E4</span><span class="when">7 días antes de <span class="var">{{fecha_limite_reagenda}}</span></span><span class="ch mail">Email</span></div><div class="msg-b">
+<p class="subj"><span>Asunto:</span> Tu sesión privada vence el <span class="var">{{fecha_limite_reagenda}}</span></p>
+<div class="body">
+<p>Hola <span class="var">{{nombre}}</span>:</p>
+<p>Tu sesión privada de interpretación sigue sin fecha. Tienes hasta el <span class="var">{{fecha_limite_reagenda}}</span> para agendarla; después de ese día ya no podremos reprogramarla.</p>
+<p>Tu gráfica, tu audio y tu cuaderno siguen disponibles.</p>
+<p>Equipo Zones of Life</p>
+</div>
+<div class="btns"><span class="primary">Reagendar mi sesión</span></div>
+<p class="note">Nuevo. Si no reagenda, pasa a nutrición mensual y reevaluación a 90 días.</p>
+</div></div>
+</section>
+<section id="f"><h2>Flujo F: asistió y no compró programa</h2>
+<div class="flowmeta"><span><b>Entra:</b> el coach marca la sesión como "sin compra"</span><span><b>Sale:</b> compra programa o producto de entrada</span><span><b>Si no responde:</b> nutrición mensual</span></div>
+<p class="lead">Al terminar la sesión, el coach llena tres campos en el CRM: resumen en una línea, propuesta enviada y objeción principal.</p>
+<div class="msg"><div class="msg-h"><span class="code">F1</span><span class="when">El mismo día</span><span class="ch mail">Email</span></div><div class="msg-b">
+<p class="subj"><span>Asunto:</span> Lo que vimos hoy en tu sesión</p>
+<div class="body">
+<p>Hola <span class="var">{{nombre}}</span>:</p>
+<p>Gracias por tu tiempo hoy. En resumen: <span class="var">{{resumen_sesion}}</span></p>
+<p>Como platicamos, la propuesta para trabajar <span class="var">{{habilidad_baja}}</span> es <span class="var">{{propuesta_programa}}</span>. Aquí puedes ver el detalle, la inversión y cómo empezar.</p>
+<p><span class="var">{{coach}}</span> y el equipo de Zones of Life</p>
+</div>
+<div class="btns"><span class="primary">Ver mi propuesta</span></div>
+<p class="note">Se firma con el nombre del coach porque ya hubo contacto real. El coach aprueba el resumen antes del envío.</p>
+</div></div>
+<div class="msg"><div class="msg-h"><span class="code">F2</span><span class="when">Día 2</span><span class="ch wa">WhatsApp</span></div><div class="msg-b">
+<div class="body">
+<p>Hola <span class="var">{{nombre}}</span>, ¿qué necesitas para decidir sobre tu propuesta?</p>
+</div>
+<div class="btns"><span>Tiempo</span><span>Revisar la inversión</span><span>Intentarlo por mi cuenta</span><span>Consultarlo con alguien</span></div>
+<p class="note">Si el lead no responde, se envía la variante de F3 que corresponde a la objeción que registró el coach.</p>
+</div></div>
+<div class="msg"><div class="msg-h"><span class="code">F3</span><span class="when">Al elegir un botón, o día 3</span><span class="ch mail">Email</span></div><div class="msg-b">
+<div class="body">
+<div class="reply"><b>Variante "Tiempo". Asunto: Cuánto tiempo pide realmente tu programa</b><p>Hola <span class="var">{{nombre}}</span>: <span class="var">{{propuesta_programa}}</span> pide <span class="var">{{tiempo_semanal}}</span> a la semana. Si el problema es cuándo empezar, puedes elegir la fecha de inicio que te acomode.</p></div>
+<div class="reply"><b>Variante "Revisar la inversión". Asunto: Formas de empezar tu programa</b><p>Hola <span class="var">{{nombre}}</span>: tu programa tiene una inversión de <span class="var">{{precio_programa}}</span>. <span class="var">{{opciones_pago}}</span>. <span class="var">{{credito_perfil}}</span></p></div>
+<div class="reply"><b>Variante "Intentarlo por mi cuenta". Asunto: Si decides hacerlo solo, empieza por aquí</b><p>Hola <span class="var">{{nombre}}</span>: respetamos esa decisión. Tu cuaderno de trabajo es tu punto de partida. Revisa tu avance a los 30 días: si <span class="var">{{habilidad_baja}}</span> no se ha movido, es señal de que el acompañamiento puede hacer la diferencia. Tu propuesta sigue vigente hasta el <span class="var">{{vigencia_propuesta}}</span>.</p></div>
+<div class="reply"><b>Variante "Consultarlo con alguien". Asunto: Para compartir tu propuesta</b><p>Hola <span class="var">{{nombre}}</span>: preparamos un resumen de una página con qué incluye tu programa, cómo funciona y qué puedes esperar, para que lo compartas con quien necesites.</p></div>
+</div>
+<div class="btns"><span class="primary">Ver mi propuesta</span></div>
+</div></div>
+<div class="msg"><div class="msg-h"><span class="code">F4</span><span class="when">Día 5</span><span class="ch mail">Email</span></div><div class="msg-b">
+<p class="subj"><span>Asunto:</span> <span class="var">{{testimonio_nombre}}</span> estaba en el mismo punto que tú</p>
+<div class="body">
+<p>Hola <span class="var">{{nombre}}</span>:</p>
+<p><span class="var">{{testimonio_nombre}}</span>, <span class="var">{{testimonio_perfil}}</span>, también dudó antes de empezar. <span class="var">{{testimonio_duda}}</span></p>
+<p>A los 90 días, su nuevo Perfil de Salud Financiera mostró <span class="var">{{testimonio_resultado}}</span>.</p>
+<p>Equipo Zones of Life</p>
+</div>
+<div class="btns"><span class="primary">Ver mi propuesta</span></div>
+<p class="note">Solo con un testimonio real y permiso por escrito. Si no lo hay, omitir F4.</p>
+</div></div>
+<div class="msg"><div class="msg-h"><span class="code">F5</span><span class="when">Día 7</span><span class="ch mail">Email</span></div><div class="msg-b">
+<p class="subj"><span>Asunto:</span> Tu propuesta vence el <span class="var">{{vigencia_propuesta}}</span></p>
+<div class="body">
+<p>Hola <span class="var">{{nombre}}</span>:</p>
+<p>Tu propuesta para <span class="var">{{propuesta_programa}}</span> con las condiciones que platicaste con <span class="var">{{coach}}</span> es válida hasta el <span class="var">{{vigencia_propuesta}}</span>.</p>
+<p>Después de esa fecha puedes volver a solicitarla, pero las condiciones pueden cambiar.</p>
+<p>Equipo Zones of Life</p>
+</div>
+<div class="btns"><span class="primary">Empezar mi programa</span></div>
+<p class="note">Solo si la vigencia es real.</p>
+</div></div>
+<div class="msg"><div class="msg-h"><span class="code">F6</span><span class="when">Día 14</span><span class="ch mail">Email</span></div><div class="msg-b">
+<p class="subj"><span>Asunto:</span> Una forma más ligera de seguir con tu salud financiera</p>
+<div class="body">
+<p>Hola <span class="var">{{nombre}}</span>:</p>
+<p>Si el programa completo no es para este momento, hay otra opción: <span class="var">{{producto_entrada}}</span>. Es un recurso enfocado en <span class="var">{{habilidad_baja}}</span>, a tu ritmo, por <span class="var">{{precio_producto_entrada}}</span>.</p>
+<p>No reemplaza el acompañamiento, pero te permite avanzar desde hoy.</p>
+<p>Equipo Zones of Life</p>
+</div>
+<div class="btns"><span class="primary">Conocer <span class="var">{{producto_entrada}}</span></span><span>Prefiero esperar</span></div>
+</div></div>
+</section>
+<section id="g"><h2>Clientes: onboarding, reevaluación y referidos</h2>
+<div class="msg"><div class="msg-h"><span class="code">G1</span><span class="when">Inmediato tras la compra</span><span class="ch mail">Email + WhatsApp</span></div><div class="msg-b">
+<p class="subj"><span>Asunto:</span> Bienvenido a tu programa, <span class="var">{{nombre}}</span></p>
+<div class="body">
+<p>Hola <span class="var">{{nombre}}</span>:</p>
+<p>Tu programa <span class="var">{{propuesta_programa}}</span> empieza el <span class="var">{{fecha_inicio}}</span>. Esto es lo que sigue: <span class="var">{{pasos_onboarding}}</span></p>
+<p>Tu punto de partida quedó registrado en tu Perfil de Salud Financiera. En 90 días lo vamos a comparar.</p>
+<p><span class="var">{{coach}}</span> y el equipo de Zones of Life</p>
+</div>
+<div class="btns"><span class="primary">Entrar a mi programa</span></div>
+<p class="note">WhatsApp: "Bienvenido, <span class="var">{{nombre}}</span>. Tu programa empieza el <span class="var">{{fecha_inicio}}</span>. Aquí está tu acceso: <span class="var">{{link_programa}}</span>"</p>
+</div></div>
+<div class="msg"><div class="msg-h"><span class="code">G2</span><span class="when">Día 7</span><span class="ch wa">WhatsApp</span></div><div class="msg-b">
+<div class="body">
+<p>Hola <span class="var">{{nombre}}</span>, llevas una semana en tu programa. ¿Cómo va?</p>
+</div>
+<div class="btns"><span>Muy bien</span><span>Me está costando</span><span>Tengo una duda</span></div>
+<p class="note">"Me está costando" y "Tengo una duda" crean una tarea para el coach.</p>
+</div></div>
+<div class="msg"><div class="msg-h"><span class="code">G3</span><span class="when">Día 30</span><span class="ch mail">Email</span></div><div class="msg-b">
+<p class="subj"><span>Asunto:</span> Tu primer mes trabajando <span class="var">{{habilidad_baja}}</span></p>
+<div class="body">
+<p>Hola <span class="var">{{nombre}}</span>:</p>
+<p>Cumpliste 30 días. Es el momento en que muchas personas sienten que no avanzan. Revisa tu cuaderno y marca lo que ya lograste: suele ser más de lo que crees.</p>
+<p>Equipo Zones of Life</p>
+</div>
+<div class="btns"><span class="primary">Revisar mi avance</span></div>
+</div></div>
+<div class="msg"><div class="msg-h"><span class="code">G4</span><span class="when">Día 90</span><span class="ch mail">Email + WhatsApp</span></div><div class="msg-b">
+<p class="subj"><span>Asunto:</span> Han pasado 90 días. ¿Cuánto se movieron tus habilidades?</p>
+<div class="body">
+<p>Hola <span class="var">{{nombre}}</span>:</p>
+<p>Hace 90 días tu habilidad más baja era <span class="var">{{habilidad_baja}}</span>, con un puntaje de <span class="var">{{puntaje_inicial}}</span>. Es momento de medir de nuevo.</p>
+<p>Tu nuevo Perfil de Salud Financiera son las mismas 100 preguntas, <span class="var">{{condicion_reevaluacion}}</span>. Al terminar verás tu gráfica de antes y después en las seis habilidades.</p>
+<p>Equipo Zones of Life</p>
+</div>
+<div class="btns"><span class="primary">Hacer mi reevaluación</span></div>
+<p class="note">También se envía a quien compró el perfil pero no el programa.</p>
+</div></div>
+<div class="msg"><div class="msg-h"><span class="code">G5</span><span class="when">Al terminar una reevaluación con mejora</span><span class="ch mail">Email</span></div><div class="msg-b">
+<p class="subj"><span>Asunto:</span> Tu <span class="var">{{habilidad_baja}}</span> subió <span class="var">{{mejora}}</span> puntos</p>
+<div class="body">
+<p>Hola <span class="var">{{nombre}}</span>:</p>
+<p>Tu reevaluación lo confirma: <span class="var">{{habilidad_baja}}</span> pasó de <span class="var">{{puntaje_inicial}}</span> a <span class="var">{{puntaje_actual}}</span>.</p>
+<p>Si conoces a alguien que esté donde tú estabas hace 90 días, compártele tu enlace. Recibirá su Mini Perfil Financiero gratuito y <span class="var">{{beneficio_referido}}</span>, y tú <span class="var">{{beneficio_referente}}</span>.</p>
+<p>Equipo Zones of Life</p>
+</div>
+<div class="btns"><span class="primary">Copiar mi enlace</span><span>Ver siguiente nivel</span></div>
+<p class="note">"Ver siguiente nivel" lleva a la oferta de ascenso a ACLC. Beneficios de referidos solo si son reales.</p>
+</div></div>
+</section>
+<section id="n"><h2>Nutrición mensual</h2>
+<p class="lead">Para todos los que salieron de un flujo sin avanzar. Un correo al mes, siempre con una sola invitación según su etapa.</p>
+<div class="msg"><div class="msg-h"><span class="code">N1</span><span class="when">Una vez al mes</span><span class="ch mail">Email</span></div><div class="msg-b">
+<p class="subj"><span>Asunto:</span> <span class="var">{{titulo_contenido_mes}}</span></p>
+<div class="body">
+<p>Hola <span class="var">{{nombre}}</span>:</p>
+<p><span class="var">{{contenido_mes}}</span></p>
+<p><span class="var">{{cta_por_etapa}}</span></p>
+<p>Equipo Zones of Life</p>
+</div>
+<div class="tbl"><table><tr><th>Etapa del lead</th><th><span class="var">{{cta_por_etapa}}</span></th></tr><tr><td>No terminó el Mini Perfil</td><td>Tu Mini Perfil Financiero sigue esperándote.</td></tr><tr><td>Hizo el Mini Perfil</td><td>Tener es una de seis habilidades. Descubre las otras cinco con tu Perfil de Salud Financiera.</td></tr><tr><td>Compró y no terminó</td><td>Tu gráfica de 6 habilidades está a unas preguntas de distancia.</td></tr><tr><td>Tiene perfil automático, sin sesión</td><td>Revisa tu gráfica con un coach en una sesión privada.</td></tr><tr><td>Pagó sesión y no agendó</td><td>Agenda tu sesión privada; ya está pagada.</td></tr><tr><td>Tuvo sesión, sin compra</td><td>Conoce <span class="var">{{producto_entrada}}</span>.</td></tr></table></div>
+</div></div>
+</section>
+<section id="lib"><h2>Textos por nivel y variables</h2>
+<h3><span class="var">{{frase_nivel}}</span> y <span class="var">{{nombre_nivel_tener}}</span></h3>
+<div class="tbl"><table><tr><th><span class="var">{{nombre_nivel_tener}}</span></th><th>Rango en la gráfica</th><th><span class="var">{{frase_nivel}}</span> (versión corta para correo y WhatsApp)</th></tr><tr><td>Trabajando para no tener</td><td>Mitad de la Zona Amarilla hacia abajo</td><td>Tu resultado quedó por debajo de la línea central de la Zona Amarilla: hoy estás trabajando para no tener. No es falta de esfuerzo. Es un proceso negativo que te aleja de lo que quieres, aunque lo estés persiguiendo, y se puede cambiar.</td></tr><tr><td>Batallando para tener</td><td>Mitad de la Zona Amarilla hacia arriba</td><td>Tu resultado quedó en la parte alta de la Zona Amarilla: estás batallando para tener. Avanzas, pero cada logro te cuesta más de lo que debería, porque sigues cargando reglas aprendidas sobre lo que no se puede o no se debe.</td></tr><tr><td>Tienes la capacidad para tener</td><td>Zona Verde</td><td>Tu resultado quedó en la Zona Verde: tienes la capacidad para tener. Tu entorno trabaja a tu favor y has recibido procesos positivos. El siguiente paso es hacer más de lo que ya te funciona para expandir tu juego.</td></tr></table></div>
+<p class="note">El texto completo del cliente para cada nivel va solo en la pantalla R1. En los correos se usa la versión corta, sin frases como "no vales nada", para no repetir ese mensaje en la bandeja del lead.</p>
+<h3>Las seis habilidades</h3>
+<div class="tbl"><table><tr><th>Español (copys)</th><th>Inglés (cliente)</th></tr><tr><td>Producir</td><td>Produce</td></tr><tr><td>Enfocar</td><td>Focus</td></tr><tr><td>Investigar</td><td>Investigate</td></tr><tr><td>Tener</td><td>Have</td></tr><tr><td>Invertir</td><td>Invest</td></tr><tr><td>Crear riqueza</td><td>Create Wealth</td></tr></table></div>
+<h3>Productos y precios</h3>
+<div class="tbl"><table><tr><th>Producto</th><th>Precio</th><th>Incluye</th></tr><tr><td>Mini Perfil Financiero</td><td>Gratuito</td><td>Gráfica de la Habilidad para Tener y texto del nivel</td></tr><tr><td>Perfil de Salud Financiera (automático)</td><td><span class="var">{{precio_perfil}}</span> = $500 MXN (el cliente acepta un precio sugerido por el equipo)</td><td>Gráfica de las 6 habilidades, audio-lección de Alan C. Walter, cuaderno "Tomando las riendas de tu futuro financiero"</td></tr><tr><td>Perfil + sesión privada de interpretación</td><td><span class="var">{{precio_perfil_sesion}}</span> = $1,640 MXN</td><td>Todo lo anterior + sesión de 60 minutos con coach</td></tr><tr><td>Mejora a sesión (quien ya compró el automático)</td><td><span class="var">{{precio_mejora_sesion}}</span> = $1,640 MXN</td><td>Sesión de 60 minutos con coach</td></tr></table></div>
+<h3>Variables por definir antes de activar</h3>
+<div class="tbl"><table><tr><th>Variable</th><th>Qué es</th></tr><tr><td><span class="var">{{opcion_pago}}</span></td><td>Facilidades de pago, si las hay</td></tr><tr><td><span class="var">{{minutos_perfil}}</span>, <span class="var">{{vigencia_acceso}}</span>, <span class="var">{{dias_guardado}}</span></td><td>Duración de las 100 preguntas y vigencias</td></tr><tr><td><span class="var">{{habilidad_baja}}</span>, <span class="var">{{p_habilidades}}</span></td><td>Cómo exporta ProfileZone los seis puntajes al CRM</td></tr><tr><td><span class="var">{{condicion_reevaluacion}}</span></td><td>Si la reevaluación a 90 días tiene costo</td></tr><tr><td><span class="var">{{propuesta_programa}}</span>, <span class="var">{{precio_programa}}</span>, <span class="var">{{opciones_pago}}</span>, <span class="var">{{credito_perfil}}</span>, <span class="var">{{vigencia_propuesta}}</span></td><td>Oferta del programa que propone el coach</td></tr><tr><td><span class="var">{{producto_entrada}}</span>, <span class="var">{{precio_producto_entrada}}</span></td><td>Producto de entrada para el downsell de F6</td></tr><tr><td><span class="var">{{testimonio_*}}</span>, <span class="var">{{beneficio_referido}}</span>, <span class="var">{{beneficio_referente}}</span></td><td>Solo si son reales</td></tr><tr><td><span class="var">{{fecha_limite_reagenda}}</span></td><td>Fecha de la sesión perdida + 1 mes</td></tr></table></div>
+<h3>Pregunta abierta para el cliente</h3>
+<p class="note">La gráfica de la Habilidad para Tener, ¿tiene alguna franja por debajo de la Zona Amarilla (por ejemplo, una zona roja) o por encima de la Verde? Si alguien cae ahí, ¿qué texto le mostramos? Hoy solo tenemos texto para la mitad baja de la Amarilla, la mitad alta de la Amarilla y la Verde.</p>
+</section>
+<footer>Zones of Life · Funnel financiero v2. Precios y variables marcados como pendientes deben confirmarse antes de activar.</footer>
+</main></div></body></html>

@@ -78,7 +78,7 @@
             "label": "Phone & WhatsApp Number",
             "name": "phone",
             "type": "text",
-            "instructions": "Official contact & WhatsApp number (EN: +1 469-501-1161 / ES: +52 1 55 4063 5251).",
+            "instructions": "Official contact & WhatsApp number (+1 469-501-1161).",
             "default_value": "+1 469-501-1161",
             "conditional_logic": [
                 [
