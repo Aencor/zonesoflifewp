@@ -25,5 +25,10 @@
     <g id="i-ig"><rect x="3.6" y="3.6" width="16.8" height="16.8" rx="4.6"/><circle cx="12" cy="12" r="4.1"/><circle cx="16.9" cy="7.1" r="1.05"/></g>
     <g id="i-in"><rect x="3.6" y="3.6" width="16.8" height="16.8" rx="2.4"/><path d="M8 10.4V17"/><circle cx="8" cy="7.3" r="1.15"/><path d="M12 17v-3.7a2.5 2.5 0 0 1 5 0V17"/><path d="M12 10.4V17"/></g>
     <g id="i-yt"><rect x="2.8" y="5.6" width="18.4" height="12.8" rx="3.6"/><path d="M10.4 9.6l5.2 2.4-5.2 2.4z"/></g>
+    <g id="i-zona-roja" stroke="#D32F2F"><circle cx="12" cy="12" r="10"/><path d="M16 16s-1.5-2-4-2-4 2-4 2"/><line x1="9" y1="9" x2="9.01" y2="9"/><line x1="15" y1="9" x2="15.01" y2="9"/></g>
+    <g id="i-zona-roja_1" stroke="#D32F2F"><circle cx="12" cy="12" r="10"/><path d="M16 16s-1.5-2-4-2-4 2-4 2"/><line x1="9" y1="9" x2="9.01" y2="9"/><line x1="15" y1="9" x2="15.01" y2="9"/></g>
+    <g id="i-zona-amarilla" stroke="#8A6A2B"><circle cx="12" cy="12" r="10"/><line x1="8" y1="15" x2="16" y2="15"/><line x1="9" y1="9" x2="9.01" y2="9"/><line x1="15" y1="9" x2="15.01" y2="9"/></g>
+    <g id="i-zona-verde" stroke="#1F5A33"><circle cx="12" cy="12" r="10"/><path d="M8 14s1.5 2 4 2 4-2 4-2"/><line x1="9" y1="9" x2="9.01" y2="9"/><line x1="15" y1="9" x2="15.01" y2="9"/></g>
+    <g id="i-zona-golden-magic" stroke="#8A6A2B"><circle cx="11" cy="13" r="9"/><path d="M7 13.5h8a4 4 0 0 1-8 0Z"/><path d="M6.8 10c.6-1 1.8-1 2.4 0"/><path d="M12.8 10c.6-1 1.8-1 2.4 0"/><path d="M20.5 1.2l.7 1.6 1.6.7-1.6.7-.7 1.6-.7-1.6-1.6-.7 1.6-.7Z" fill="#8A6A2B" stroke-width="1"/></g>
   </defs>
 </svg>

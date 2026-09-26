@@ -63,12 +63,16 @@
                     "name": "icon",
                     "type": "select",
                     "choices": {
+                        "zona-roja": "Zona Roja (Red)",
+                        "zona-amarilla": "Zona Amarilla (Yellow)",
+                        "zona-verde": "Zona Verde (Green)",
+                        "zona-golden-magic": "Zona Golden Magic",
                         "compass": "Compass",
                         "spark": "Spark",
                         "chart": "Chart",
                         "target": "Target"
                     },
-                    "default_value": "compass"
+                    "default_value": "zona-roja"
                 },
                 {
                     "key": "field_fz_zone_icon_style",
@@ -76,11 +80,13 @@
                     "name": "icon_style",
                     "type": "select",
                     "choices": {
-                        "navy": "Soft Blue / Navy",
+                        "red": "Soft Red",
+                        "yellow": "Soft Yellow",
                         "gold": "Soft Gold",
-                        "green": "Soft Green"
+                        "green": "Soft Green",
+                        "navy": "Soft Blue / Navy"
                     },
-                    "default_value": "navy"
+                    "default_value": "red"
                 },
                 {
                     "key": "field_fz_zone_title_color",

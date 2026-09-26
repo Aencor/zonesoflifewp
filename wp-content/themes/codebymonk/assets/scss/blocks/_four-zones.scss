@@ -48,6 +48,16 @@
       flex: none;
       transition: background 0.2s ease, color 0.2s ease;
 
+      &.red {
+        background: #FDE8E8;
+        color: #D32F2F;
+      }
+
+      &.yellow {
+        background: #FEF8E7;
+        color: #8A6A2B;
+      }
+
       &.gold {
         background: #FBF3E4;
         color: #8A6414;

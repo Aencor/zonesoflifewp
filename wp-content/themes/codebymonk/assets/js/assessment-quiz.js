@@ -263,8 +263,19 @@ document.addEventListener('DOMContentLoaded', function () {
     });
     var haveAvg = haveVals.length ? (haveVals.reduce(function (a, b) { return a + b; }, 0) / haveVals.length) : (abilityScores[0] || 2);
     
-    // Determine level key
-    var haveLevelKey = (haveAvg >= 3.0) ? 'green' : ((haveAvg >= 2.25) ? 'high_yellow' : 'low_yellow');
+    // Determine level key & have zone (Roja, Amarilla, Verde)
+    var haveLevelKey;
+    var haveZone;
+    if (haveAvg >= 3.0) {
+      haveLevelKey = 'green';
+      haveZone = isEs ? 'Verde' : 'Green';
+    } else if (haveAvg >= 1.4) {
+      haveLevelKey = (haveAvg >= 2.25) ? 'high_yellow' : 'low_yellow';
+      haveZone = isEs ? 'Amarilla' : 'Yellow';
+    } else {
+      haveLevelKey = 'low_yellow';
+      haveZone = isEs ? 'Roja' : 'Red';
+    }
     var haveLevelObj = HAVE_LEVELS[haveLevelKey] || HAVE_LEVELS.low_yellow;
 
     // Numerical score for line positioning on the -10000..+10000 chart
@@ -414,10 +425,13 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // 5. Have Ability Level Card (Mini Perfil Diagnosis)
     if (rLevelBadge) {
-      rLevelBadge.textContent = (haveLevelKey === 'green') ? (isEs ? 'Zona Verde' : 'Green Zone') : (isEs ? 'Zona Amarilla' : 'Yellow Zone');
-      if (haveLevelKey === 'green') {
+      rLevelBadge.textContent = isEs ? ('Zona ' + haveZone) : (haveZone + ' Zone');
+      if (haveZone === 'Verde' || haveZone === 'Green') {
         rLevelBadge.style.background = 'rgba(0,125,25,0.12)';
         rLevelBadge.style.color = 'var(--shgreen)';
+      } else if (haveZone === 'Roja' || haveZone === 'Red') {
+        rLevelBadge.style.background = 'rgba(232,29,45,0.12)';
+        rLevelBadge.style.color = 'var(--red)';
       } else {
         rLevelBadge.style.background = '#FDE68A';
         rLevelBadge.style.color = '#92400E';
@@ -502,7 +516,9 @@ document.addEventListener('DOMContentLoaded', function () {
       email: emailVal,
       phone: phoneVal,
       whatsapp_optin: waOptinVal ? '1' : '0',
-      zone: z.n,
+      zone: haveZone,
+      have_zone: haveZone,
+      overall_zone: z.n,
       lowest_ability: worstAbilityName,
       lowest_ability_quote: worstQuote,
       have_level: haveLevelKey,
@@ -522,7 +538,11 @@ document.addEventListener('DOMContentLoaded', function () {
     formData.append('email', emailVal);
     formData.append('phone', phoneVal);
     formData.append('whatsapp_optin', waOptinVal ? '1' : '0');
-    formData.append('zone', z.n);
+    formData.append('zone', haveZone);
+    formData.append('have_zone', haveZone);
+    formData.append('have_score', haveAvg);
+    formData.append('have_numeric_score', haveNumericScore);
+    formData.append('overall_zone', z.n);
     formData.append('financial_zone', (ZONE[areaScores[0]] || z).n);
     formData.append('life_zone', (ZONE[areaScores[1]] || z).n);
     formData.append('body_zone', (ZONE[areaScores[2]] || z).n);

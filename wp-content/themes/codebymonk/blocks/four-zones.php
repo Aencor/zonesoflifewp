@@ -15,6 +15,21 @@ if (!empty($block['className'])) {
     $blockClasses[] = $block['className'];
 }
 
+// Default icons and style mapping by level
+$defaultZoneIcons = [
+    1 => 'zona-roja',
+    2 => 'zona-amarilla',
+    3 => 'zona-verde',
+    4 => 'zona-golden-magic',
+];
+
+$defaultZoneStyles = [
+    1 => 'red',
+    2 => 'yellow',
+    3 => 'green',
+    4 => 'gold',
+];
+
 // Cards
 $zones = get_field('zones');
 if (empty($zones)) {
@@ -22,23 +37,23 @@ if (empty($zones)) {
         [
             'title'       => __('Red', 'codebymonk'),
             'level'       => 1,
-            'icon'        => 'compass',
-            'icon_style'  => 'navy',
+            'icon'        => 'zona-roja',
+            'icon_style'  => 'red',
             'title_color' => 'var(--red)',
             'description' => __('This is someone who is in the wrong place at the wrong time, connected to the wrong people.', 'codebymonk'),
         ],
         [
             'title'       => __('Yellow', 'codebymonk'),
             'level'       => 2,
-            'icon'        => 'spark',
-            'icon_style'  => 'gold',
+            'icon'        => 'zona-amarilla',
+            'icon_style'  => 'yellow',
             'title_color' => '#B98F0C',
             'description' => __('This is the “daily grind” or “rut” where the person doesn’t take risks but works only for security.', 'codebymonk'),
         ],
         [
             'title'       => __('Green', 'codebymonk'),
             'level'       => 3,
-            'icon'        => 'chart',
+            'icon'        => 'zona-verde',
             'icon_style'  => 'green',
             'title_color' => 'var(--shgreen)',
             'description' => __('This is someone who is in the right place at the right time, making things go right. This person is living their dream.', 'codebymonk'),
@@ -46,7 +61,7 @@ if (empty($zones)) {
         [
             'title'       => __('Golden Magic', 'codebymonk'),
             'level'       => 4,
-            'icon'        => 'target',
+            'icon'        => 'zona-golden-magic',
             'icon_style'  => 'gold',
             'title_color' => '#8A7440',
             'description' => __('You are outside of the physical universe. You operate above the laws of the physical universe and are totally telepathic.', 'codebymonk'),
@@ -71,13 +86,20 @@ if (empty($ctaBtnLink) || $ctaBtnLink === '#quiz') {
 <section id="<?= esc_attr($blockID); ?>" data-block="four-zones" class="<?= esc_attr(implode(' ', $blockClasses)); ?>">
   <div class="wrap">
     <div class="g4">
-      <?php foreach ($zones as $zone): 
-        $level = intval($zone['level'] ?? 1);
-        $icon = !empty($zone['icon']) ? $zone['icon'] : 'compass';
-        $iconBoxClass = 'iconbox mb16';
-        if (!empty($zone['icon_style']) && $zone['icon_style'] !== 'navy') {
-            $iconBoxClass .= ' ' . esc_attr($zone['icon_style']);
+      <?php foreach ($zones as $index => $zone): 
+        $level = intval($zone['level'] ?? ($index + 1));
+        
+        $icon = !empty($zone['icon']) ? $zone['icon'] : ($defaultZoneIcons[$level] ?? 'zona-roja');
+        if (in_array($icon, ['compass', 'spark', 'chart', 'target'])) {
+            $icon = $defaultZoneIcons[$level] ?? $icon;
         }
+
+        $iconStyle = !empty($zone['icon_style']) ? $zone['icon_style'] : ($defaultZoneStyles[$level] ?? 'navy');
+        if ($iconStyle === 'navy' && isset($defaultZoneStyles[$level])) {
+            $iconStyle = $defaultZoneStyles[$level];
+        }
+
+        $iconBoxClass = 'iconbox mb16 ' . esc_attr($iconStyle);
         $titleColor = !empty($zone['title_color']) ? $zone['title_color'] : 'var(--ink)';
       ?>
         <div class="card">

@@ -110,6 +110,26 @@ function zol_handle_assessment_lead() {
     $have_level_name      = sanitize_text_field($_POST['have_level_name'] ?? '');
     $have_level_quote     = sanitize_text_field($_POST['have_level_quote'] ?? '');
     $have_level_text      = sanitize_textarea_field($_POST['have_level_text'] ?? '');
+    $have_zone            = sanitize_text_field($_POST['have_zone'] ?? '');
+
+    $lang = sanitize_text_field($_POST['lang'] ?? 'en');
+    if (!in_array($lang, ['es', 'en'])) {
+        $lang = 'en';
+    }
+
+    // Determine Have Zone (Roja, Amarilla, or Verde)
+    if (class_exists('ACLC_Zapier')) {
+        $have_zone = ACLC_Zapier::calculate_have_zone([
+            'have_zone'            => $have_zone,
+            'have_level'           => $have_level,
+            'have_level_name'      => $have_level_name,
+            'zone'                 => $zone,
+            'have_score'           => $_POST['have_score'] ?? null,
+            'have_numeric_score'   => $_POST['have_numeric_score'] ?? null,
+        ], $lang);
+    } else {
+        $have_zone = $have_zone ?: 'Amarilla';
+    }
 
     if (empty($email) || !is_email($email)) {
         wp_send_json_error(['message' => __('Please provide a valid email address.', 'codebymonk')]);
@@ -118,7 +138,7 @@ function zol_handle_assessment_lead() {
         $name = __('Participant', 'codebymonk');
     }
 
-    $post_title = sprintf('%s — %s (%s)', $name, $lowest_ability ?: ($zone . ' Zone'), date_i18n('M j, Y'));
+    $post_title = sprintf('%s — %s (%s)', $name, $have_level_name ?: ($have_zone . ' Zone'), date_i18n('M j, Y'));
 
     $post_id = wp_insert_post([
         'post_type'   => 'profile_lead',
@@ -140,30 +160,28 @@ function zol_handle_assessment_lead() {
     update_post_meta($post_id, 'have_level_name', $have_level_name);
     update_post_meta($post_id, 'have_level_quote', $have_level_quote);
     update_post_meta($post_id, 'have_level_text', $have_level_text);
+    update_post_meta($post_id, 'have_zone', $have_zone);
     update_post_meta($post_id, 'funnel_stage', 'R1_completed');
-    update_post_meta($post_id, 'zone', $zone);
+    update_post_meta($post_id, 'zone', $have_zone);
+    update_post_meta($post_id, 'overall_zone', $zone);
     update_post_meta($post_id, 'financial_zone', $financial_zone);
     update_post_meta($post_id, 'life_zone', $life_zone);
     update_post_meta($post_id, 'body_zone', $body_zone);
-
-    $lang = sanitize_text_field($_POST['lang'] ?? 'en');
-    if (!in_array($lang, ['es', 'en'])) {
-        $lang = 'en';
-    }
     update_post_meta($post_id, 'lead_lang', $lang);
 
     // Notify admin via email
     $admin_email = get_option('admin_email');
-    $subject = sprintf('[New Assessment Lead] %s — Lowest Ability: %s (%s Zone, Lang: %s)', $name, $lowest_ability ?: 'N/A', $zone, strtoupper($lang));
+    $subject = sprintf('[New Assessment Lead] %s — Have Level: %s (%s Zone, Lang: %s)', $name, $have_level_name ?: 'N/A', $have_zone, strtoupper($lang));
     $message = sprintf(
-        "A user completed the Personal Zones Profile Mini Assessment:\n\nName: %s\nEmail: %s\nWhatsApp/Phone: %s (Opt-in: %s)\nLanguage: %s\nLowest Ability: %s\nQuote: %s\nOverall Zone: %s\nDate: %s\n\nView in admin: %s",
+        "A user completed the Personal Zones Profile Mini Assessment:\n\nName: %s\nEmail: %s\nWhatsApp/Phone: %s (Opt-in: %s)\nLanguage: %s\nHave Level: %s\nHave Zone: %s\nQuote: %s\nOverall Zone: %s\nDate: %s\n\nView in admin: %s",
         $name,
         $email,
         $phone,
         $wa_optin === '1' ? 'Yes' : 'No',
         strtoupper($lang),
-        $lowest_ability,
-        $lowest_ability_quote,
+        $have_level_name,
+        $have_zone,
+        $have_level_quote,
         $zone,
         current_time('mysql'),
         admin_url('edit.php?post_type=profile_lead')
@@ -181,7 +199,9 @@ function zol_handle_assessment_lead() {
             'have_level_name'      => $have_level_name,
             'have_level_quote'     => $have_level_quote,
             'have_level_text'      => $have_level_text,
-            'zone'                 => $zone,
+            'have_zone'            => $have_zone,
+            'zone'                 => $have_zone,
+            'overall_zone'         => $zone,
             'lang'                 => $lang,
         ]);
     }
@@ -189,7 +209,7 @@ function zol_handle_assessment_lead() {
     wp_send_json_success([
         'message' => __('Assessment saved successfully!', 'codebymonk'),
         'lead_id' => $post_id,
-        'zone'    => $zone,
+        'zone'    => $have_zone,
     ]);
 }
 add_action('wp_ajax_zol_submit_assessment_lead', 'zol_handle_assessment_lead');
@@ -205,6 +225,7 @@ function zol_handle_email_mini_profile() {
     $email                = sanitize_email(wp_unslash($_POST['email'] ?? ''));
     $lowest_ability       = sanitize_text_field(wp_unslash($_POST['lowest_ability'] ?? ''));
     $lowest_ability_quote = sanitize_text_field(wp_unslash($_POST['lowest_ability_quote'] ?? ''));
+    $have_level           = sanitize_text_field(wp_unslash($_POST['have_level'] ?? ''));
     $have_level_name      = sanitize_text_field(wp_unslash($_POST['have_level_name'] ?? ''));
     $have_level_quote     = sanitize_text_field(wp_unslash($_POST['have_level_quote'] ?? ''));
     $have_level_text      = sanitize_textarea_field(wp_unslash($_POST['have_level_text'] ?? ''));
@@ -217,8 +238,16 @@ function zol_handle_email_mini_profile() {
         wp_send_json_error(['message' => 'Invalid email']);
     }
 
-    $zone                 = sanitize_text_field(wp_unslash($_POST['zone'] ?? 'Amber'));
-    $finance_url          = ($lang === 'es') ? home_url('/es/perfil-financiero/') : home_url('/finance/');
+    $zone = sanitize_text_field(wp_unslash($_POST['zone'] ?? 'Amarilla'));
+    if (class_exists('ACLC_Zapier')) {
+        $zone = ACLC_Zapier::calculate_have_zone([
+            'have_zone'       => $zone,
+            'have_level'      => $have_level,
+            'have_level_name' => $have_level_name,
+            'zone'            => $zone,
+        ], $lang);
+    }
+    $finance_url = ($lang === 'es') ? home_url('/es/perfil-financiero/') : home_url('/finance/');
 
     // Fallbacks if have_level_name not provided
     if (empty($have_level_name)) {
