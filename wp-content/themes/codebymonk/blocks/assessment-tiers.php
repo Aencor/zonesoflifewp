@@ -38,9 +38,17 @@ $c2Price = get_field('card_2_price');
 if (empty($c2Price) || in_array(trim($c2Price), ['price TBD', '$500 USD', '$50 USD', '$1,000 MXN', 'precio por definir'])) {
     $c2Price = $is_es ? '$500 MXN' : '$25 USD';
 }
+$aclc_user = class_exists('ACLC_Auth') ? ACLC_Auth::get_logged_user() : null;
+$is_logged_in = !empty($aclc_user);
+$pay_url_base = $is_es ? home_url('/es/adquirir/') : home_url('/pay/');
+$access_url_base = $is_es ? home_url('/es/acceso/') : home_url('/access/');
+
+$pay_profile = add_query_arg('package', 'profile', $pay_url_base);
+$pay_session = add_query_arg('package', 'session', $pay_url_base);
+
 $c2BtnText = get_field('card_2_btn_text') ?: ($is_es ? 'Obtener Perfil ($500 MXN)' : 'Get Profile ($25 USD)');
 $c2BtnLink = get_field('card_2_btn_link');
-if (empty($c2BtnLink) || $c2BtnLink === '/finance/' || $c2BtnLink === '/es/finance/') {
+if (empty($c2BtnLink) || in_array($c2BtnLink, ['/finance/', '/es/finance/', home_url('/finance/'), home_url('/es/perfil-financiero/')])) {
     $c2BtnLink = $is_es ? home_url('/es/perfil-financiero/') : home_url('/finance/');
 }
 
@@ -54,7 +62,7 @@ if (empty($c3Price)) {
 }
 $c3BtnText = get_field('card_3_btn_text') ?: ($is_es ? 'Elegir con Sesión ($1,640 MXN)' : 'Choose with Session ($85 USD)');
 $c3BtnLink = get_field('card_3_btn_link');
-if (empty($c3BtnLink) || $c3BtnLink === '/cohorts/' || $c3BtnLink === '/events/') {
+if (empty($c3BtnLink) || in_array($c3BtnLink, ['/cohorts/', '/events/', '/finance/?package=session', '/es/perfil-financiero/?package=session', home_url('/finance/?package=session'), home_url('/es/perfil-financiero/?package=session')])) {
     $c3BtnLink = $is_es ? home_url('/es/perfil-financiero/?package=session') : home_url('/finance/?package=session');
 }
 

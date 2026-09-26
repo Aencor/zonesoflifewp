@@ -16,7 +16,7 @@ $phone = '+525619956812';
 $languages = ['es', 'en'];
 
 $dashboard_url = home_url('/user-home/');
-$calendly_url  = function_exists('aclc_get_coach_calendly_url') ? aclc_get_coach_calendly_url() : 'https://calendly.com/';
+$calendly_url  = function_exists('aclc_get_coach_calendly_url') ? aclc_get_coach_calendly_url() : 'https://calendly.com/raulrivera/perfil-financiero-uno-a-uno';
 $sample_graph  = home_url('/wp-content/uploads/aclc-graphs/Finance1973.png');
 
 echo "=========================================================================\n";
@@ -119,7 +119,7 @@ foreach ($languages as $lang) {
         // Flujo D: Perfil 100 Preguntas Terminado
         [
             'code' => 'D1',
-            'flow' => ($is_en ? 'Flow D (Profile Ready + Chart + Workbook PDF Attached + SoundCloud Audio + Upgrade)' : 'Flujo D (Perfil Listo + Gráfica + Cuaderno PDF Adjunto + Audio SoundCloud + Sesión $1,940)'),
+            'flow' => ($is_en ? 'Flow D (Profile Ready + Chart + Workbook PDF Attached + SoundCloud Audio + Upgrade)' : 'Flujo D (Perfil Listo + Gráfica + Cuaderno PDF Adjunto + Audio SoundCloud + Sesión $1,640)'),
             'data' => ACLC_Funnel_Emails::get_email_d1($name, $dashboard_url, $coaching_url, $lang, $sample_graph, $lowest_hab),
             'attachments' => [ACLC_Funnel_Emails::get_workbook_path($lang)],
         ],
@@ -135,7 +135,7 @@ foreach ($languages as $lang) {
         ],
         [
             'code' => 'D5',
-            'flow' => ($is_en ? 'Flow D (Day 7 - Review chart with a coach)' : 'Flujo D (Día 7 - Revisa tu gráfica con un coach $1,940 MXN)'),
+            'flow' => ($is_en ? 'Flow D (Day 7 - Review chart with a coach)' : 'Flujo D (Día 7 - Revisa tu gráfica con un coach $1,640 MXN)'),
             'data' => ACLC_Funnel_Emails::get_email_d5($name, $coaching_url, $lang, $lowest_hab),
         ],
 
@@ -171,7 +171,7 @@ foreach ($languages as $lang) {
         [
             'code'    => 'B2',
             'flow'    => 'Flow B (WhatsApp 2h after Mini Profile)',
-            'message' => "{$name}, here is your Financial Mini Profile result: your Ability to Have was measured as Struggling to have. We have emailed your chart and analysis to {$email}.",
+            'message' => "Hello {$name}, here is your Financial Mini Profile result: your Ability to Have was measured as Struggling to have. We have emailed your chart and analysis to {$email}.",
         ],
         [
             'code'    => 'B6',
@@ -192,7 +192,7 @@ foreach ($languages as $lang) {
         [
             'code'    => 'B2',
             'flow'    => 'Flujo B (WhatsApp 2h tras Mini Perfil)',
-            'message' => "{$name}, aquí está tu resultado del Mini Perfil Financiero. Tu Habilidad para Tener quedó en Batallando para tener. Te enviamos la gráfica y explicación completa a tu correo: {$email}",
+            'message' => "Hola {$name}, aquí está tu Mini Perfil Financiero. Mide tu Habilidad para Tener y tu resultado es: Batallando para tener. Te mandamos el resultado completo a tu correo. Tener es una de tus seis habilidades financieras; tu Perfil de Salud Financiera te muestra las seis.",
         ],
         [
             'code'    => 'B6',

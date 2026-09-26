@@ -46,7 +46,7 @@ services:
       WORDPRESS_DB_NAME: '${MYSQL_DATABASE}'
       WORDPRESS_DB_USER: '${MYSQL_USER}'
       WORDPRESS_DB_PASSWORD: '${MYSQL_PASSWORD}'
-      MANDRILL_API_KEY: '${MANDRILL_API_KEY:-md-zfK92yc0RIz7lQUB9m377Q}'
+      MANDRILL_API_KEY: '${MANDRILL_API_KEY:-md-idmmPXM2xBXZnIlSns5j0g}'
       WORDPRESS_CONFIG_EXTRA: |
         if (isset($$_SERVER['HTTP_X_FORWARDED_PROTO']) && strpos($$_SERVER['HTTP_X_FORWARDED_PROTO'], 'https') !== false) {
             $$_SERVER['HTTPS'] = 'on';
@@ -59,7 +59,7 @@ services:
       - ./uploads.ini:/usr/local/etc/php/conf.d/uploads.ini
     networks:
       - wordpress-network
-      - local-proxy
+      - proxy-network
 
 volumes:
   db-data:
@@ -67,7 +67,7 @@ volumes:
 networks:
   wordpress-network:
     driver: bridge
-  local-proxy:
-    name: local-proxy
+  proxy-network:
+    name: nathalielesbachescom_default
     external: true
 

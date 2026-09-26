@@ -5,7 +5,8 @@ document.addEventListener('DOMContentLoaded', function () {
   var quizSection = document.getElementById('quiz');
   if (!quizSection) return;
 
-  var i18n = (window.zolQuizData && window.zolQuizData.isSpanish) ? window.zolQuizData : null;
+  var isEs = (window.zolQuizData && window.zolQuizData.isSpanish === true);
+  var i18n = window.zolQuizData || null;
 
   var Q = (i18n && i18n.questions) ? i18n.questions : [
     { a: "Life & Skills", ab: "Produce", t: "Do you complete activities quickly?", o: [["Yes", 4], ["Maybe", 2], ["No", 1]] },
@@ -183,8 +184,23 @@ document.addEventListener('DOMContentLoaded', function () {
 
   function scoreAbility(abKey) {
     var vals = [];
+    var searchKey = (abKey || '').toLowerCase();
     Q.forEach(function (item, i) {
-      if (item.ab === abKey && answers[i]) {
+      var itemAb = (item.ab || '').toLowerCase();
+      if ((itemAb === searchKey || itemAb.indexOf(searchKey) === 0 || searchKey.indexOf(itemAb) === 0) && answers[i]) {
+        vals.push(answers[i]);
+      }
+    });
+    if (!vals.length) return 2;
+    return Math.round(vals.reduce(function (a, b) { return a + b; }, 0) / vals.length);
+  }
+
+  function scoreArea(areaKey) {
+    var vals = [];
+    var searchKey = (areaKey || '').toLowerCase();
+    Q.forEach(function (item, i) {
+      var itemA = (item.a || '').toLowerCase();
+      if ((itemA === searchKey || itemA.indexOf(searchKey) === 0 || searchKey.indexOf(itemA) === 0) && answers[i]) {
         vals.push(answers[i]);
       }
     });
@@ -193,7 +209,7 @@ document.addEventListener('DOMContentLoaded', function () {
   }
 
   function renderResult(nameVal, emailVal, phoneVal, waOptinVal) {
-    var isEs = !!i18n;
+    var isEs = (window.zolQuizData && window.zolQuizData.isSpanish === true) || (i18n && i18n.isSpanish === true) || (document.documentElement.lang && document.documentElement.lang.indexOf('es') === 0);
     var baseAbilities = isEs
       ? [
           { key: "Tener", label: "Tener" },
@@ -237,10 +253,31 @@ document.addEventListener('DOMContentLoaded', function () {
     var worstAbilityName = worstAbilityObj.label;
     var worstQuote = ABILITY_QUOTES[worstAbilityObj.key] || "";
 
-    // Calculate Have Ability Level (Question indices for Have: abilityScores[3])
-    var haveScore = abilityScores[3] || 2;
-    var haveLevelKey = (haveScore >= 3) ? 'green' : ((haveScore >= 2.5) ? 'high_yellow' : 'low_yellow');
+    // Calculate Have Ability Level (abilityScores[0] corresponds to Tener/Have)
+    var haveVals = [];
+    Q.forEach(function (item, qIdx) {
+      var itemAb = (item.ab || '').toLowerCase();
+      if ((itemAb === 'have' || itemAb === 'tener') && answers[qIdx]) {
+        haveVals.push(answers[qIdx]);
+      }
+    });
+    var haveAvg = haveVals.length ? (haveVals.reduce(function (a, b) { return a + b; }, 0) / haveVals.length) : (abilityScores[0] || 2);
+    
+    // Determine level key
+    var haveLevelKey = (haveAvg >= 3.0) ? 'green' : ((haveAvg >= 2.25) ? 'high_yellow' : 'low_yellow');
     var haveLevelObj = HAVE_LEVELS[haveLevelKey] || HAVE_LEVELS.low_yellow;
+
+    // Numerical score for line positioning on the -10000..+10000 chart
+    var haveNumericScore;
+    if (haveAvg >= 3.0) {
+      haveNumericScore = 60 + ((haveAvg - 3.0) / 1.0) * 35; // 60 to 95 (Green Zone)
+    } else if (haveAvg >= 2.25) {
+      haveNumericScore = 30 + ((haveAvg - 2.25) / 0.75) * 30; // 30 to 60 (Upper Yellow Zone)
+    } else if (haveAvg >= 1.4) {
+      haveNumericScore = 0 + ((haveAvg - 1.4) / 0.85) * 30; // 0 to 30 (Lower Yellow Zone)
+    } else {
+      haveNumericScore = -100 + ((haveAvg - 1.0) / 0.4) * 100; // -100 to 0 (Red Zone)
+    }
 
     // DOM Elements - R1 Layout
     var rUserName = document.getElementById('rUserName');
@@ -255,12 +292,103 @@ document.addEventListener('DOMContentLoaded', function () {
     var rAbilitiesBreakdown = document.getElementById('rAbilitiesBreakdown');
     var rGapCopy = document.getElementById('rGapCopy');
 
-    // 1. Prominent Zone Heading & Color
+    // 1. Prominent Zone Heading (C5 R1 copy)
     if (rZone) {
-      var zoneLabel = isEs ? ('Estás en la Zona ' + z.n) : ('You are in the ' + z.n + ' Zone');
+      var personDisplayName = (nameVal || '').trim();
+      var zoneLabel;
+      if (personDisplayName) {
+        zoneLabel = isEs 
+          ? (personDisplayName + ', este es tu Mini Perfil: tu Habilidad para Tener.') 
+          : (personDisplayName + ', this is your Mini Profile: your Ability to Have.');
+      } else {
+        zoneLabel = isEs 
+          ? 'Este es tu Mini Perfil: tu Habilidad para Tener.' 
+          : 'This is your Mini Profile: your Ability to Have.';
+      }
       rZone.textContent = zoneLabel;
-      rZone.style.color = z.col;
+      rZone.style.color = 'var(--ink)';
     }
+
+    // Dynamic Chart rendering with score line on Canvas
+    function calcHaveY(score) {
+      var YValues = [10000, 1000, 100, 90, 80, 70, 60, 50, 40, 30, 20, 10, 0, -10, -20, -30, -40, -50, -60, -70, -80, -90, -100, -1000, -10000];
+      var YPoints = [129, 178, 201, 251, 300, 349, 398, 447, 474, 497, 546, 573, 595, 629, 671, 694, 743, 773, 793, 805, 819, 833, 848, 868, 893];
+      if (score > 10000) score = 10000;
+      if (score < -10000) score = -10000;
+      for (var i = 0; i < YValues.length; i++) {
+        if (score === YValues[i]) return YPoints[i];
+      }
+      for (var i = 1; i < YValues.length; i++) {
+        if (score > YValues[i]) {
+          var hiV = YValues[i - 1], loV = YValues[i];
+          var hiP = YPoints[i - 1], loP = YPoints[i];
+          var pct = (score - loV) / (hiV - loV);
+          return loP - (loP - hiP) * pct;
+        }
+      }
+      return 497;
+    }
+
+    var chartUrl = (window.zolQuizData && window.zolQuizData.chartTemplateUrl)
+      ? window.zolQuizData.chartTemplateUrl
+      : (isEs ? '/wp-content/themes/codebymonk/assets/img/HaveTemplate_ES.png' : '/wp-content/themes/codebymonk/assets/img/HaveTemplate.png');
+
+    var chartImg = new Image();
+    chartImg.crossOrigin = 'anonymous';
+    chartImg.onload = function () {
+      try {
+        var canvas = document.createElement('canvas');
+        canvas.width = chartImg.naturalWidth || 580;
+        canvas.height = chartImg.naturalHeight || 1024;
+        var ctx = canvas.getContext('2d');
+        ctx.drawImage(chartImg, 0, 0);
+
+        var yPos = calcHaveY(haveNumericScore);
+        var xStart = 116; // Tick marks start
+        var xEnd = 462;   // Right border of Have column
+
+        // Draw dynamic score line (blue matching the user's reference)
+        ctx.save();
+        ctx.strokeStyle = '#2563eb';
+        ctx.lineWidth = 6;
+        ctx.beginPath();
+        ctx.moveTo(xStart, yPos);
+        ctx.lineTo(xEnd, yPos);
+        ctx.stroke();
+
+        // Annotate person's name at top of canvas
+        var personName = (nameVal || '').trim();
+        if (personName) {
+          ctx.fillStyle = '#0f172a';
+          ctx.font = 'bold 15px -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif';
+          ctx.textAlign = 'center';
+          ctx.fillText(personName + ' · ' + (isEs ? 'Mini Perfil: Nivel en Tener' : 'Mini Profile: Have Level'), canvas.width / 2, 42);
+        }
+        ctx.restore();
+
+        var dynamicDataUrl = canvas.toDataURL('image/png');
+        var rHaveChartImg = document.getElementById('rHaveChartImg');
+        var chartModalImg = document.getElementById('chartModalImg');
+        var btnDownloadHaveChart = document.getElementById('btnDownloadHaveChart');
+        var modalDownloadBtn = document.getElementById('modalDownloadBtn');
+
+        if (rHaveChartImg) rHaveChartImg.src = dynamicDataUrl;
+        if (chartModalImg) chartModalImg.src = dynamicDataUrl;
+
+        var downloadName = 'Mini_Perfil_' + (personName ? personName.replace(/[^a-zA-Z0-9_-]/g, '_') : 'Resultado') + '.png';
+        if (btnDownloadHaveChart) {
+          btnDownloadHaveChart.href = dynamicDataUrl;
+          btnDownloadHaveChart.download = downloadName;
+        }
+        if (modalDownloadBtn) {
+          modalDownloadBtn.href = dynamicDataUrl;
+          modalDownloadBtn.download = downloadName;
+        }
+      } catch (err) {
+        console.error('Error drawing chart canvas:', err);
+      }
+    };
+    chartImg.src = chartUrl;
 
     // 2. Zone Bar (Signature 4-Color Indicator)
     if (rBar) {
@@ -299,7 +427,11 @@ document.addEventListener('DOMContentLoaded', function () {
       rLevelTitle.textContent = haveLevelObj.name;
     }
     if (rLevelText) {
-      rLevelText.textContent = haveLevelObj.full;
+      if (haveLevelObj.full_html) {
+        rLevelText.innerHTML = haveLevelObj.full_html;
+      } else {
+        rLevelText.textContent = haveLevelObj.full;
+      }
     }
 
     // 6. By Area Breakdown (Financiero, Vida y Habilidades, Cuerpo)
@@ -344,6 +476,23 @@ document.addEventListener('DOMContentLoaded', function () {
         : '<strong>What this result still doesn\'t show you:</strong> Having is only one of the six abilities that define your financial health. The other five are Producing, Focusing, Investigating, Investing, and Creating Wealth. Your Financial Health Profile measures all six, shows you which one is holding you back the most, and gives you tools to elevate it.');
     }
 
+    // 9. Purchase CTAs -> Full Profile (Finance page)
+    var financeBase = (window.zolQuizData && window.zolQuizData.financeUrl) 
+      ? window.zolQuizData.financeUrl 
+      : (isEs ? '/es/perfil-financiero/' : '/finance/');
+
+    var rBtnBuy = document.getElementById('rBtnBuy');
+    var rBtnBuySession = document.getElementById('rBtnBuySession');
+
+    if (rBtnBuy) {
+      rBtnBuy.href = financeBase;
+    }
+
+    if (rBtnBuySession) {
+      var sep = financeBase.indexOf('?') !== -1 ? '&' : '?';
+      rBtnBuySession.href = financeBase + sep + 'package=session';
+    }
+
     gate.hidden = true;
     res.hidden = false;
     quizSection.scrollIntoView({ behavior: 'smooth' });
@@ -359,6 +508,7 @@ document.addEventListener('DOMContentLoaded', function () {
       have_level: haveLevelKey,
       have_level_name: haveLevelObj.name,
       have_level_quote: haveLevelObj.short,
+      have_level_text: haveLevelObj.full || haveLevelObj.short,
       lang: isEs ? 'es' : 'en'
     };
 
@@ -381,6 +531,7 @@ document.addEventListener('DOMContentLoaded', function () {
     formData.append('have_level', haveLevelKey);
     formData.append('have_level_name', haveLevelObj.name);
     formData.append('have_level_quote', haveLevelObj.short);
+    formData.append('have_level_text', haveLevelObj.full || haveLevelObj.short);
     formData.append('lang', isEs ? 'es' : 'en');
     allAbilities.forEach(function(ab, idx) {
       formData.append('ability_' + ab.key.toLowerCase().replace(/\s+/g, '_'), allScores[idx]);
@@ -408,8 +559,23 @@ document.addEventListener('DOMContentLoaded', function () {
       }
 
       var emailVal = gMail ? gMail.value.trim() : '';
-      var phoneVal = gPhone ? gPhone.value.trim() : '';
-      var nameVal = gName ? gName.value.trim() : (i18n ? 'Participante' : 'Participant');
+      var rawPhone = gPhone ? gPhone.value.trim() : '';
+      var gCountryCode = document.getElementById('gCountryCode');
+      var countryCodeVal = gCountryCode ? gCountryCode.value : '';
+      var phoneVal = rawPhone;
+      if (countryCodeVal && rawPhone && rawPhone.indexOf('+') !== 0) {
+        phoneVal = countryCodeVal + ' ' + rawPhone;
+      }
+      var rawName = gName ? gName.value.trim() : '';
+      if (!rawName) {
+        if (err) {
+          err.textContent = isEs ? 'Escribe tu nombre' : 'Please enter your name';
+          err.style.display = 'block';
+        }
+        if (gName) gName.focus();
+        return;
+      }
+      var nameVal = rawName;
       var waOptinVal = gWaOptin ? gWaOptin.checked : true;
 
       if (!emailVal || emailVal.indexOf('@') < 1 || emailVal.indexOf('.') < 0) {
@@ -421,7 +587,7 @@ document.addEventListener('DOMContentLoaded', function () {
         return;
       }
 
-      if (!phoneVal || phoneVal.length < 7) {
+      if (!rawPhone || rawPhone.length < 7) {
         if (err) {
           err.textContent = LBL.phone_error || 'Por favor ingresa un número de teléfono válido.';
           err.style.display = 'block';
@@ -430,8 +596,57 @@ document.addEventListener('DOMContentLoaded', function () {
         return;
       }
 
+      // Save lead cookies for prefill across checkout and portal (A4)
+      document.cookie = 'zol_lead_email=' + encodeURIComponent(emailVal) + ';path=/;max-age=86400';
+      document.cookie = 'zol_lead_name=' + encodeURIComponent(nameVal) + ';path=/;max-age=86400';
+      document.cookie = 'zol_lead_phone=' + encodeURIComponent(phoneVal) + ';path=/;max-age=86400';
+      try {
+        localStorage.setItem('zol_lead_email', emailVal);
+        localStorage.setItem('zol_lead_name', nameVal);
+        localStorage.setItem('zol_lead_phone', phoneVal);
+      } catch (e) {}
+
       if (err) err.style.display = 'none';
       renderResult(nameVal, emailVal, phoneVal, waOptinVal);
+    });
+  }
+
+  // Country code selector helper
+  var gCountryCode = document.getElementById('gCountryCode');
+  var gPhone = document.getElementById('gPhone');
+  if (gCountryCode && gPhone) {
+    gCountryCode.addEventListener('change', function () {
+      var code = this.value;
+      if (code === '+52') gPhone.placeholder = '55 1234 5678';
+      else if (code === '+1') gPhone.placeholder = '469 123 4567';
+      else if (code === '+34') gPhone.placeholder = '612 34 56 78';
+      else if (code === '+57') gPhone.placeholder = '300 123 4567';
+      else if (code === '+54') gPhone.placeholder = '11 1234 5678';
+      else gPhone.placeholder = '1234 5678';
+    });
+  }
+
+  // Modal event listeners
+  var chartModal = document.getElementById('chartModal');
+  var btnOpenChartModal = document.getElementById('btnOpenChartModal');
+  var chartImgContainer = document.getElementById('chartImgContainer');
+  var closeChartModal = document.getElementById('closeChartModal');
+  var modalCloseBtn = document.getElementById('modalCloseBtn');
+
+  function openChartModal() {
+    if (chartModal) chartModal.style.display = 'flex';
+  }
+  function closeChartModalFunc() {
+    if (chartModal) chartModal.style.display = 'none';
+  }
+
+  if (btnOpenChartModal) btnOpenChartModal.addEventListener('click', openChartModal);
+  if (chartImgContainer) chartImgContainer.addEventListener('click', openChartModal);
+  if (closeChartModal) closeChartModal.addEventListener('click', closeChartModalFunc);
+  if (modalCloseBtn) modalCloseBtn.addEventListener('click', closeChartModalFunc);
+  if (chartModal) {
+    chartModal.addEventListener('click', function (e) {
+      if (e.target === chartModal) closeChartModalFunc();
     });
   }
 
@@ -453,6 +668,7 @@ document.addEventListener('DOMContentLoaded', function () {
       sendData.append('lowest_ability_quote', lastLeadData.lowest_ability_quote);
       sendData.append('have_level_name', lastLeadData.have_level_name || '');
       sendData.append('have_level_quote', lastLeadData.have_level_quote || '');
+      sendData.append('have_level_text', lastLeadData.have_level_text || '');
       sendData.append('zone', lastLeadData.zone || 'Amber');
       sendData.append('lang', lastLeadData.lang || 'en');
 

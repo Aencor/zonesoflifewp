@@ -106,6 +106,11 @@ function zol_handle_assessment_lead() {
     $life_zone            = sanitize_text_field($_POST['life_zone'] ?? '');
     $body_zone            = sanitize_text_field($_POST['body_zone'] ?? '');
 
+    $have_level           = sanitize_text_field($_POST['have_level'] ?? '');
+    $have_level_name      = sanitize_text_field($_POST['have_level_name'] ?? '');
+    $have_level_quote     = sanitize_text_field($_POST['have_level_quote'] ?? '');
+    $have_level_text      = sanitize_textarea_field($_POST['have_level_text'] ?? '');
+
     if (empty($email) || !is_email($email)) {
         wp_send_json_error(['message' => __('Please provide a valid email address.', 'codebymonk')]);
     }
@@ -131,6 +136,10 @@ function zol_handle_assessment_lead() {
     update_post_meta($post_id, 'whatsapp_optin', $wa_optin);
     update_post_meta($post_id, 'lowest_ability', $lowest_ability);
     update_post_meta($post_id, 'lowest_ability_quote', $lowest_ability_quote);
+    update_post_meta($post_id, 'have_level', $have_level);
+    update_post_meta($post_id, 'have_level_name', $have_level_name);
+    update_post_meta($post_id, 'have_level_quote', $have_level_quote);
+    update_post_meta($post_id, 'have_level_text', $have_level_text);
     update_post_meta($post_id, 'funnel_stage', 'R1_completed');
     update_post_meta($post_id, 'zone', $zone);
     update_post_meta($post_id, 'financial_zone', $financial_zone);
@@ -168,6 +177,10 @@ function zol_handle_assessment_lead() {
             'phone'                => $phone,
             'lowest_ability'       => $lowest_ability,
             'lowest_ability_quote' => $lowest_ability_quote,
+            'have_level'           => $have_level,
+            'have_level_name'      => $have_level_name,
+            'have_level_quote'     => $have_level_quote,
+            'have_level_text'      => $have_level_text,
             'zone'                 => $zone,
             'lang'                 => $lang,
         ]);
@@ -194,6 +207,7 @@ function zol_handle_email_mini_profile() {
     $lowest_ability_quote = sanitize_text_field($_POST['lowest_ability_quote'] ?? '');
     $have_level_name      = sanitize_text_field($_POST['have_level_name'] ?? '');
     $have_level_quote     = sanitize_text_field($_POST['have_level_quote'] ?? '');
+    $have_level_text      = sanitize_textarea_field($_POST['have_level_text'] ?? '');
     $lang                 = sanitize_text_field($_POST['lang'] ?? 'en');
     if (!in_array($lang, ['es', 'en'])) {
         $lang = 'en';
@@ -215,7 +229,7 @@ function zol_handle_email_mini_profile() {
     }
 
     if (class_exists('ACLC_Funnel_Emails')) {
-        $email_data = ACLC_Funnel_Emails::get_email_b1($name, $lowest_ability, $lowest_ability_quote, $finance_url, $lang, $zone, [], $have_level_name, $have_level_quote);
+        $email_data = ACLC_Funnel_Emails::get_email_b1($name, $lowest_ability, $lowest_ability_quote, $finance_url, $lang, $zone, [], $have_level_name, $have_level_quote, $have_level_text);
         ACLC_Funnel_Emails::send($email, $email_data['subject'], $email_data['html'], $lang);
     } else {
         $is_es = ($lang === 'es');

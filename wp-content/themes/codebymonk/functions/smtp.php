@@ -15,7 +15,7 @@ define('MANDRILL_SMTP_INITIALIZED', true);
 
 // Setup default Mandrill constants if not already defined in wp-config.php or environment
 if (!defined('MANDRILL_API_KEY')) {
-    define('MANDRILL_API_KEY', getenv('MANDRILL_API_KEY') ?: 'md-zfK92yc0RIz7lQUB9m377Q');
+    define('MANDRILL_API_KEY', getenv('MANDRILL_API_KEY') ?: 'md-idmmPXM2xBXZnIlSns5j0g');
 }
 
 if (!defined('MANDRILL_HOST')) {
