@@ -201,14 +201,14 @@ add_action('wp_ajax_nopriv_zol_submit_assessment_lead', 'zol_handle_assessment_l
 function zol_handle_email_mini_profile() {
     check_ajax_referer('zol_cohort_nonce', 'nonce');
 
-    $name                 = sanitize_text_field($_POST['name'] ?? '');
-    $email                = sanitize_email($_POST['email'] ?? '');
-    $lowest_ability       = sanitize_text_field($_POST['lowest_ability'] ?? '');
-    $lowest_ability_quote = sanitize_text_field($_POST['lowest_ability_quote'] ?? '');
-    $have_level_name      = sanitize_text_field($_POST['have_level_name'] ?? '');
-    $have_level_quote     = sanitize_text_field($_POST['have_level_quote'] ?? '');
-    $have_level_text      = sanitize_textarea_field($_POST['have_level_text'] ?? '');
-    $lang                 = sanitize_text_field($_POST['lang'] ?? 'en');
+    $name                 = sanitize_text_field(wp_unslash($_POST['name'] ?? ''));
+    $email                = sanitize_email(wp_unslash($_POST['email'] ?? ''));
+    $lowest_ability       = sanitize_text_field(wp_unslash($_POST['lowest_ability'] ?? ''));
+    $lowest_ability_quote = sanitize_text_field(wp_unslash($_POST['lowest_ability_quote'] ?? ''));
+    $have_level_name      = sanitize_text_field(wp_unslash($_POST['have_level_name'] ?? ''));
+    $have_level_quote     = sanitize_text_field(wp_unslash($_POST['have_level_quote'] ?? ''));
+    $have_level_text      = sanitize_textarea_field(wp_unslash($_POST['have_level_text'] ?? ''));
+    $lang                 = sanitize_text_field(wp_unslash($_POST['lang'] ?? 'en'));
     if (!in_array($lang, ['es', 'en'])) {
         $lang = 'en';
     }
@@ -217,7 +217,7 @@ function zol_handle_email_mini_profile() {
         wp_send_json_error(['message' => 'Invalid email']);
     }
 
-    $zone                 = sanitize_text_field($_POST['zone'] ?? 'Amber');
+    $zone                 = sanitize_text_field(wp_unslash($_POST['zone'] ?? 'Amber'));
     $finance_url          = ($lang === 'es') ? home_url('/es/perfil-financiero/') : home_url('/finance/');
 
     // Fallbacks if have_level_name not provided
@@ -230,7 +230,14 @@ function zol_handle_email_mini_profile() {
 
     if (class_exists('ACLC_Funnel_Emails')) {
         $email_data = ACLC_Funnel_Emails::get_email_b1($name, $lowest_ability, $lowest_ability_quote, $finance_url, $lang, $zone, [], $have_level_name, $have_level_quote, $have_level_text);
-        ACLC_Funnel_Emails::send($email, $email_data['subject'], $email_data['html'], $lang);
+        ACLC_Funnel_Emails::send(
+            $email,
+            $email_data['subject'],
+            $email_data['html'],
+            $lang,
+            $email_data['attachments'] ?? [],
+            $email_data['embedded_images'] ?? []
+        );
     } else {
         $is_es = ($lang === 'es');
         $subject = $is_es 

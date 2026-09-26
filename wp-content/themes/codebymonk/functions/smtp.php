@@ -15,7 +15,7 @@ define('MANDRILL_SMTP_INITIALIZED', true);
 
 // Setup default Mandrill constants if not already defined in wp-config.php or environment
 if (!defined('MANDRILL_API_KEY')) {
-    define('MANDRILL_API_KEY', getenv('MANDRILL_API_KEY') ?: 'md-idmmPXM2xBXZnIlSns5j0g');
+    define('MANDRILL_API_KEY', getenv('MANDRILL_API_KEY') ?: 'md-uSYDOfF4dGAocY7s6UUrNg');
 }
 
 if (!defined('MANDRILL_HOST')) {
@@ -31,7 +31,7 @@ if (!defined('MANDRILL_SECURE')) {
 }
 
 if (!defined('MANDRILL_USERNAME')) {
-    define('MANDRILL_USERNAME', getenv('MANDRILL_USERNAME') ?: 'noreply@zonesoflife.com');
+    define('MANDRILL_USERNAME', getenv('MANDRILL_USERNAME') ?: '31645118');
 }
 
 if (!defined('MANDRILL_FROM_EMAIL')) {

@@ -17,7 +17,7 @@ define('MANDRILL_SMTP_INITIALIZED', true);
 
 // Setup default Mandrill constants if not already defined in wp-config.php or environment
 if (!defined('MANDRILL_API_KEY')) {
-    define('MANDRILL_API_KEY', getenv('MANDRILL_API_KEY') ?: 'md-idmmPXM2xBXZnIlSns5j0g');
+    define('MANDRILL_API_KEY', getenv('MANDRILL_API_KEY') ?: 'md-uSYDOfF4dGAocY7s6UUrNg');
 }
 
 if (!defined('MANDRILL_HOST')) {
@@ -33,7 +33,7 @@ if (!defined('MANDRILL_SECURE')) {
 }
 
 if (!defined('MANDRILL_USERNAME')) {
-    define('MANDRILL_USERNAME', getenv('MANDRILL_USERNAME') ?: 'noreply@zonesoflife.com');
+    define('MANDRILL_USERNAME', getenv('MANDRILL_USERNAME') ?: '31645118');
 }
 
 if (!defined('MANDRILL_FROM_EMAIL')) {
@@ -46,7 +46,8 @@ if (!defined('MANDRILL_FROM_NAME')) {
 
 if (!function_exists('aclc_configure_mandrill_smtp')) {
     add_action('phpmailer_init', 'aclc_configure_mandrill_smtp', 999);
-    function aclc_configure_mandrill_smtp($phpmailer) {
+    function aclc_configure_mandrill_smtp($phpmailer)
+    {
         $api_key = defined('MANDRILL_API_KEY') ? trim(MANDRILL_API_KEY) : '';
 
         if (empty($api_key)) {
@@ -54,21 +55,22 @@ if (!function_exists('aclc_configure_mandrill_smtp')) {
         }
 
         $phpmailer->isSMTP();
-        $phpmailer->Host       = defined('MANDRILL_HOST') ? MANDRILL_HOST : 'smtp.mandrillapp.com';
-        $phpmailer->SMTPAuth   = true;
-        $phpmailer->Port       = defined('MANDRILL_PORT') ? (int) MANDRILL_PORT : 587;
+        $phpmailer->Host = defined('MANDRILL_HOST') ? MANDRILL_HOST : 'smtp.mandrillapp.com';
+        $phpmailer->SMTPAuth = true;
+        $phpmailer->Port = defined('MANDRILL_PORT') ? (int) MANDRILL_PORT : 587;
         $phpmailer->SMTPSecure = defined('MANDRILL_SECURE') ? MANDRILL_SECURE : 'tls';
-        $phpmailer->Username   = defined('MANDRILL_USERNAME') ? MANDRILL_USERNAME : 'noreply@zonesoflife.com';
-        $phpmailer->Password   = $api_key;
-        $phpmailer->Timeout    = 15;
+        $phpmailer->Username = defined('MANDRILL_USERNAME') ? MANDRILL_USERNAME : 'noreply@zonesoflife.com';
+        $phpmailer->Password = $api_key;
+        $phpmailer->Timeout = 15;
 
         // Set From email and name if not already defined on the PHPMailer instance
-        if (empty($phpmailer->From) 
-            || strpos($phpmailer->From, 'wordpress@') === 0 
-            || strpos($phpmailer->From, 'localhost') !== false 
+        if (
+            empty($phpmailer->From)
+            || strpos($phpmailer->From, 'wordpress@') === 0
+            || strpos($phpmailer->From, 'localhost') !== false
             || strpos($phpmailer->From, '.local') !== false
-            || strpos($phpmailer->From, '@gmail.com') !== false 
-            || strpos($phpmailer->From, '@yahoo.') !== false 
+            || strpos($phpmailer->From, '@gmail.com') !== false
+            || strpos($phpmailer->From, '@yahoo.') !== false
             || strpos($phpmailer->From, '@hotmail.') !== false
         ) {
             $phpmailer->From = defined('MANDRILL_FROM_EMAIL') ? MANDRILL_FROM_EMAIL : 'noreply@zonesoflife.com';
@@ -82,13 +84,15 @@ if (!function_exists('aclc_configure_mandrill_smtp')) {
 
 if (!function_exists('aclc_mandrill_filter_wp_mail_from')) {
     add_filter('wp_mail_from', 'aclc_mandrill_filter_wp_mail_from', 20);
-    function aclc_mandrill_filter_wp_mail_from($from_email) {
-        if (empty($from_email) 
-            || strpos($from_email, 'wordpress@') === 0 
-            || strpos($from_email, 'localhost') !== false 
+    function aclc_mandrill_filter_wp_mail_from($from_email)
+    {
+        if (
+            empty($from_email)
+            || strpos($from_email, 'wordpress@') === 0
+            || strpos($from_email, 'localhost') !== false
             || strpos($from_email, '.local') !== false
-            || strpos($from_email, '@gmail.com') !== false 
-            || strpos($from_email, '@yahoo.') !== false 
+            || strpos($from_email, '@gmail.com') !== false
+            || strpos($from_email, '@yahoo.') !== false
             || strpos($from_email, '@hotmail.') !== false
         ) {
             return defined('MANDRILL_FROM_EMAIL') ? MANDRILL_FROM_EMAIL : 'noreply@zonesoflife.com';
@@ -99,7 +103,8 @@ if (!function_exists('aclc_mandrill_filter_wp_mail_from')) {
 
 if (!function_exists('aclc_mandrill_filter_wp_mail_from_name')) {
     add_filter('wp_mail_from_name', 'aclc_mandrill_filter_wp_mail_from_name', 20);
-    function aclc_mandrill_filter_wp_mail_from_name($from_name) {
+    function aclc_mandrill_filter_wp_mail_from_name($from_name)
+    {
         if (empty($from_name) || $from_name === 'WordPress') {
             return defined('MANDRILL_FROM_NAME') ? MANDRILL_FROM_NAME : 'Zones of Life';
         }
@@ -109,7 +114,8 @@ if (!function_exists('aclc_mandrill_filter_wp_mail_from_name')) {
 
 if (!function_exists('aclc_mandrill_mail_failed_logger')) {
     add_action('wp_mail_failed', 'aclc_mandrill_mail_failed_logger');
-    function aclc_mandrill_mail_failed_logger($wp_error) {
+    function aclc_mandrill_mail_failed_logger($wp_error)
+    {
         if (is_wp_error($wp_error)) {
             error_log('[Mandrill SMTP Error] ' . $wp_error->get_error_message() . ' | Data: ' . print_r($wp_error->get_error_data(), true));
         }
@@ -118,7 +124,8 @@ if (!function_exists('aclc_mandrill_mail_failed_logger')) {
 
 if (!function_exists('aclc_mandrill_test_send_ajax')) {
     add_action('wp_ajax_mandrill_smtp_test_send', 'aclc_mandrill_test_send_ajax');
-    function aclc_mandrill_test_send_ajax() {
+    function aclc_mandrill_test_send_ajax()
+    {
         if (!current_user_can('manage_options')) {
             wp_send_json_error(['message' => 'No autorizado.']);
         }

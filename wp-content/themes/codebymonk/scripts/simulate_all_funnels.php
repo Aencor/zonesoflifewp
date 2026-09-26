@@ -9,8 +9,8 @@ require_once __DIR__ . '/../../../../wp-load.php';
 require_once WP_PLUGIN_DIR . '/aclc-plugin/includes/class-funnel-emails.php';
 require_once WP_PLUGIN_DIR . '/aclc-plugin/includes/class-zapier.php';
 
-$name  = 'Enrique';
-$email = 'enrique@attikka.com';
+$name  = 'Erika';
+$email = 'erika@attikka.com';
 $phone = '+525619956812';
 
 $languages = ['es', 'en'];
@@ -151,12 +151,16 @@ foreach ($languages as $lang) {
     foreach ($emails_to_send as $item) {
         $subject = "[SIMULACIÓN {$lang_label} {$item['code']}] " . $item['data']['subject'];
         $html    = $item['data']['html'];
-        $attachments = $item['attachments'] ?? [];
+        $attachments = array_values(array_filter(array_unique(array_merge(
+            $item['attachments'] ?? [],
+            $item['data']['attachments'] ?? []
+        ))));
+        $embedded_images = $item['data']['embedded_images'] ?? [];
 
-        $sent = ACLC_Funnel_Emails::send($email, $subject, $html, $lang, $attachments);
+        $sent = ACLC_Funnel_Emails::send($email, $subject, $html, $lang, $attachments, $embedded_images);
 
         if ($sent) {
-            $att_note = !empty($attachments) ? ' [PDF Adjunto ' . round(filesize($attachments[0])/1048576, 2) . 'MB de wp-content/books/]' : '';
+            $att_note = !empty($attachments) ? ' [' . count($attachments) . ' adjuntos]' : '';
             echo "  ✓ [{$item['code']}] {$item['flow']}{$att_note} -> ENVIADO\n";
         } else {
             echo "  ✗ [{$item['code']}] {$item['flow']} -> FALLÓ (Verificar Mandrill SMTP)\n";
