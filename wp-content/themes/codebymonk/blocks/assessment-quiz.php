@@ -33,11 +33,11 @@ $pay_profile = add_query_arg('package', 'profile', $pay_url_base);
 $reportBtnText = get_field('report_btn_text') ?: ($isSpanish ? 'Obtener mi Perfil de Salud Financiera' : 'Get my Financial Health Profile');
 $reportBtnLink = get_field('report_btn_link');
 if (empty($reportBtnLink) || in_array($reportBtnLink, ['/finance/', '/es/finance/', home_url('/finance/'), home_url('/es/perfil-financiero/')])) {
-    $reportBtnLink = $isSpanish ? home_url('/es/perfil-financiero/') : home_url('/finance/');
+    $reportBtnLink = $isSpanish ? home_url('/es/adquirir/?package=profile') : home_url('/pay/?package=profile');
 }
 $sessionBtnLink = get_field('session_btn_link');
-if (empty($sessionBtnLink)) {
-    $sessionBtnLink = $isSpanish ? home_url('/es/perfil-financiero/?package=session') : home_url('/finance/?package=session');
+if (empty($sessionBtnLink) || in_array($sessionBtnLink, ['/finance/?package=session', '/es/perfil-financiero/?package=session', home_url('/finance/?package=session'), home_url('/es/perfil-financiero/?package=session')])) {
+    $sessionBtnLink = $isSpanish ? home_url('/es/adquirir/?package=coach_bundle') : home_url('/pay/?package=coach_bundle');
 }
 
 $spanishQuizData = [
@@ -424,21 +424,21 @@ window.zolQuizData = <?= json_encode($isSpanish ? $spanishQuizData : $englishQui
             <a class="btn btn-go btn-block mt14" id="rBtnBuy" href="<?= esc_url($reportBtnLink); ?>"><?= $isSpanish ? 'Obtener mi Perfil de Salud Financiera' : 'Get my Financial Health Profile'; ?></a>
           </div>
 
-          <!-- Secondary Offer: Profile + Private Session -->
+          <!-- Secondary Offer: Profile + Private Session Bundle -->
           <div class="card pad-md mt16" style="background:#fff;border:1px solid var(--line);border-radius:10px;">
-            <div class="tiny" style="color:var(--stage);font-weight:700;text-transform:uppercase;letter-spacing:0.05em;"><?= $isSpanish ? 'Opción Secundaria · Con Coach' : 'Secondary Option · With Coach'; ?></div>
-            <h4 class="mt6" style="font-size:16px;"><?= $isSpanish ? 'Perfil + Sesión Privada (60 min)' : 'Profile + Private Session (60 min)'; ?></h4>
+            <div class="tiny" style="color:var(--stage);font-weight:700;text-transform:uppercase;letter-spacing:0.05em;"><?= $isSpanish ? 'Opción Recomendada · Coach 1 a 1' : 'Recommended Option · 1-on-1 Coach'; ?></div>
+            <h4 class="mt6" style="font-size:16px;"><?= $isSpanish ? 'Coach 1 a 1 + Perfil Financiero (60 min)' : '1-on-1 Coach + Financial Profile (60 min)'; ?></h4>
             <p class="xs mt6" style="color:#5B6475;line-height:1.5;">
               <?= $isSpanish 
-                ? 'Todo lo anterior, más una sesión de 60 minutos con un coach certificado para interpretar y profundizar en tus resultados.' 
-                : 'All the above, plus a 60-minute one-on-one session with a certified coach to interpret and deepen into your results.'; ?>
+                ? 'Incluye el Perfil de Salud Financiera completo (100 preguntas), análisis previo y una sesión privada 1 a 1 de 60 minutos con tu coach Raúl Rivera para interpretar tus resultados y trazar tu plan.' 
+                : 'Includes the full Financial Health Profile (100 questions), prior analysis, and a 60-minute private 1-on-1 session with coach Raúl Rivera to interpret results and create your plan.'; ?>
             </p>
             <div class="hgroup mt10 mb10" style="justify-content:space-between;align-items:center;">
               <span class="tiny" style="font-weight:700;color:var(--ink);"><?= $isSpanish ? 'Inversión:' : 'Investment:'; ?></span>
-              <span style="font-size:16px;font-weight:700;color:var(--ink);"><?= $isSpanish ? '$1,640 MXN' : '$85 USD'; ?></span>
+              <span style="font-size:16px;font-weight:700;color:var(--shgreen);"><?= $isSpanish ? '$2,140 MXN' : '$110 USD'; ?></span>
             </div>
             <a class="btn btn-sm btn-block" id="rBtnBuySession" href="<?= esc_url($sessionBtnLink); ?>" style="background:var(--stage-bg);color:var(--stage);border:1px solid var(--stage);font-weight:600;text-align:center;text-decoration:none;display:block;">
-              <?= $isSpanish ? 'Quiero el perfil con sesión privada' : 'Get profile with private session'; ?>
+              <?= $isSpanish ? 'Quiero el perfil con Coach 1 a 1' : 'Get profile with 1-on-1 Coach'; ?>
             </a>
           </div>
 

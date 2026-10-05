@@ -161,6 +161,12 @@ function zol_handle_assessment_lead() {
     update_post_meta($post_id, 'have_level_quote', $have_level_quote);
     update_post_meta($post_id, 'have_level_text', $have_level_text);
     update_post_meta($post_id, 'have_zone', $have_zone);
+    if (isset($_POST['have_numeric_score']) && is_numeric($_POST['have_numeric_score'])) {
+        update_post_meta($post_id, 'have_numeric_score', floatval($_POST['have_numeric_score']));
+    }
+    if (isset($_POST['have_score']) && is_numeric($_POST['have_score'])) {
+        update_post_meta($post_id, 'have_score', floatval($_POST['have_score']));
+    }
     update_post_meta($post_id, 'funnel_stage', 'R1_completed');
     update_post_meta($post_id, 'zone', $have_zone);
     update_post_meta($post_id, 'overall_zone', $zone);

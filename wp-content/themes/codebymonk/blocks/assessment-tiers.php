@@ -49,21 +49,21 @@ $pay_session = add_query_arg('package', 'session', $pay_url_base);
 $c2BtnText = get_field('card_2_btn_text') ?: ($is_es ? 'Obtener Perfil ($500 MXN)' : 'Get Profile ($25 USD)');
 $c2BtnLink = get_field('card_2_btn_link');
 if (empty($c2BtnLink) || in_array($c2BtnLink, ['/finance/', '/es/finance/', home_url('/finance/'), home_url('/es/perfil-financiero/')])) {
-    $c2BtnLink = $is_es ? home_url('/es/perfil-financiero/') : home_url('/finance/');
+    $c2BtnLink = $is_es ? home_url('/es/adquirir/?package=profile') : home_url('/pay/?package=profile');
 }
 
 // Card 3
 $c3Badge = get_field('card_3_badge') ?: ($is_es ? 'Paso 3 · con sesión privada' : 'Step 3 · with private session');
-$c3Title = get_field('card_3_title') ?: ($is_es ? 'Perfil + Sesión Privada (60 min)' : 'Profile + Private Session (60 min)');
-$c3Desc  = get_field('card_3_desc') ?: ($is_es ? 'Incluye el Perfil de Salud Financiera completo, el audio y cuaderno de trabajo, más una sesión privada de 60 minutos con un coach certificado de ACLC para analizar tus resultados y trazar tu plan.' : 'Includes the complete Financial Health Profile, audio lesson, and workbook, plus a 60-minute private session with a certified ACLC coach to analyze your results and map out your plan.');
+$c3Title = get_field('card_3_title') ?: ($is_es ? 'Coach 1 a 1 + Perfil Financiero (60 min)' : '1-on-1 Coach + Financial Profile (60 min)');
+$c3Desc  = get_field('card_3_desc') ?: ($is_es ? 'Incluye el Perfil de Salud Financiera completo (100 preguntas), análisis diagnóstico previo y una sesión privada 1 a 1 de 60 minutos con tu coach Raúl Rivera para interpretar tus resultados y definir tus prioridades.' : 'Includes the complete Financial Health Profile (100 questions), prior diagnostic analysis, and a 60-minute private 1-on-1 session with coach Raúl Rivera to interpret your results and set your priorities.');
 $c3Price = get_field('card_3_price');
 if (empty($c3Price)) {
-    $c3Price = $is_es ? '$1,640 MXN' : '$85 USD';
+    $c3Price = $is_es ? '$2,140 MXN' : '$110 USD';
 }
-$c3BtnText = get_field('card_3_btn_text') ?: ($is_es ? 'Elegir con Sesión ($1,640 MXN)' : 'Choose with Session ($85 USD)');
+$c3BtnText = get_field('card_3_btn_text') ?: ($is_es ? 'Elegir con Sesión ($2,140 MXN)' : 'Choose with Session ($110 USD)');
 $c3BtnLink = get_field('card_3_btn_link');
 if (empty($c3BtnLink) || in_array($c3BtnLink, ['/cohorts/', '/events/', '/finance/?package=session', '/es/perfil-financiero/?package=session', home_url('/finance/?package=session'), home_url('/es/perfil-financiero/?package=session')])) {
-    $c3BtnLink = $is_es ? home_url('/es/perfil-financiero/?package=session') : home_url('/finance/?package=session');
+    $c3BtnLink = $is_es ? home_url('/es/adquirir/?package=coach_bundle') : home_url('/pay/?package=coach_bundle');
 }
 
 // Guarantee
