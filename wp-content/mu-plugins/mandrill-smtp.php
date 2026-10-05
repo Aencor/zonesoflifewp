@@ -44,11 +44,65 @@ if (!defined('MANDRILL_FROM_NAME')) {
     define('MANDRILL_FROM_NAME', getenv('MANDRILL_FROM_NAME') ?: 'Zones of Life');
 }
 
+if (!function_exists('aclc_get_mandrill_api_key')) {
+    function aclc_get_mandrill_api_key()
+    {
+        $custom = get_option('aclc_mandrill_api_key', '') ?: get_option('mandrill_api_key', '');
+        if (!empty($custom)) {
+            return trim($custom);
+        }
+        $settings = get_option('aclc_portal_settings', []);
+        if (!empty($settings['mandrill_api_key'])) {
+            return trim($settings['mandrill_api_key']);
+        }
+        if (defined('MANDRILL_API_KEY') && !empty(MANDRILL_API_KEY)) {
+            return trim(MANDRILL_API_KEY);
+        }
+        return getenv('MANDRILL_API_KEY') ?: 'md-gLRp4YT69PyKB4vJ8mbmYg';
+    }
+}
+
+if (!function_exists('aclc_get_mandrill_from_email')) {
+    function aclc_get_mandrill_from_email()
+    {
+        $custom = get_option('aclc_mandrill_from_email', '') ?: get_option('mandrill_from_email', '');
+        if (!empty($custom)) {
+            return trim($custom);
+        }
+        $settings = get_option('aclc_portal_settings', []);
+        if (!empty($settings['mandrill_from_email'])) {
+            return trim($settings['mandrill_from_email']);
+        }
+        if (defined('MANDRILL_FROM_EMAIL') && !empty(MANDRILL_FROM_EMAIL)) {
+            return trim(MANDRILL_FROM_EMAIL);
+        }
+        return getenv('MANDRILL_FROM_EMAIL') ?: 'noreply@zonesoflife.com';
+    }
+}
+
+if (!function_exists('aclc_get_mandrill_from_name')) {
+    function aclc_get_mandrill_from_name()
+    {
+        $custom = get_option('aclc_mandrill_from_name', '') ?: get_option('mandrill_from_name', '');
+        if (!empty($custom)) {
+            return trim($custom);
+        }
+        $settings = get_option('aclc_portal_settings', []);
+        if (!empty($settings['mandrill_from_name'])) {
+            return trim($settings['mandrill_from_name']);
+        }
+        if (defined('MANDRILL_FROM_NAME') && !empty(MANDRILL_FROM_NAME)) {
+            return trim(MANDRILL_FROM_NAME);
+        }
+        return getenv('MANDRILL_FROM_NAME') ?: 'Zones of Life';
+    }
+}
+
 if (!function_exists('aclc_configure_mandrill_smtp')) {
     add_action('phpmailer_init', 'aclc_configure_mandrill_smtp', 999);
     function aclc_configure_mandrill_smtp($phpmailer)
     {
-        $api_key = defined('MANDRILL_API_KEY') ? trim(MANDRILL_API_KEY) : '';
+        $api_key = aclc_get_mandrill_api_key();
 
         if (empty($api_key)) {
             return;
@@ -73,11 +127,11 @@ if (!function_exists('aclc_configure_mandrill_smtp')) {
             || strpos($phpmailer->From, '@yahoo.') !== false
             || strpos($phpmailer->From, '@hotmail.') !== false
         ) {
-            $phpmailer->From = defined('MANDRILL_FROM_EMAIL') ? MANDRILL_FROM_EMAIL : 'noreply@zonesoflife.com';
+            $phpmailer->From = aclc_get_mandrill_from_email();
         }
 
         if (empty($phpmailer->FromName) || $phpmailer->FromName === 'WordPress') {
-            $phpmailer->FromName = defined('MANDRILL_FROM_NAME') ? MANDRILL_FROM_NAME : 'Zones of Life';
+            $phpmailer->FromName = aclc_get_mandrill_from_name();
         }
     }
 }
@@ -95,7 +149,7 @@ if (!function_exists('aclc_mandrill_filter_wp_mail_from')) {
             || strpos($from_email, '@yahoo.') !== false
             || strpos($from_email, '@hotmail.') !== false
         ) {
-            return defined('MANDRILL_FROM_EMAIL') ? MANDRILL_FROM_EMAIL : 'noreply@zonesoflife.com';
+            return aclc_get_mandrill_from_email();
         }
         return $from_email;
     }
@@ -106,7 +160,7 @@ if (!function_exists('aclc_mandrill_filter_wp_mail_from_name')) {
     function aclc_mandrill_filter_wp_mail_from_name($from_name)
     {
         if (empty($from_name) || $from_name === 'WordPress') {
-            return defined('MANDRILL_FROM_NAME') ? MANDRILL_FROM_NAME : 'Zones of Life';
+            return aclc_get_mandrill_from_name();
         }
         return $from_name;
     }
@@ -149,5 +203,32 @@ if (!function_exists('aclc_mandrill_test_send_ajax')) {
             $error_info = (isset($phpmailer) && !empty($phpmailer->ErrorInfo)) ? $phpmailer->ErrorInfo : 'Error desconocido al enviar correo.';
             wp_send_json_error(['message' => 'Fallo al enviar correo: ' . esc_html($error_info)]);
         }
+    }
+}
+
+if (!function_exists('aclc_mandrill_save_key_ajax')) {
+    add_action('wp_ajax_aclc_mandrill_save_key', 'aclc_mandrill_save_key_ajax');
+    function aclc_mandrill_save_key_ajax()
+    {
+        if (!current_user_can('manage_options')) {
+            wp_send_json_error(['message' => 'No autorizado.']);
+        }
+
+        check_ajax_referer('mandrill_test_nonce', 'security');
+
+        $api_key = isset($_POST['mandrill_api_key']) ? trim(sanitize_text_field($_POST['mandrill_api_key'])) : '';
+        if (empty($api_key)) {
+            wp_send_json_error(['message' => 'Por favor ingresa una API Key válida.']);
+        }
+
+        update_option('aclc_mandrill_api_key', $api_key);
+        update_option('mandrill_api_key', $api_key);
+
+        $masked = strlen($api_key) > 8 ? (substr($api_key, 0, 7) . '...' . substr($api_key, -5)) : (substr($api_key, 0, 3) . '...');
+
+        wp_send_json_success([
+            'message' => '¡API Key de Mandrill actualizada y guardada correctamente!',
+            'masked_key' => $masked . ' (Activa)'
+        ]);
     }
 }
