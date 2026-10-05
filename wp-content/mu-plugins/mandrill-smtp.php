@@ -17,7 +17,7 @@ define('MANDRILL_SMTP_INITIALIZED', true);
 
 // Setup default Mandrill constants if not already defined in wp-config.php or environment
 if (!defined('MANDRILL_API_KEY')) {
-    define('MANDRILL_API_KEY', getenv('MANDRILL_API_KEY') ?: 'md-gLRp4YT69PyKB4vJ8mbmYg');
+    define('MANDRILL_API_KEY', getenv('MANDRILL_API_KEY') ?: 'md-7IhX4OdttOD7KzRk_4RcYw');
 }
 
 if (!defined('MANDRILL_HOST')) {
@@ -58,7 +58,7 @@ if (!function_exists('aclc_get_mandrill_api_key')) {
         if (defined('MANDRILL_API_KEY') && !empty(MANDRILL_API_KEY)) {
             return trim(MANDRILL_API_KEY);
         }
-        return getenv('MANDRILL_API_KEY') ?: 'md-gLRp4YT69PyKB4vJ8mbmYg';
+        return getenv('MANDRILL_API_KEY') ?: 'md-7IhX4OdttOD7KzRk_4RcYw';
     }
 }
 
