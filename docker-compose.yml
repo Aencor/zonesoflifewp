@@ -26,7 +26,7 @@ services:
     image: phpmyadmin/phpmyadmin
     restart: unless-stopped
     ports:
-      - 8081:80
+      - 8085:80
     environment:
       PMA_HOST: database
       MYSQL_ROOT_PASSWORD: '${MYSQL_ROOT_PASSWORD}'
