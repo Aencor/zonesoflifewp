@@ -1,13 +1,26 @@
-version: "3.9"
-
 services:
+  nginx:
+    image: nginx:latest
+    container_name: newzonesoflife-nginx
+    restart: unless-stopped
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./nginx/default.conf:/etc/nginx/conf.d/default.conf:ro
+      - ./certs:/etc/nginx/certs:ro
+    depends_on:
+      - wordpress
+    networks:
+      - wordpress-network
+
   database:
     container_name: newzonesoflife-db
     mem_limit: 2048m
     image: mariadb:10.11
     restart: unless-stopped
     ports:
-      - 3306:3306
+      - "${MYSQL_PORT:-3307}:3306"
     env_file: .env
     environment:
       MYSQL_ROOT_PASSWORD: '${MYSQL_ROOT_PASSWORD}'
@@ -26,7 +39,7 @@ services:
     image: phpmyadmin/phpmyadmin
     restart: unless-stopped
     ports:
-      - 8085:80
+      - "${PMA_PORT:-8085}:80"
     environment:
       PMA_HOST: database
       MYSQL_ROOT_PASSWORD: '${MYSQL_ROOT_PASSWORD}'
@@ -40,7 +53,7 @@ services:
     image: wordpress:latest
     restart: unless-stopped
     ports:
-      - 8080:80
+      - "${WORDPRESS_PORT:-8088}:80"
     environment:
       WORDPRESS_DB_HOST: database:3306
       WORDPRESS_DB_NAME: '${MYSQL_DATABASE}'
@@ -49,8 +62,15 @@ services:
       MANDRILL_API_KEY: '${MANDRILL_API_KEY:-md-7IhX4OdttOD7KzRk_4RcYw}'
       MANDRILL_USERNAME: '${MANDRILL_USERNAME:-31645118}'
       WORDPRESS_CONFIG_EXTRA: |
+        define('WP_MEMORY_LIMIT', '512M');
+        define('WP_MAX_MEMORY_LIMIT', '512M');
         if (isset($$_SERVER['HTTP_X_FORWARDED_PROTO']) && strpos($$_SERVER['HTTP_X_FORWARDED_PROTO'], 'https') !== false) {
             $$_SERVER['HTTPS'] = 'on';
+        }
+        if (isset($$_SERVER['HTTP_HOST'])) {
+            $$scheme = (isset($$_SERVER['HTTPS']) && $$_SERVER['HTTPS'] === 'on') ? 'https' : 'http';
+            define('WP_HOME', $$scheme . '://' . $$_SERVER['HTTP_HOST']);
+            define('WP_SITEURL', $$scheme . '://' . $$_SERVER['HTTP_HOST']);
         }
         if (!defined('MANDRILL_API_KEY') && getenv('MANDRILL_API_KEY')) {
             define('MANDRILL_API_KEY', getenv('MANDRILL_API_KEY'));
@@ -63,7 +83,6 @@ services:
       - ./uploads.ini:/usr/local/etc/php/conf.d/uploads.ini
     networks:
       - wordpress-network
-      - proxy-network
 
 volumes:
   db-data:
@@ -71,7 +90,3 @@ volumes:
 networks:
   wordpress-network:
     driver: bridge
-  proxy-network:
-    name: nathalielesbachescom_default
-    external: true
-

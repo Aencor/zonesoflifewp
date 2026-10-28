@@ -107,7 +107,7 @@ foreach ($languages as $lang) {
         // Flujo P: Compra / Activación
         [
             'code' => 'P1a',
-            'flow' => ($is_en ? 'Flow P (Purchase Profile $25 USD)' : 'Flujo P (Compra Perfil Automático $500 MXN)'),
+            'flow' => ($is_en ? 'Flow P (Purchase Profile $250 USD)' : 'Flujo P (Compra Perfil Automático $5,000 MXN)'),
             'data' => ACLC_Funnel_Emails::get_email_p1a($name, $finance_url, $lang),
         ],
         [
@@ -201,7 +201,7 @@ foreach ($languages as $lang) {
         [
             'code'    => 'B6',
             'flow'    => 'Flujo B (WhatsApp Día 1 - El orden importa)',
-            'message' => "{$name}, ¿viste tu gráfica del Mini Perfil? Medir una sola habilidad es como pesarte sin saber tu estatura. Con tu Perfil completo mides las 6 habilidades por solo $500 MXN.",
+            'message' => "{$name}, ¿viste tu gráfica del Mini Perfil? Medir una sola habilidad es como pesarte sin saber tu estatura. Con tu Perfil completo mides las 6 habilidades por solo $5,000 MXN.",
         ],
         [
             'code'    => 'D2',

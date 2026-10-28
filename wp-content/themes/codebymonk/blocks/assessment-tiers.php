@@ -35,8 +35,8 @@ $c2Badge = get_field('card_2_badge') ?: ($is_es ? 'Paso 2 · automatizado' : 'St
 $c2Title = get_field('card_2_title') ?: ($is_es ? 'Perfil de Salud Financiera' : 'Financial Health Profile');
 $c2Desc  = get_field('card_2_desc') ?: ($is_es ? 'Las 6 habilidades financieras clave (Producir, Enfocar, Investigar, Tener, Invertir y Crear riqueza), lección en audio de Alan C. Walter y cuaderno de trabajo digital descargable.' : 'All 6 key financial abilities (Produce, Focus, Investigate, Have, Invest, and Create Wealth), Alan C. Walter audio lesson, and downloadable digital workbook.');
 $c2Price = get_field('card_2_price');
-if (empty($c2Price) || in_array(trim($c2Price), ['price TBD', '$500 USD', '$50 USD', '$1,000 MXN', 'precio por definir'])) {
-    $c2Price = $is_es ? '$500 MXN' : '$25 USD';
+if (empty($c2Price) || in_array(trim($c2Price), ['price TBD', '$500 USD', '$50 USD', '$1,000 MXN', 'precio por definir', '$500 MXN', '$25 USD'])) {
+    $c2Price = $is_es ? '$5,000 MXN' : '$250 USD';
 }
 $aclc_user = class_exists('ACLC_Auth') ? ACLC_Auth::get_logged_user() : null;
 $is_logged_in = !empty($aclc_user);
@@ -46,7 +46,10 @@ $access_url_base = $is_es ? home_url('/es/acceso/') : home_url('/access/');
 $pay_profile = add_query_arg('package', 'profile', $pay_url_base);
 $pay_session = add_query_arg('package', 'session', $pay_url_base);
 
-$c2BtnText = get_field('card_2_btn_text') ?: ($is_es ? 'Obtener Perfil ($500 MXN)' : 'Get Profile ($25 USD)');
+$c2BtnText = get_field('card_2_btn_text') ?: ($is_es ? 'Obtener Perfil ($5,000 MXN)' : 'Get Profile ($250 USD)');
+if (in_array(trim($c2BtnText), ['Obtener Perfil ($500 MXN)', 'Get Profile ($25 USD)'])) {
+    $c2BtnText = $is_es ? 'Obtener Perfil ($5,000 MXN)' : 'Get Profile ($250 USD)';
+}
 $c2BtnLink = get_field('card_2_btn_link');
 if (empty($c2BtnLink) || in_array($c2BtnLink, ['/finance/', '/es/finance/', home_url('/finance/'), home_url('/es/perfil-financiero/')])) {
     $c2BtnLink = $is_es ? home_url('/es/adquirir/?package=profile') : home_url('/pay/?package=profile');
@@ -57,10 +60,13 @@ $c3Badge = get_field('card_3_badge') ?: ($is_es ? 'Paso 3 · con sesión privada
 $c3Title = get_field('card_3_title') ?: ($is_es ? 'Coach 1 a 1 + Perfil Financiero (60 min)' : '1-on-1 Coach + Financial Profile (60 min)');
 $c3Desc  = get_field('card_3_desc') ?: ($is_es ? 'Incluye el Perfil de Salud Financiera completo (100 preguntas), análisis diagnóstico previo y una sesión privada 1 a 1 de 60 minutos con tu coach Raúl Rivera para interpretar tus resultados y definir tus prioridades.' : 'Includes the complete Financial Health Profile (100 questions), prior diagnostic analysis, and a 60-minute private 1-on-1 session with coach Raúl Rivera to interpret your results and set your priorities.');
 $c3Price = get_field('card_3_price');
-if (empty($c3Price)) {
-    $c3Price = $is_es ? '$2,140 MXN' : '$110 USD';
+if (empty($c3Price) || in_array(trim($c3Price), ['$2,140 MXN', '$110 USD', '$1,640 MXN', '$85 USD'])) {
+    $c3Price = $is_es ? '$6,640 MXN' : '$335 USD';
 }
-$c3BtnText = get_field('card_3_btn_text') ?: ($is_es ? 'Elegir con Sesión ($2,140 MXN)' : 'Choose with Session ($110 USD)');
+$c3BtnText = get_field('card_3_btn_text') ?: ($is_es ? 'Elegir con Sesión ($6,640 MXN)' : 'Choose with Session ($335 USD)');
+if (in_array(trim($c3BtnText), ['Elegir con Sesión ($2,140 MXN)', 'Choose with Session ($110 USD)', 'Elegir con Sesión ($1,640 MXN)', 'Choose with Session ($85 USD)'])) {
+    $c3BtnText = $is_es ? 'Elegir con Sesión ($6,640 MXN)' : 'Choose with Session ($335 USD)';
+}
 $c3BtnLink = get_field('card_3_btn_link');
 if (empty($c3BtnLink) || in_array($c3BtnLink, ['/cohorts/', '/events/', '/finance/?package=session', '/es/perfil-financiero/?package=session', home_url('/finance/?package=session'), home_url('/es/perfil-financiero/?package=session')])) {
     $c3BtnLink = $is_es ? home_url('/es/adquirir/?package=coach_bundle') : home_url('/pay/?package=coach_bundle');

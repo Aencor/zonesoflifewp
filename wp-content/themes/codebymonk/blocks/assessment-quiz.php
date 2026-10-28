@@ -418,7 +418,7 @@ window.zolQuizData = <?= json_encode($isSpanish ? $spanishQuizData : $englishQui
 
             <div class="hgroup mt16" style="justify-content:space-between;align-items:center;">
               <span class="tiny" style="font-weight:700;color:var(--ink);"><?= $isSpanish ? 'Pago único:' : 'One-time payment:'; ?></span>
-              <span class="price-tag" style="font-size:19px;font-weight:700;color:var(--shgreen);"><?= $isSpanish ? '$500 MXN' : '$25 USD'; ?></span>
+              <span class="price-tag" style="font-size:19px;font-weight:700;color:var(--shgreen);"><?= $isSpanish ? '$5,000 MXN' : '$250 USD'; ?></span>
             </div>
 
             <a class="btn btn-go btn-block mt14" id="rBtnBuy" href="<?= esc_url($reportBtnLink); ?>"><?= $isSpanish ? 'Obtener mi Perfil de Salud Financiera' : 'Get my Financial Health Profile'; ?></a>
@@ -435,7 +435,7 @@ window.zolQuizData = <?= json_encode($isSpanish ? $spanishQuizData : $englishQui
             </p>
             <div class="hgroup mt10 mb10" style="justify-content:space-between;align-items:center;">
               <span class="tiny" style="font-weight:700;color:var(--ink);"><?= $isSpanish ? 'Inversión:' : 'Investment:'; ?></span>
-              <span style="font-size:16px;font-weight:700;color:var(--shgreen);"><?= $isSpanish ? '$2,140 MXN' : '$110 USD'; ?></span>
+              <span style="font-size:16px;font-weight:700;color:var(--shgreen);"><?= $isSpanish ? '$6,640 MXN' : '$335 USD'; ?></span>
             </div>
             <a class="btn btn-sm btn-block" id="rBtnBuySession" href="<?= esc_url($sessionBtnLink); ?>" style="background:var(--stage-bg);color:var(--stage);border:1px solid var(--stage);font-weight:600;text-align:center;text-decoration:none;display:block;">
               <?= $isSpanish ? 'Quiero el perfil con Coach 1 a 1' : 'Get profile with 1-on-1 Coach'; ?>

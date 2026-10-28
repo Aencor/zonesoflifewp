@@ -83,14 +83,14 @@
             "label": "Card 2 Price / Badge",
             "name": "card_2_price",
             "type": "text",
-            "default_value": "$25 USD"
+            "default_value": "$250 USD"
         },
         {
             "key": "field_at_c2_btn_text",
             "label": "Card 2 Button Text",
             "name": "card_2_btn_text",
             "type": "text",
-            "default_value": "Get Profile ($25 USD)"
+            "default_value": "Get Profile ($250 USD)"
         },
         {
             "key": "field_at_c2_btn_link",
@@ -126,14 +126,14 @@
             "label": "Card 3 Price",
             "name": "card_3_price",
             "type": "text",
-            "default_value": "$85 USD"
+            "default_value": "$335 USD"
         },
         {
             "key": "field_at_c3_btn_text",
             "label": "Card 3 Button Text",
             "name": "card_3_btn_text",
             "type": "text",
-            "default_value": "Choose with Session ($85 USD)"
+            "default_value": "Choose with Session ($335 USD)"
         },
         {
             "key": "field_at_c3_btn_link",
